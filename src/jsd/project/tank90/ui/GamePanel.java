@@ -1,15 +1,19 @@
 package jsd.project.tank90.ui;
 
 import jsd.project.tank90.MapLoader;
+import jsd.project.tank90.Tank;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.util.List;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements KeyListener {
+    // Instance variables
     private MapLoader mapLoader;
     private List<String> mapData;
 
@@ -19,7 +23,12 @@ public class GamePanel extends JPanel {
     private Image borderImage;
     private Image baseImage;
 
+    // Tank instance
+    private Tank tank;
+
+    // Constructor
     public GamePanel() {
+        // Set up the panel
         setBackground(Color.BLACK);
 
         // Load the map
@@ -29,9 +38,16 @@ public class GamePanel extends JPanel {
 
         // Load images for tiles
         loadImages();
+
+        // Initialize the tank at starting position
+        tank = new Tank(100, 100); // Set initial tank position
+
+        // Enable KeyListener for tank movement
+        setFocusable(true);
+        addKeyListener(this);
     }
 
-    // Load images for map elements
+    // Method to load images for map elements
     private void loadImages() {
         try {
             wallImage = loadImage("src/jsd/project/tank90/images/wall_brick.png");
@@ -52,15 +68,7 @@ public class GamePanel extends JPanel {
         return ImageIO.read(imgFile);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        // Draw the map
-        drawMap(g);
-    }
-
-    // Draw the map with images
+    // Method to draw the map with images
     private void drawMap(Graphics g) {
         int tileSize = 20; // Size of each tile
 
@@ -93,4 +101,46 @@ public class GamePanel extends JPanel {
             g.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize, this);
         }
     }
+
+    // Override paintComponent method to draw the game elements
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Draw the map
+        drawMap(g);
+
+        // Draw the tank
+        tank.draw(g);
+    }
+
+    // KeyListener methods
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        // Move tank based on arrow key presses
+        switch (keyCode) {
+            case KeyEvent.VK_RIGHT:
+                tank.moveRight();
+                break;
+            case KeyEvent.VK_LEFT:
+                tank.moveLeft();
+                break;
+            case KeyEvent.VK_UP:
+                tank.moveUp();
+                break;
+            case KeyEvent.VK_DOWN:
+                tank.moveDown();
+                break;
+        }
+
+        repaint(); // Redraw the tank after moving
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
 }

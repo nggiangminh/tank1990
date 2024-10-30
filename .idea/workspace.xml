@@ -1,42 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="186f1f40-ec22-4553-ae54-6ae74585313a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
-    </list>
+    <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/tank1990" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="2nYyohzBe1ZzOD7UBw7PQ5lMawS" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2o97a89hke6Ycffs7IW24ITvReu" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,38 +22,20 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
-    "Application.Menu.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/HANUdocs/Nam4/JSD/Tank1990/src/jsd/project/tank90/images",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "last_opened_file_path": "D:/HANUdocs/Nam4/JSD/Tank1990/tank1990"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\HANUdocs\Nam4\JSD\Tank1990\src\jsd\project\tank90\images" />
-      <recent name="D:\HANUdocs\Nam4\JSD\Tank1990\src\jsd\project\tank90" />
-      <recent name="D:\HANUdocs\Nam4\JSD\Tank1990\src\jsd\project\tank90\resources\font" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\HANUdocs\Nam4\JSD\Tank1990\src\jsd\project\tank90\map_stage" />
-      <recent name="D:\HANUdocs\Nam4\JSD\Tank1990\src\jsd\project\tank90\images" />
-      <recent name="D:\HANUdocs\Nam4\JSD\Tank1990\src\jsd\project\tank90\resources\font" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="jsd.project.tank90" />
-    </key>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="186f1f40-ec22-4553-ae54-6ae74585313a" name="Changes" comment="" />
-      <created>1729164481876</created>
+      <changelist id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="" />
+      <created>1730269998442</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1729164481876</updated>
+      <updated>1730269998442</updated>
     </task>
     <servers />
   </component>
