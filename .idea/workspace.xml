@@ -1,19 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="" />
+    <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/images/bullet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/GameObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/Base.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/BrickWall.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/SteelWall.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/Water.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Bullet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Direction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Tank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/MapLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/MapLoader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Tank.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/Tank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/tank1990" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2o97a89hke6Ycffs7IW24ITvReu" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -21,13 +51,40 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Game.executor": "Run",
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/HANUdocs/Nam4/JSD/Tank1990/tank1990"
+    "last_opened_file_path": "C:/Users/nhda6/Documents/HOC/F24/JSD/Tank1990/src/jsd/project/tank90/model/tanks"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\Tank1990\src\jsd\project\tank90\model\tanks" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\Tank1990\src\jsd\project\tank90\images" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Game" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jsd.project.tank90.Main" />
+      <module name="Tank1990" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-1.8.0_402-corretto-1.8.0_402-4caba194b151-ae57be32" />
+        <option value="jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555" />
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
