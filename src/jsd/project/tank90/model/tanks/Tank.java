@@ -10,6 +10,8 @@ import java.util.List;
 public abstract class Tank extends GameObject {
     protected Direction direction; // Current direction of the tank
 
+    protected int speed;
+
     // List to store bullets fired by the tank
     protected List<Bullet> bullets = new ArrayList<>();
 
@@ -21,6 +23,10 @@ public abstract class Tank extends GameObject {
     // Move the tank in the current direction based on its speed
     public void move() {
     }
+
+    public void undoMove() {
+    }
+
 
     // Implement the shoot() method
     public Bullet shoot() {
@@ -64,7 +70,6 @@ public abstract class Tank extends GameObject {
         for (Bullet bullet : bullets) {
             bullet.update();
         }
-        bullets.removeIf(bullet -> bullet.isOutOfBounds(800, 600));
     }
 
     public void renderBullets(Graphics g) {

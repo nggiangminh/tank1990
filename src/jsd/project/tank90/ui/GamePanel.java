@@ -1,6 +1,7 @@
 package jsd.project.tank90.ui;
 
 import jsd.project.tank90.MapLoader;
+import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.Base;
 import jsd.project.tank90.model.environments.BrickWall;
 import jsd.project.tank90.model.environments.SteelWall;
@@ -8,23 +9,18 @@ import jsd.project.tank90.model.environments.Water;
 import jsd.project.tank90.model.tanks.Direction;
 import jsd.project.tank90.model.tanks.PlayerTank;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final MapLoader mapLoader;
     private final List<String> mapData;
     private final PlayerTank playerTank;
-    private Image wallImage;
-    private Image waterImage;
-    private Image borderImage;
-    private Image baseImage;
+    private List<GameObject> environmentObjects;
     private boolean running = true;
 
     // Movement and firing control booleans
@@ -35,7 +31,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isFire = false;
 
     // Firing cooldown to manage fire rate
-    private int fireCooldown = 0; // Counts down to zero for each fire
+    private int fireCooldown = 0;
 
     public GamePanel() {
         setBackground(Color.BLACK);
@@ -44,7 +40,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         mapLoader.loadMap("src/jsd/project/tank90/map_stage/map.txt");
         mapData = mapLoader.getMapData();
 
-        loadImages();
+        initializeMapObjects();
         playerTank = new PlayerTank(200, 200, 20, 5);
 
         setFocusable(true);
@@ -54,26 +50,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         new Thread(this).start();
     }
 
-    private void loadImages() {
-        try {
-            wallImage = loadImage("src/jsd/project/tank90/images/wall_brick.png");
-            waterImage = loadImage("src/jsd/project/tank90/images/water.png");
-            borderImage = loadImage("src/jsd/project/tank90/images/wall_steel.png");
-            baseImage = loadImage("src/jsd/project/tank90/images/base.png");
-        } catch (IOException e) {
-            System.err.println("Error loading images: " + e.getMessage());
-        }
-    }
-
-    private Image loadImage(String path) throws IOException {
-        File imgFile = new File(path);
-        if (!imgFile.exists()) {
-            throw new IOException("File not found: " + path);
-        }
-        return ImageIO.read(imgFile);
-    }
-
-    private void drawMap(Graphics g) {
+    private void initializeMapObjects() {
+        environmentObjects = new ArrayList<>();
         int tileSize = 20;
 
         for (int y = 0; y < mapData.size(); y++) {
@@ -82,66 +60,71 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 char tile = line.charAt(x);
                 switch (tile) {
                     case '1':
-                        BrickWall br = new BrickWall(x*tileSize, y*tileSize, tileSize);
-                        br.render(g);
+                        environmentObjects.add(new BrickWall(x * tileSize, y * tileSize, tileSize));
                         break;
-                    case '2' :
-                        Water water = new Water(x*tileSize, y*tileSize, tileSize);
-                        water.render(g);
+                    case '2':
+                        environmentObjects.add(new Water(x * tileSize, y * tileSize, tileSize));
                         break;
-                    case '5' :
-                        SteelWall st = new SteelWall(x*tileSize, y*tileSize, tileSize);
-                        st.render(g);
+                    case '5':
+                        environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize));
                         break;
-                    case '9' :
-                        Base base = new Base(x*tileSize, y*tileSize, tileSize*2);
-                        base.render(g);
+                    case '9':
+                        environmentObjects.add(new Base(x * tileSize, y * tileSize, tileSize * 2));
                         break;
                 }
             }
         }
     }
 
-    private void drawTile(Graphics g, Image img, int x, int y, int tileSize) {
-        if (img != null) {
-            g.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize, this);
-        }
-    }
-
     public void updateGame() {
-        // Move based on movement booleans
         if (isUp) {
             playerTank.setDirection(Direction.UP);
             playerTank.move();
+            if (checkCollisionWithEnvironment(playerTank)) {
+                playerTank.undoMove(); // Undo movement if collision is detected
+            }
         } else if (isDown) {
             playerTank.setDirection(Direction.DOWN);
             playerTank.move();
+            if (checkCollisionWithEnvironment(playerTank)) {
+                playerTank.undoMove();
+            }
         } else if (isLeft) {
             playerTank.setDirection(Direction.LEFT);
             playerTank.move();
+            if (checkCollisionWithEnvironment(playerTank)) {
+                playerTank.undoMove();
+            }
         } else if (isRight) {
             playerTank.setDirection(Direction.RIGHT);
             playerTank.move();
+            if (checkCollisionWithEnvironment(playerTank)) {
+                playerTank.undoMove();
+            }
         }
 
         // Handle continuous firing with cooldown
         if (isFire && fireCooldown <= 0) {
-            playerTank.shoot(); // Fire a bullet
-            fireCooldown = 20 - playerTank.fireSpeed;  // Reset cooldown (adjust this value to control firing rate)
+            playerTank.shoot();
+            fireCooldown = Math.max(5, 20 - playerTank.fireSpeed);
         }
 
-        // Update bullets and decrease cooldown
         playerTank.updateBullets();
         if (fireCooldown > 0) {
             fireCooldown--;
         }
     }
 
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        drawMap(g);
+        // Render map objects from cached environmentObjects
+        for (GameObject obj : environmentObjects) {
+            obj.render(g);
+        }
+
         playerTank.render(g);
         playerTank.renderBullets(g);
     }
@@ -195,6 +178,20 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     @Override
     public void keyTyped(KeyEvent e) {
+    }
+
+
+    private boolean checkCollisionWithEnvironment(PlayerTank tank) {
+        Rectangle tankBounds = tank.getBounds();
+
+        for (GameObject environmentObj : environmentObjects) {
+            if (environmentObj instanceof BrickWall || environmentObj instanceof SteelWall) {
+                if (tankBounds.intersects(environmentObj.getBounds())) {
+                    return true; // Collision detected
+                }
+            }
+        }
+        return false; // No collision
     }
 
     @Override

@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/images/bullet.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/GameObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/Base.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/BrickWall.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/SteelWall.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/Water.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Bullet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Direction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Tank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/MapLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/MapLoader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Tank.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/Tank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Tank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +23,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/tank1990" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -53,8 +38,9 @@
   "keyToString": {
     "Application.Game.executor": "Run",
     "Application.Main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "dang",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/nhda6/Documents/HOC/F24/JSD/Tank1990/src/jsd/project/tank90/model/tanks"
   }

@@ -8,13 +8,12 @@ public class PlayerTank extends Tank {
     private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_down.png").getImage();
     private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_left.png").getImage();
     private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_right.png").getImage();
-    private Image tankImage;
 
     public int speed = 1;
     public int bulletSize = 20;
     public int bulletSpeed = 2;
-
     public int fireSpeed = 2;
+    private Image tankImage;
 
     public PlayerTank(int x, int y, int size, int speed) {
         super(x, y, size, speed, Direction.UP);
@@ -33,7 +32,7 @@ public class PlayerTank extends Tank {
     }
 
     @Override
-    public void move(){
+    public void move() {
         switch (direction) {
             case UP -> y -= speed;
             case DOWN -> y += speed;
@@ -41,6 +40,17 @@ public class PlayerTank extends Tank {
             case RIGHT -> x += speed;
         }
     }
+
+    @Override
+    public void undoMove() {
+        switch (this.direction) {
+            case UP -> y += speed;
+            case DOWN -> y -= speed;
+            case LEFT -> x += speed;
+            case RIGHT -> x -= speed;
+        }
+    }
+
     public void setDirection(Direction newDirection) {
         this.direction = newDirection;
         switch (newDirection) {
