@@ -7,15 +7,20 @@ import java.awt.*;
 
 public class Bullet extends GameObject {
 
-    private final Image bulletImage = new ImageIcon("src/jsd/project/tank90/images/bullet.png").getImage();
-    private int speed;
-    private Direction direction;
+    private final Image bulletImage = new ImageIcon("src/jsd/project/tank90/images/bullet_right.png").getImage();
+    private final int speed;
+    private final Direction direction;
 
     public Bullet(int x, int y, int size, int speed, Direction direction) {
         super(x, y, size);
         this.speed = speed;
         this.direction = direction;
     }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y,5,10); // Adjust `width` and `height` as per bullet size
+    }
+
 
     // Move the bullet based on its direction and speed
 

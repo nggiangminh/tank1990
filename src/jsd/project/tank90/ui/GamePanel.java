@@ -2,12 +2,11 @@ package jsd.project.tank90.ui;
 
 import jsd.project.tank90.MapLoader;
 import jsd.project.tank90.model.GameObject;
-import jsd.project.tank90.model.environments.Base;
-import jsd.project.tank90.model.environments.BrickWall;
-import jsd.project.tank90.model.environments.SteelWall;
-import jsd.project.tank90.model.environments.Water;
+import jsd.project.tank90.model.environments.*;
+import jsd.project.tank90.model.tanks.Bullet;
 import jsd.project.tank90.model.tanks.Direction;
 import jsd.project.tank90.model.tanks.PlayerTank;
+import jsd.project.tank90.utils.CollisionHandling;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
-    private final MapLoader mapLoader;
     private final List<String> mapData;
     private final PlayerTank playerTank;
     private List<GameObject> environmentObjects;
@@ -36,12 +34,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public GamePanel() {
         setBackground(Color.BLACK);
 
-        mapLoader = new MapLoader();
+        MapLoader mapLoader = new MapLoader();
         mapLoader.loadMap("src/jsd/project/tank90/map_stage/map.txt");
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
-        playerTank = new PlayerTank(200, 200, 20, 5);
+        playerTank = new PlayerTank(100, 100, 35, 5);
 
         setFocusable(true);
         addKeyListener(this);
@@ -68,6 +66,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                     case '5':
                         environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize));
                         break;
+                    case '4':
+                        environmentObjects.add(new Tree(x * tileSize, y * tileSize, tileSize));
+                        break;
                     case '9':
                         environmentObjects.add(new Base(x * tileSize, y * tileSize, tileSize * 2));
                         break;
@@ -76,32 +77,38 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+
+    // In updateGame()
     public void updateGame() {
         if (isUp) {
             playerTank.setDirection(Direction.UP);
             playerTank.move();
-            if (checkCollisionWithEnvironment(playerTank)) {
+            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
                 playerTank.undoMove(); // Undo movement if collision is detected
             }
         } else if (isDown) {
             playerTank.setDirection(Direction.DOWN);
             playerTank.move();
-            if (checkCollisionWithEnvironment(playerTank)) {
+            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
                 playerTank.undoMove();
             }
         } else if (isLeft) {
             playerTank.setDirection(Direction.LEFT);
             playerTank.move();
-            if (checkCollisionWithEnvironment(playerTank)) {
+            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
                 playerTank.undoMove();
             }
         } else if (isRight) {
             playerTank.setDirection(Direction.RIGHT);
             playerTank.move();
-            if (checkCollisionWithEnvironment(playerTank)) {
+            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
                 playerTank.undoMove();
             }
         }
+
+        // Check for bullet collisions with SteelWall and BrickWall
+        CollisionHandling.checkBulletCollisionWithSteel(playerTank, environmentObjects);
+        CollisionHandling.checkBulletCollisionWithBricks(playerTank, environmentObjects);
 
         // Handle continuous firing with cooldown
         if (isFire && fireCooldown <= 0) {
@@ -115,19 +122,29 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Render map objects from cached environmentObjects
+        // Render environment objects except Tree
         for (GameObject obj : environmentObjects) {
-            obj.render(g);
+            if (!(obj instanceof Tree)) {
+                obj.render(g);
+            }
         }
 
+        // Render player tank and bullets
         playerTank.render(g);
         playerTank.renderBullets(g);
+
+        // Render Tree objects last to make them appear on top of the tank
+        for (GameObject obj : environmentObjects) {
+            if (obj instanceof Tree) {
+                obj.render(g);
+            }
+        }
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -180,19 +197,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public void keyTyped(KeyEvent e) {
     }
 
-
-    private boolean checkCollisionWithEnvironment(PlayerTank tank) {
-        Rectangle tankBounds = tank.getBounds();
-
-        for (GameObject environmentObj : environmentObjects) {
-            if (environmentObj instanceof BrickWall || environmentObj instanceof SteelWall) {
-                if (tankBounds.intersects(environmentObj.getBounds())) {
-                    return true; // Collision detected
-                }
-            }
-        }
-        return false; // No collision
-    }
 
     @Override
     public void run() {

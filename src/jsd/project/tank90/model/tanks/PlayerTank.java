@@ -10,7 +10,7 @@ public class PlayerTank extends Tank {
     private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_right.png").getImage();
 
     public int speed = 1;
-    public int bulletSize = 20;
+    public int bulletSize = 7;
     public int bulletSpeed = 2;
     public int fireSpeed = 2;
     private Image tankImage;

@@ -1,94 +1,87 @@
 package jsd.project.tank90.model.tanks;
 
 import jsd.project.tank90.model.GameObject;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public abstract class Tank extends GameObject {
     protected Direction direction; // Current direction of the tank
-
     protected int speed;
-
-    // List to store bullets fired by the tank
-    protected List<Bullet> bullets = new ArrayList<>();
+    protected List<Bullet> bullets = new ArrayList<>(); // List of bullets fired by the tank
 
     public Tank(int x, int y, int size, int speed, Direction direction) {
         super(x, y, size);
         this.direction = direction;
     }
 
-    // Move the tank in the current direction based on its speed
-    public void move() {
-    }
-
-    public void undoMove() {
-    }
-
-
-    // Implement the shoot() method
+    // Shoot a bullet based on the tank's direction
     public Bullet shoot() {
-        int bulletX;
-        int bulletY;
+        int bulletX, bulletY;
         int bulletSize = getBulletSize();
         int bulletSpeed = getBulletSpeed();
 
-        // Adjust bullet's initial position based on tank's direction
+        // Adjust bullet position based on the tank's direction
         switch (direction) {
-            case UP:
+            case UP -> {
                 bulletX = x + (size - bulletSize) / 2;
                 bulletY = y - bulletSize;
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 bulletX = x + (size - bulletSize) / 2;
                 bulletY = y + size;
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 bulletX = x - bulletSize;
-                bulletY = y + (size -bulletSize)/2;
-                break;
-            default:
+                bulletY = y + (size - bulletSize) / 2;
+            }
+            default -> { // RIGHT
                 bulletX = x + size;
-                bulletY = y + (size -bulletSize)/2;
-                break;
+                bulletY = y + (size - bulletSize) / 2;
+            }
         }
 
+        // Create and add the bullet
         Bullet bullet = new Bullet(bulletX, bulletY, bulletSize, bulletSpeed, direction);
-        bullets.add(bullet); // Add the bullet to the list of bullets
-        bullet.update();
+        bullets.add(bullet);
         return bullet;
     }
 
-    // Abstract methods to get bullet size and speed, implemented in subclasses
+    // Abstract methods for bullet size and speed
     protected abstract int getBulletSize();
-
     protected abstract int getBulletSpeed();
 
+    // Update bullets and remove those out of bounds
     public void updateBullets() {
-        for (Bullet bullet : bullets) {
-            bullet.update();
-        }
+        bullets.removeIf(bullet -> bullet.isOutOfBounds(800, 600)); // Screen size example; adjust as needed
+        bullets.forEach(Bullet::update);
     }
 
+    // Render bullets on the screen
     public void renderBullets(Graphics g) {
-        for (Bullet bullet : bullets) {
-            bullet.render(g);
-        }
+        bullets.forEach(bullet -> bullet.render(g));
     }
 
-    @Override
-    public abstract void update();
-
-    @Override
-    public abstract void render(Graphics g);
-
+    // Getters and setters for tank direction
     public Direction getDirection() {
         return direction;
     }
 
+    public abstract void move();
+
+    public abstract void undoMove();
+
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    // Abstract methods to be implemented in subclasses
+    @Override
+    public abstract void update();
+    @Override
+    public abstract void render(Graphics g);
+
+    public List<Bullet> getBullets() {
+        return  bullets;
     }
 }
