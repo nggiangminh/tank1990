@@ -1,16 +1,18 @@
 package jsd.project.tank90.model.tanks;
 
 import jsd.project.tank90.model.GameObject;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Tank extends GameObject {
     protected Direction direction; // Current direction of the tank
-    protected int speed;
     protected List<Bullet> bullets = new ArrayList<>(); // List of bullets fired by the tank
 
-    public Tank(int x, int y, int size, int speed, Direction direction) {
+    protected Image tankImage;
+
+    public Tank(int x, int y, int size, Direction direction) {
         super(x, y, size);
         this.direction = direction;
     }
@@ -49,11 +51,11 @@ public abstract class Tank extends GameObject {
 
     // Abstract methods for bullet size and speed
     protected abstract int getBulletSize();
+
     protected abstract int getBulletSpeed();
 
     // Update bullets and remove those out of bounds
     public void updateBullets() {
-        bullets.removeIf(bullet -> bullet.isOutOfBounds(800, 600)); // Screen size example; adjust as needed
         bullets.forEach(Bullet::update);
     }
 
@@ -67,21 +69,70 @@ public abstract class Tank extends GameObject {
         return direction;
     }
 
-    public abstract void move();
-
-    public abstract void undoMove();
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
+    public void setDirection(Direction newDirection) {
+        this.direction = newDirection;
+        switch (newDirection) {
+            case UP -> tankImage = getTankUpImage();
+            case DOWN -> tankImage = getTankDownImage();
+            case LEFT -> tankImage = getTankLeftImage();
+            case RIGHT -> tankImage = getTankRightImage();
+        }
     }
+
+    public void move() {
+        switch (direction) {
+            case UP -> y -= getSpeed();
+            case DOWN -> y += getSpeed();
+            case LEFT -> x -= getSpeed();
+            case RIGHT -> x += getSpeed();
+        }
+        setDirection(direction);
+    }
+
+    public void undoMove() {
+        switch (this.direction) {
+            case UP -> y += getSpeed();
+            case DOWN -> y -= getSpeed();
+            case LEFT -> x += getSpeed();
+            case RIGHT -> x -= getSpeed();
+        }
+    }
+
+    public abstract int getSpeed();
+
+    public abstract Image getTankUpImage();
+
+    public abstract Image getTankDownImage();
+
+    public abstract Image getTankLeftImage();
+
+    public abstract Image getTankRightImage();
 
     // Abstract methods to be implemented in subclasses
     @Override
-    public abstract void update();
+    public void update() {
+        move();
+    }
+
     @Override
-    public abstract void render(Graphics g);
+    public void render(Graphics g) {
+        g.drawImage(tankImage, x, y, size, size, null);
+        renderBullets(g); // Render bullets fired by the player tank
+    }
 
     public List<Bullet> getBullets() {
-        return  bullets;
+        return bullets;
+    }
+
+    public void setBullets(List<Bullet> bullets) {
+        this.bullets = bullets;
+    }
+
+    public Image getTankImage() {
+        return tankImage;
+    }
+
+    public void setTankImage(Image tankImage) {
+        this.tankImage = tankImage;
     }
 }

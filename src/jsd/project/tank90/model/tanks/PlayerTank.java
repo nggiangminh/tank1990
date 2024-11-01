@@ -9,14 +9,14 @@ public class PlayerTank extends Tank {
     private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_left.png").getImage();
     private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_right.png").getImage();
 
+    public int life = 4;
     public int speed = 1;
     public int bulletSize = 7;
     public int bulletSpeed = 2;
-    public int fireSpeed = 2;
-    private Image tankImage;
+    public int fireSpeed = 45;
 
-    public PlayerTank(int x, int y, int size, int speed) {
-        super(x, y, size, speed, Direction.UP);
+    public PlayerTank(int x, int y, int size) {
+        super(x, y, size, Direction.UP);
         this.tankImage = TANK_UP;
     }
 
@@ -32,43 +32,29 @@ public class PlayerTank extends Tank {
     }
 
     @Override
-    public void move() {
-        switch (direction) {
-            case UP -> y -= speed;
-            case DOWN -> y += speed;
-            case LEFT -> x -= speed;
-            case RIGHT -> x += speed;
-        }
+    public int getSpeed() {
+        return speed;
     }
 
     @Override
-    public void undoMove() {
-        switch (this.direction) {
-            case UP -> y += speed;
-            case DOWN -> y -= speed;
-            case LEFT -> x += speed;
-            case RIGHT -> x -= speed;
-        }
-    }
-
-    public void setDirection(Direction newDirection) {
-        this.direction = newDirection;
-        switch (newDirection) {
-            case UP -> tankImage = TANK_UP;
-            case DOWN -> tankImage = TANK_DOWN;
-            case LEFT -> tankImage = TANK_LEFT;
-            case RIGHT -> tankImage = TANK_RIGHT;
-        }
+    public Image getTankUpImage() {
+        return TANK_UP;
     }
 
     @Override
-    public void update() {
-        move();
+    public Image getTankDownImage() {
+        return TANK_DOWN;
     }
 
     @Override
-    public void render(Graphics g) {
-        g.drawImage(tankImage, x, y, size, size, null);
-        renderBullets(g); // Render bullets fired by the player tank
+    public Image getTankLeftImage() {
+        return TANK_LEFT;
     }
+
+    @Override
+    public Image getTankRightImage() {
+        return TANK_RIGHT;
+    }
+
+
 }

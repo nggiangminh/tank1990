@@ -6,66 +6,52 @@ import jsd.project.tank90.model.environments.SteelWall;
 import jsd.project.tank90.model.environments.Water;
 import jsd.project.tank90.model.tanks.Bullet;
 import jsd.project.tank90.model.tanks.PlayerTank;
+import jsd.project.tank90.model.tanks.Tank;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.List;
 
 public class CollisionHandling {
 
-    // Checks collisions between bullets and SteelWalls
-    public static void checkBulletCollisionWithSteel(PlayerTank playerTank, List<GameObject> environmentObjects) {
-        List<Bullet> bullets = playerTank.getBullets();
+    // Checks collisions between bullets and environment objects (BrickWall and SteelWall)
+    public static void checkBulletCollisionWithEnvironment(Tank tank, List<GameObject> environmentObjects) {
+        List<Bullet> bullets = tank.getBullets();
+        Iterator<Bullet> bulletIterator = bullets.iterator();
 
-        for (int i = 0; i < bullets.size(); i++) {
-            Bullet bullet = bullets.get(i);
+        while (bulletIterator.hasNext()) {
+            Bullet bullet = bulletIterator.next();
             Rectangle bulletBounds = bullet.getBounds();
 
-            for (GameObject environmentObj : environmentObjects) {
-                if (environmentObj instanceof SteelWall) {
-                    if (bulletBounds.intersects(environmentObj.getBounds())) {
-                        bullets.remove(i);
-                        i--; // Adjust index after removal
-                        break;
-                    }
-                }
-            }
-        }
-    }
+            Iterator<GameObject> envIterator = environmentObjects.iterator();
+            while (envIterator.hasNext()) {
+                GameObject environmentObj = envIterator.next();
 
-    // Checks collisions between bullets and BrickWalls
-    public static void checkBulletCollisionWithBricks(PlayerTank playerTank, List<GameObject> environmentObjects) {
-        List<Bullet> bullets = playerTank.getBullets();
-
-        for (int i = 0; i < bullets.size(); i++) {
-            Bullet bullet = bullets.get(i);
-            Rectangle bulletBounds = bullet.getBounds();
-
-            for (int j = 0; j < environmentObjects.size(); j++) {
-                GameObject environmentObj = environmentObjects.get(j);
-
-                if (environmentObj instanceof BrickWall) {
-                    if (bulletBounds.intersects(environmentObj.getBounds())) {
-                        bullets.remove(i);
-                        environmentObjects.remove(j);
-                        i--; // Adjust bullet index after removal
-                        break;
-                    }
+                if (environmentObj instanceof BrickWall && bulletBounds.intersects(environmentObj.getBounds())) {
+                    // Collision with BrickWall: Remove both the bullet and the brick
+                    bulletIterator.remove();
+                    envIterator.remove();
+                    break; // Stop checking this bullet as it has been removed
+                } else if (environmentObj instanceof SteelWall && bulletBounds.intersects(environmentObj.getBounds())) {
+                    // Collision with SteelWall: Only remove the bullet
+                    bulletIterator.remove();
+                    break; // Stop checking this bullet as it has been removed
                 }
             }
         }
     }
 
     // Checks collisions between the tank and solid environment objects
-    public static boolean checkCollisionWithEnvironment(PlayerTank tank, List<GameObject> environmentObjects) {
+    public static boolean checkCollisionWithEnvironment(Tank tank, List<GameObject> environmentObjects) {
         Rectangle tankBounds = tank.getBounds();
 
         for (GameObject environmentObj : environmentObjects) {
             if (environmentObj instanceof BrickWall || environmentObj instanceof SteelWall || environmentObj instanceof Water) {
                 if (tankBounds.intersects(environmentObj.getBounds())) {
-                    return true; // Collision detected
+                    return true;
                 }
             }
         }
-        return false; // No collision
+        return false;
     }
 }

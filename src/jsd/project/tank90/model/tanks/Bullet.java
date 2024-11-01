@@ -7,14 +7,25 @@ import java.awt.*;
 
 public class Bullet extends GameObject {
 
-    private final Image bulletImage = new ImageIcon("src/jsd/project/tank90/images/bullet_right.png").getImage();
+    private final Image BULLET_UP = new ImageIcon("src/jsd/project/tank90/images/bullet_up.png").getImage();
+    private final Image BULLET_DOWN = new ImageIcon("src/jsd/project/tank90/images/bullet_down.png").getImage();
+    private final Image BULLET_LEFT = new ImageIcon("src/jsd/project/tank90/images/bullet_left.png").getImage();
+    private final Image BULLET_RIGHT = new ImageIcon("src/jsd/project/tank90/images/bullet_right.png").getImage();
     private final int speed;
     private final Direction direction;
+
+    private Image bulletImage;
 
     public Bullet(int x, int y, int size, int speed, Direction direction) {
         super(x, y, size);
         this.speed = speed;
         this.direction = direction;
+        switch (direction){
+            case UP -> bulletImage = BULLET_UP;
+            case DOWN -> bulletImage = BULLET_DOWN;
+            case LEFT -> bulletImage = BULLET_LEFT;
+            case RIGHT -> bulletImage = BULLET_RIGHT;
+        }
     }
 
     public Rectangle getBounds() {
@@ -28,6 +39,7 @@ public class Bullet extends GameObject {
     public void update(){
         move();
     }
+
 
     public void move() {
         switch (direction) {

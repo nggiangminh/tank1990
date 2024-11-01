@@ -5,29 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/BasicTank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/EnemyTank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/map_stage/map.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/map_stage/map.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/GameObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/GameObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/Base.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/Base.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/BrickWall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/BrickWall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/SteelWall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/SteelWall.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/Water.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/Water.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/MapLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/MapLoader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Direction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/map_stage/map.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/map_stage/map.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/CollisionHandling.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/CollisionHandling.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/ArmorTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/ArmorTank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Bullet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/Tank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/utils/CollisionHandling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/utils/CollisionHandling.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,19 +55,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Game.executor": "Run",
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dang",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/HANUdocs/Nam4/JSD/Tank1990/src/jsd/project/tank90/images"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dang&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nhda6/Documents/HOC/F24/JSD/Tank1990/src/jsd/project/tank90/images&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\Tank1990\src\jsd\project\tank90\images" />
       <recent name="D:\HANUdocs\Nam4\JSD\Tank1990\src\jsd\project\tank90\images" />
       <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\Tank1990\src\jsd\project\tank90\model\tanks" />
     </key>
@@ -87,6 +87,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
