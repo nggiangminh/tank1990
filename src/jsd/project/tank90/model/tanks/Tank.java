@@ -12,6 +12,8 @@ public abstract class Tank extends GameObject {
 
     protected Image tankImage;
 
+
+
     public Tank(int x, int y, int size, Direction direction) {
         super(x, y, size);
         this.direction = direction;
@@ -44,7 +46,7 @@ public abstract class Tank extends GameObject {
         }
 
         // Create and add the bullet
-        Bullet bullet = new Bullet(bulletX, bulletY, bulletSize, bulletSpeed, direction);
+        Bullet bullet = new Bullet(bulletX, bulletY, bulletSize, bulletSpeed, direction, getBulletDamage());
         bullets.add(bullet);
         return bullet;
     }
@@ -108,8 +110,9 @@ public abstract class Tank extends GameObject {
 
     public abstract Image getTankRightImage();
 
+    public abstract int getBulletDamage();
+
     // Abstract methods to be implemented in subclasses
-    @Override
     public void update() {
         move();
     }
@@ -134,5 +137,16 @@ public abstract class Tank extends GameObject {
 
     public void setTankImage(Image tankImage) {
         this.tankImage = tankImage;
+    }
+
+    public abstract int getLife();
+
+    public abstract void setLife(int life);
+    public void takeDamage(int damage) {
+        int newLife = Math.max(0, getLife() - damage);
+        setLife(newLife);
+    }
+    public boolean isDead() {
+        return getLife() == 0;
     }
 }

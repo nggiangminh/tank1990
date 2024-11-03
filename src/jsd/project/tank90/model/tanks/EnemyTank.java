@@ -58,7 +58,6 @@ public abstract class EnemyTank extends Tank {
     public Bullet shoot() {
         if (fireCooldown <= 0) {
             fireCooldown = FIRE_INTERVAL; // Reset cooldown
-            System.out.println("Boom");
             return super.shoot(); // Use the shoot method from Tank to create a bullet
         }
         updateCooldown();

@@ -16,11 +16,14 @@ public class Bullet extends GameObject {
 
     private Image bulletImage;
 
-    public Bullet(int x, int y, int size, int speed, Direction direction) {
+    private int damage;
+
+    public Bullet(int x, int y, int size, int speed, Direction direction, int damage) {
         super(x, y, size);
         this.speed = speed;
         this.direction = direction;
-        switch (direction){
+        this.damage = damage;
+        switch (direction) {
             case UP -> bulletImage = BULLET_UP;
             case DOWN -> bulletImage = BULLET_DOWN;
             case LEFT -> bulletImage = BULLET_LEFT;
@@ -29,14 +32,13 @@ public class Bullet extends GameObject {
     }
 
     public Rectangle getBounds() {
-        return new Rectangle(x, y,5,10); // Adjust `width` and `height` as per bullet size
+        return new Rectangle(x, y, 5, 10); // Adjust `width` and `height` as per bullet size
     }
 
 
     // Move the bullet based on its direction and speed
 
-    @Override
-    public void update(){
+    public void update() {
         move();
     }
 
@@ -50,10 +52,34 @@ public class Bullet extends GameObject {
         }
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public Image getBulletImage() {
+        return bulletImage;
+    }
+
+    public void setBulletImage(Image bulletImage) {
+        this.bulletImage = bulletImage;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     // Render the bullet on the screen
     @Override
     public void render(Graphics g) {
-        g.drawImage(bulletImage,x,y,size,size,null);
+        g.drawImage(bulletImage, x, y, size, size, null);
     }
 }
 

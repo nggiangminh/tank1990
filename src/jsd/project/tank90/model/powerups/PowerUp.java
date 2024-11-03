@@ -1,23 +1,23 @@
 package jsd.project.tank90.model.powerups;
 
+import jsd.project.tank90.model.GameObject;
+import jsd.project.tank90.model.tanks.PlayerTank;
+import jsd.project.tank90.ui.GamePanel;
+
 import java.awt.*;
 
-public abstract class PowerUp {
-    protected int x, y; // Position of the power-up
-    protected int size; // Size of the power-up
-    protected boolean isVisible = true; // Controls visibility
+public abstract class PowerUp extends GameObject {
 
+    protected PlayerTank playerTank;
+    protected GamePanel gamePanel;
     public PowerUp(int x, int y, int size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
+        super(x, y, size);
     }
+
 
     // Method to render the power-up on the screen
     public void render(Graphics g) {
-        if (isVisible) {
-            g.drawImage(getImage(), x, y, size, size, null);
-        }
+        g.drawImage(getImage(), x, y, size, size, null);
     }
 
     // Abstract method to get the specific image for each power-up type
@@ -26,8 +26,5 @@ public abstract class PowerUp {
     // Abstract method to identify the power-up type
     public abstract String getType();
 
-    // Optional: method to control flashing effects
-    public void toggleVisibility() {
-        isVisible = !isVisible; // Toggle visibility for flashing effect
-    }
+    public abstract void activate(PlayerTank playerTank, GamePanel gamePanel);
 }
