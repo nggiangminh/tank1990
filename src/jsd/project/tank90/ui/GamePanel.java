@@ -3,6 +3,9 @@ package jsd.project.tank90.ui;
 import jsd.project.tank90.MapLoader;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
+import jsd.project.tank90.model.powerups.PowerUp;
+import jsd.project.tank90.model.powerups.TankPowerUp;
+import jsd.project.tank90.model.powerups.TimerPowerUp;
 import jsd.project.tank90.model.tanks.*;
 import jsd.project.tank90.utils.CollisionHandling;
 
@@ -12,7 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-//
+
 public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int FPS = 60;
     private final List<String> mapData;
@@ -20,6 +23,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
     private List<GameObject> environmentObjects;
     private boolean running = true;
+    private List<PowerUp> powerUps = new ArrayList<>();
 
     // Movement and firing control booleans
     private boolean isUp = false;
@@ -46,6 +50,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         setFocusable(true);
         addKeyListener(this);
+
+        // Example power-up spawning
+        powerUps.add(new TankPowerUp(100, 150, 30)); // Position and size for Tank power-up
+        powerUps.add(new TimerPowerUp(200, 250, 30)); // Position and size for Timer power-up
 
         // Start the game loop in a new thread
         new Thread(this).start();
@@ -160,6 +168,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 obj.render(g);
             }
         }
+
+        // Render all power-ups
+        for (PowerUp powerUp : powerUps) {
+            powerUp.render(g);
+        }
+
     }
 
     @Override
