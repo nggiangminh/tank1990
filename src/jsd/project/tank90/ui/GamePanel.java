@@ -1,6 +1,6 @@
 package jsd.project.tank90.ui;
 
-import jsd.project.tank90.MapLoader;
+import jsd.project.tank90.utils.MapLoader;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;

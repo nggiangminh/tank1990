@@ -1,4 +1,4 @@
-package jsd.project.tank90;
+package jsd.project.tank90.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
