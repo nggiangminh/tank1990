@@ -1,5 +1,6 @@
 package jsd.project.tank90.ui;
 
+import jsd.project.tank90.model.powerups.ShovelPowerUp;
 import jsd.project.tank90.utils.MapLoader;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
@@ -36,6 +37,11 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
 
+
+
+    private int shovelEffectTimer; // Timer for the shovel effect duration
+    private List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
+
     public GamePanel() {
         setBackground(Color.BLACK);
 
@@ -53,8 +59,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         addKeyListener(this);
 
         // Example power-up spawning
-        powerUps.add(new TankPowerUp(100, 150, 30)); // Position and size for Tank power-up
+        powerUps.add(new TankPowerUp(200, 280, 30)); // Position and size for Tank power-up
         powerUps.add(new TimerPowerUp(200, 250, 30)); // Position and size for Timer power-up
+        powerUps.add(new ShovelPowerUp(100, 150, 30)); // Position and size for Timer power-up
 
         // Start the game loop in a new thread
         new Thread(this).start();
@@ -164,6 +171,26 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         if (fireCooldown > 0) {
             fireCooldown--;
         }
+
+        // thử active lại
+        activateShovelEffect();
+        // Shovel effect duration handling
+        if (shovelEffectTimer > 0) {
+            shovelEffectTimer--;
+
+            if (shovelEffectTimer == 0) {
+                // Revert steel walls back to original brick walls after effect ends
+                for (GameObject originalBrick : originalWalls) {
+                    for (int i = 0; i < environmentObjects.size(); i++) {
+                        GameObject obj = environmentObjects.get(i);
+                        if (obj instanceof SteelWall && isNearFortress(obj)) {
+                            environmentObjects.set(i, originalBrick);
+                        }
+                    }
+                }
+                originalWalls.clear(); // Clear stored walls after reverting
+            }
+        }
     }
 
     @Override
@@ -250,4 +277,41 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public void stopGame() {
         running = false;
     }
+
+
+    public void activateShovelEffect() {
+        shovelEffectTimer = 300; // Duration in frames (adjust as needed)
+
+        // Replace brick walls around the fortress with steel walls
+        for (int i = 0; i < environmentObjects.size(); i++) {
+            GameObject obj = environmentObjects.get(i);
+            if (obj instanceof BrickWall && isNearFortress(obj)) {
+                // Store the original brick wall for later restoration
+                originalWalls.add(obj);
+                // Replace with steel wall
+                environmentObjects.set(i, new SteelWall(obj.getX(), obj.getY(), obj.getSize()));
+            }
+        }
+    }
+
+    private boolean isNearFortress(GameObject wall) {
+        // Coordinates around the base `9` in the provided map
+        int[][] fortressArea = {
+                 {12, 24}, {12, 25},{12, 26},
+                 {13, 24},
+                 {14, 24},
+                 {15, 24}, {15, 25},{15, 26}
+        };
+
+
+        for (int[] coordinate : fortressArea) {
+            int fortressX = coordinate[0] * 20; // Assuming each tile is 20 pixels wide
+            int fortressY = coordinate[1] * 20; // Assuming each tile is 20 pixels tall
+            if (wall.getX() == fortressX && wall.getY() == fortressY) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
