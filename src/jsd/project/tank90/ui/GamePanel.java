@@ -14,24 +14,25 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int FPS = 60;
     private final List<String> mapData;
     private final PlayerTank playerTank;
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
+    private final List<PowerUp> powerUps = new ArrayList<>();
+    public int freezeTimer = 0;
     private List<GameObject> environmentObjects;
     private boolean running = true;
-    private List<PowerUp> powerUps = new ArrayList<>();
-
     // Movement and firing control booleans
     private boolean isUp = false;
     private boolean isDown = false;
     private boolean isLeft = false;
     private boolean isRight = false;
     private boolean isFire = false;
-
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
 
@@ -58,6 +59,11 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         // Start the game loop in a new thread
         new Thread(this).start();
     }
+
+    public void activateFreeze() {
+        freezeTimer = 300; // 300 frame
+    }
+
 
     private void initializeMapObjects() {
         environmentObjects = new ArrayList<>();
@@ -87,55 +93,74 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void updateGame() {
+        if (freezeTimer > 0) {
+            freezeTimer--;
+        }
         // Player movement
         if (isUp) {
             playerTank.setDirection(Direction.UP);
             playerTank.move();
-            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
+            if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
                 playerTank.undoMove(); // Undo movement if collision is detected
             }
         } else if (isDown) {
             playerTank.setDirection(Direction.DOWN);
             playerTank.move();
-            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
+            if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
                 playerTank.undoMove();
             }
         } else if (isLeft) {
             playerTank.setDirection(Direction.LEFT);
             playerTank.move();
-            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
+            if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
                 playerTank.undoMove();
             }
         } else if (isRight) {
             playerTank.setDirection(Direction.RIGHT);
             playerTank.move();
-            if (CollisionHandling.checkCollisionWithEnvironment(playerTank, environmentObjects)) {
+            if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
                 playerTank.undoMove();
             }
         }
-
+        CollisionHandling.checkClaimPowerup(playerTank, powerUps, this);
         // Update each enemy tank's movement and check collisions
-        for (EnemyTank enemy : enemyTanks) {
-            enemy.move();
-            enemy.changeDirection();
-            if (CollisionHandling.checkCollisionWithEnvironment(enemy, environmentObjects)) {
-                enemy.undoMove();
-                enemy.turn();
+        Iterator<EnemyTank> enemyIterator = enemyTanks.iterator();
+        while (enemyIterator.hasNext()) {
+            EnemyTank enemy = enemyIterator.next();
+            if (freezeTimer == 0) {
+                enemy.move();
+                enemy.changeDirection();
+
+                if (CollisionHandling.checkTankEnvironmentCollision(enemy, environmentObjects)) {
+                    enemy.undoMove();
+                    enemy.turn();
+                }
+
+                // Check for bullet collisions with the player tank
+                enemy.shoot();
+            }
+            enemy.updateBullets();
+            CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects);
+            CollisionHandling.checkBulletTankCollision(enemy.getBullets(), playerTank);
+
+            // Remove dead enemy tanks
+            if (enemy.isDead()) {
+                enemyIterator.remove(); // Safely remove the dead enemy
             }
         }
+
         // Handle continuous firing with cooldown
         if (isFire && fireCooldown <= 0) {
             playerTank.shoot();
-            fireCooldown = Math.max(5, 50 - playerTank.fireSpeed);
+            fireCooldown = Math.max(5, 50 - playerTank.getFireSpeed());
         }
 
         playerTank.updateBullets();
-        CollisionHandling.checkBulletCollisionWithEnvironment(playerTank, environmentObjects);
+        CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects);
         for (EnemyTank enemy : enemyTanks) {
-            enemy.shoot();
-            enemy.updateBullets(); // Update bullets for each enemy tank
-            CollisionHandling.checkBulletCollisionWithEnvironment(enemy, environmentObjects);
+            CollisionHandling.checkBulletTankCollision(playerTank.getBullets(), enemy);
         }
+
         if (fireCooldown > 0) {
             fireCooldown--;
         }

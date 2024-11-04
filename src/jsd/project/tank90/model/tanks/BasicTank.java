@@ -13,7 +13,9 @@ public class BasicTank extends EnemyTank {
     private final int bulletSize = 5;
     private final int bulletSpeed = 2;
     private final int fireSpeed = 2;
-    private final int life = 4;
+    private int life = 4;
+    private final int bulletDamage = 1;
+
 
     public BasicTank(int x, int y, int size, Direction direction) {
         super(x, y, size, direction);
@@ -21,6 +23,11 @@ public class BasicTank extends EnemyTank {
 
     public int getLife() {
         return life;
+    }
+
+    @Override
+    public void setLife(int life) {
+        this.life = life;
     }
 
     public int getFireSpeed() {
@@ -40,6 +47,11 @@ public class BasicTank extends EnemyTank {
     @Override
     public int getSpeed() {
         return speed;
+    }
+
+    @Override
+    public int getBulletDamage() {
+        return bulletDamage;
     }
 
     @Override

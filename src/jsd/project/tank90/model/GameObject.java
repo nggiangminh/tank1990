@@ -27,6 +27,5 @@ public abstract class GameObject {
         return x < 0 || y < 0 || x + size > width || y + size > height;
     }
 
-    public abstract void update();
     public abstract void render(Graphics g);
 }
