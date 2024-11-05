@@ -11,7 +11,7 @@ public class Explosion extends GameObject {
     private Image currentImage;
     private int currentFrame = 0;
     private long lastUpdateTime = 0; // Track time to control animation speed
-    private final int animationDelay = 150; // Time in milliseconds between frames
+    private final int animationDelay = 100; // Time in milliseconds between frames
 
     public Explosion(int centerX, int centerY, int size) {
         super(centerX - size / 2, centerY - size / 2, size); // Adjust so explosion is centered
@@ -20,7 +20,8 @@ public class Explosion extends GameObject {
                 new ImageIcon("src/jsd/project/tank90/images/exp2.png").getImage(),
                 new ImageIcon("src/jsd/project/tank90/images/exp3.png").getImage(),
                 new ImageIcon("src/jsd/project/tank90/images/exp4.png").getImage(),
-                new ImageIcon("src/jsd/project/tank90/images/exp5.png").getImage()
+                new ImageIcon("src/jsd/project/tank90/images/exp5.png").getImage(),
+                new ImageIcon("src/jsd/project/tank90/images/bullet.png").getImage()
         };
         currentImage = images[0];
     }

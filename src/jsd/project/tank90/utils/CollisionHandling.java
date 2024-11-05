@@ -142,6 +142,18 @@ public class CollisionHandling {
         return false;
     }
 
+    public static void checkPlayerEnemyCollision(PlayerTank playerTank, List<EnemyTank> enemyTanks, List<Explosion> explosions) {
+        Rectangle playerTankBounds = playerTank.getBounds();
+        for (EnemyTank enemy : enemyTanks) {
+                if (playerTankBounds.intersects(enemy.getBounds())) {
+                    enemy.takeDamage();
+                    playerTank.takeDamage();
+                    explosions.add(new Explosion(enemy.getCenterX(),enemy.getCenterY(),enemy.getSize()));
+                    explosions.add(new Explosion(playerTank.getCenterX(),playerTank.getCenterY(),playerTank.getSize()));
+            }
+        }
+    }
+
     public static void checkClaimPowerup(PlayerTank tank, List<PowerUp> powerUps, GamePanel gamePanel) {
         Rectangle tankBounds = tank.getBounds();
         Iterator<PowerUp> powerUpIterator = powerUps.iterator();

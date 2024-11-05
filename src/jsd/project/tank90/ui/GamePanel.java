@@ -137,28 +137,32 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         Iterator<EnemyTank> enemyIterator = enemyTanks.iterator();
         while (enemyIterator.hasNext()) {
             EnemyTank enemy = enemyIterator.next();
-            if (freezeTimer == 0) {
-                enemy.move();
-                enemy.changeDirection();
-
-                if (CollisionHandling.checkTankEnvironmentCollision(enemy, environmentObjects)) {
-                    enemy.undoMove();
-                    enemy.turn();
-                }
-
-                // Check for bullet collisions with the player tank
-                enemy.shoot();
-            }
-            enemy.updateBullets();
-            CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects, explosions);
-            CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy, explosions);
-            CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
-            CollisionHandling.checkBulletEnemyBulletCollision(playerTank.getBullets(), enemy.getBullets(), explosions);
-            if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
-            // Remove dead enemy tanks
-            if (enemy.isDead()) {
+            if (enemy.isDead() && !enemy.isShowPoints()) {
+                enemy.markAsDead();
+                explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
+            } else if (enemy.shouldRemove()) {
                 playerTank.increasePoints(enemy.getPoints());
                 enemyIterator.remove(); // Safely remove the dead enemy
+            } else if (!enemy.isDead()){
+                if (freezeTimer == 0) {
+                    enemy.move();
+                    enemy.changeDirection();
+
+                    if (CollisionHandling.checkTankEnvironmentCollision(enemy, environmentObjects)) {
+                        enemy.undoMove();
+                        enemy.turn();
+                    }
+
+                    // Check for bullet collisions with the player tank
+                    enemy.shoot();
+                }
+                enemy.updateBullets();
+                CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects, explosions);
+                CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy, explosions);
+                CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
+                CollisionHandling.checkBulletEnemyBulletCollision(playerTank.getBullets(), enemy.getBullets(), explosions);
+                CollisionHandling.checkPlayerEnemyCollision(playerTank, enemyTanks, explosions);
+                if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
             }
         }
 
@@ -355,7 +359,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         while (enemyTankIterator.hasNext()) {
             EnemyTank enemy = enemyTankIterator.next();
             playerTank.increasePoints(enemy.getPoints());
-            enemyTankIterator.remove();
+            enemy.kill();
         }
     }
 }

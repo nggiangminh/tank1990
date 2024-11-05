@@ -3,7 +3,6 @@ package jsd.project.tank90.model.tanks;
 import jsd.project.tank90.model.GameObject;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Random;
 
 public abstract class EnemyTank extends Tank {
@@ -14,25 +13,32 @@ public abstract class EnemyTank extends Tank {
     private int directionChangeCooldown = DIRECTION_CHANGE_INTERVAL; // Timer for direction changes
     protected Random random = new Random(); // Random generator for movement
 
+    private boolean showPoints = false; // Flag to show points when tank is destroyed
+    private long pointsDisplayStartTime; // Time when points start displaying
+    private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
+
     public EnemyTank(int x, int y, int size, Direction direction) {
         super(x, y, size, direction); // Initial position, size, and default direction
         this.fireCooldown = FIRE_INTERVAL;
     }
-    public Direction randomDirection(){
+
+    // Return a random direction
+    public Direction randomDirection() {
         Direction[] directions = Direction.values();
         return directions[random.nextInt(directions.length)];
     }
+
     // Change to a random direction
     public void changeDirection() {
         if (directionChangeCooldown <= 0) {
-            Direction[] directions = Direction.values();
-            setDirection(directions[random.nextInt(directions.length)]);
+            setDirection(randomDirection());
             directionChangeCooldown = DIRECTION_CHANGE_INTERVAL;
         } else {
             directionChangeCooldown--;
         }
     }
 
+    // Turn the tank 90 degrees, either clockwise or counterclockwise
     public void turn() {
         if (random.nextBoolean()) {
             // Turn clockwise
@@ -70,16 +76,61 @@ public abstract class EnemyTank extends Tank {
             fireCooldown--;
         }
     }
+
+    // Abstract methods for subclasses
     public abstract int getPoints();
-
     public abstract int getLife();
-
     public abstract void setLife(int life);
+
+    // Handle damage and death
     public void takeDamage() {
-        setLife(getLife()-1);
+        setLife(getLife() - 1);
     }
+
+    // Check if the tank is dead (i.e., has zero life)
     public boolean isDead() {
         return getLife() == 0;
+    }
+
+    // Instantly kill the tank
+    public void kill() {
+        setLife(0);
+    }
+
+    public boolean isShowPoints() {
+        return showPoints;
+    }
+
+    public void setShowPoints(boolean showPoints) {
+        this.showPoints = showPoints;
+    }
+
+    // Mark the tank as dead and start showing points
+    public void markAsDead() {
+        showPoints = true;
+        pointsDisplayStartTime = System.currentTimeMillis();
+    }
+
+    // Check if the points display duration has passed and the tank should be removed
+    public boolean shouldRemove() {
+        return showPoints && (System.currentTimeMillis() - pointsDisplayStartTime > POINTS_DISPLAY_DURATION);
+    }
+
+    // Render the tank and points if dead
+    @Override
+    public void render(Graphics g) {
+        if (showPoints) {
+            // Render points in white font
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Monospaced", Font.BOLD, 14));
+
+            // Display points at the center of the tank
+            String points = Integer.toString(getPoints());
+            g.drawString(points, getCenterX(), getCenterY());
+        } else {
+            // Render the tank image if it's still alive
+            g.drawImage(getTankImage(), x, y, size, size, null);
+        }
     }
 
     @Override

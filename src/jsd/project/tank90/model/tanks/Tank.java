@@ -16,6 +16,13 @@ public abstract class Tank extends GameObject {
         super(x, y, size);
         this.direction = direction;
     }
+    public int getCenterX(){
+        return x+size/2;
+    }
+    public int getCenterY(){
+        return y+size/2;
+    }
+
 
     // Shoot a bullet based on the tank's direction
     public Bullet shoot() {
