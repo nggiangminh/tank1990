@@ -16,7 +16,7 @@ public class PlayerTank extends Tank {
     private int bulletSize = 7;
     private int bulletSpeed = 2;
     private int maxBullets = 2;
-    private int fireSpeed = 10;
+    private int fireSpeed = 45;
 
     private int bulletDamage = 1;
 

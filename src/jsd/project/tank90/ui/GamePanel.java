@@ -58,6 +58,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         powerUps.add(new StarPowerUp(300, 150, 30)); // Position and size for Star power-up
         powerUps.add(new StarPowerUp(450, 250, 30)); // Position and size for Star power-up
         powerUps.add(new StarPowerUp(100, 450, 30)); // Position and size for Star power-up
+        powerUps.add(new GrenadePowerUp(220, 450, 30)); // Position and size for Star power-up
 
         // Start the game loop in a new thread
         new Thread(this).start();
@@ -334,5 +335,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         return fortressCoordinates;
     }
-
+    public void killAllEnemies(){
+        Iterator<EnemyTank> enemyTankIterator = enemyTanks.iterator();
+        while (enemyTankIterator.hasNext()){
+            EnemyTank enemy = enemyTankIterator.next();
+            playerTank.increasePoints(enemy.getPoints());
+            enemyTankIterator.remove();
+        }
+    }
 }
