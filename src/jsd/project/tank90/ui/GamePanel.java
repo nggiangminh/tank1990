@@ -20,12 +20,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int FPS = 60;
     private final List<String> mapData;
     private final PlayerTank playerTank;
-    private final int[] playerSpawnPos = new int[] {200,500};
+    private final int[] playerSpawnPos = new int[]{200, 500};
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
     private final List<PowerUp> powerUps = new ArrayList<>();
     private final List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
-    public int freezeTimer = 0;
     private final int tileSize = 20;
+    private final List<Explosion> explosions = new ArrayList<>();
+    public int freezeTimer = 0;
     private List<GameObject> environmentObjects;
     private boolean running = true;
     // Movement and firing control booleans
@@ -36,7 +37,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isFire = false;
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
-    private List<Explosion> explosions = new ArrayList<>();
 
 
     public GamePanel() {
@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
-        playerTank = new PlayerTank(playerSpawnPos[0],playerSpawnPos[1], tileSize*2);
+        playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tileSize * 2);
         // Spawn multiple BasicTanks at different locations
         spawnEnemyTanks();
 
@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                     case '1' -> environmentObjects.add(new BrickWall(x * tileSize, y * tileSize, tileSize));
                     case '2' -> environmentObjects.add(new Water(x * tileSize, y * tileSize, tileSize));
                     case '5' -> environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize));
-                    case '6' -> environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize,false));
+                    case '6' -> environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize, false));
                     case '4' -> environmentObjects.add(new Tree(x * tileSize, y * tileSize, tileSize));
                     case '9' -> environmentObjects.add(new Base(x * tileSize, y * tileSize, tileSize * 2));
                 }
@@ -94,13 +94,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     // Method to spawn multiple BasicTanks
     private void spawnEnemyTanks() {
-        enemyTanks.add(new BasicTank(50, 20, tileSize*2, Direction.UP));
-        enemyTanks.add(new ArmorTank(300, 20, tileSize*2, Direction.RIGHT));
-        enemyTanks.add(new FastTank(400, 20, tileSize*2, Direction.LEFT));
-        enemyTanks.add(new PowerTank(150, 20, tileSize*2, Direction.DOWN));
+        enemyTanks.add(new BasicTank(50, 20, tileSize * 2, Direction.UP));
+        enemyTanks.add(new ArmorTank(300, 20, tileSize * 2, Direction.RIGHT));
+        enemyTanks.add(new FastTank(400, 20, tileSize * 2, Direction.LEFT));
+        enemyTanks.add(new PowerTank(150, 20, tileSize * 2, Direction.DOWN));
     }
 
     public void updateGame() {
+        for (Explosion explosion : explosions)
+            explosion.update();
         if (freezeTimer > 0) {
             freezeTimer--;
         }
@@ -149,7 +151,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             }
             enemy.updateBullets();
             CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects, explosions);
-
+            CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy, explosions);
+            CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
+            CollisionHandling.checkBulletEnemyBulletCollision(playerTank.getBullets(), enemy.getBullets(), explosions);
+            if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
             // Remove dead enemy tanks
             if (enemy.isDead()) {
                 playerTank.increasePoints(enemy.getPoints());
@@ -165,28 +170,18 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         playerTank.updateBullets();
         CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects, explosions);
-        for (EnemyTank enemy : enemyTanks) {
-            CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy, explosions);
-            CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
-        }
-
         if (fireCooldown > 0) {
             fireCooldown--;
         }
+        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
+        if (playerTank.getLife() == 0) stopGame();
+
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Iterator<Explosion> explosionIterator = explosions.iterator();
-        while (explosionIterator.hasNext()) {
-            Explosion explosion = explosionIterator.next();
-            explosion.render(g);
-            if (explosion.isFinished()) {
-                explosionIterator.remove(); // Remove finished explosion
-            }
-        }
 
         // Render environment objects except Tree
         for (GameObject obj : environmentObjects) {
@@ -216,7 +211,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         for (PowerUp powerUp : powerUps) {
             powerUp.render(g);
         }
-
+        Iterator<Explosion> explosionIterator = explosions.iterator();
+        while (explosionIterator.hasNext()) {
+            Explosion explosion = explosionIterator.next();
+            explosion.render(g);
+            if (explosion.isFinished()) explosionIterator.remove();
+        }
     }
 
     @Override
@@ -349,9 +349,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         return fortressCoordinates;
     }
-    public void killAllEnemies(){
+
+    public void killAllEnemies() {
         Iterator<EnemyTank> enemyTankIterator = enemyTanks.iterator();
-        while (enemyTankIterator.hasNext()){
+        while (enemyTankIterator.hasNext()) {
             EnemyTank enemy = enemyTankIterator.next();
             playerTank.increasePoints(enemy.getPoints());
             enemyTankIterator.remove();

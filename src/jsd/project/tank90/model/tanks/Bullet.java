@@ -24,8 +24,8 @@ public class Bullet extends GameObject {
     private int damage;
 
 
-    public Bullet(int x, int y, int size, int speed, Direction direction, int damage) {
-        super(x, y, size);
+    public Bullet(int centerX, int centerY, int size, int speed, Direction direction, int damage) {
+        super(centerX - size / 2, centerY - size / 2, size);
         this.speed = speed;
         this.direction = direction;
         this.damage = damage;
@@ -37,8 +37,15 @@ public class Bullet extends GameObject {
         }
     }
 
+
+    public int getCenterX(){
+        return x+size/2;
+    }
+    public int getCenterY(){
+        return y+size/2;
+    }
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 5, 10); // Adjust `width` and `height` as per bullet size
+        return new Rectangle(x, y, size, size ); // Adjust `width` and `height` as per bullet size
     }
 
 

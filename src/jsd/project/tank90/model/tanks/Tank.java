@@ -21,25 +21,25 @@ public abstract class Tank extends GameObject {
     public Bullet shoot() {
         int bulletX, bulletY;
         int bulletSize = getBulletSize();
-        int bulletSpeed = getBulletSpeed()*2;
+        int bulletSpeed = getBulletSpeed() * 2;
 
         // Adjust bullet position based on the tank's direction
         switch (direction) {
             case UP -> {
-                bulletX = x + (size - bulletSize) / 2;
-                bulletY = y - bulletSize;
+                bulletX = x + size / 2;
+                bulletY = y;
             }
             case DOWN -> {
-                bulletX = x + (size - bulletSize) / 2;
+                bulletX = x + size / 2;
                 bulletY = y + size;
             }
             case LEFT -> {
-                bulletX = x - bulletSize;
-                bulletY = y + (size - bulletSize) / 2;
+                bulletX = x;
+                bulletY = y + size / 2;
             }
             default -> { // RIGHT
                 bulletX = x + size;
-                bulletY = y + (size - bulletSize) / 2;
+                bulletY = y + size / 2;
             }
         }
 
@@ -107,6 +107,7 @@ public abstract class Tank extends GameObject {
     public abstract Image getTankLeftImage();
 
     public abstract Image getTankRightImage();
+
     // Abstract methods to be implemented in subclasses
     public void update() {
         move();
@@ -133,5 +134,6 @@ public abstract class Tank extends GameObject {
     public void setTankImage(Image tankImage) {
         this.tankImage = tankImage;
     }
+
     public abstract int getBulletDamage();
 }

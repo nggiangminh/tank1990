@@ -7,17 +7,17 @@ public class PlayerTank extends Tank {
 
     private static final Image SHIELD_IMAGE_1 = new ImageIcon("src/jsd/project/tank90/images/shield_1.png").getImage();
     private static final Image SHIELD_IMAGE_2 = new ImageIcon("src/jsd/project/tank90/images/shield_2.png").getImage();
-    private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/images/tank_up.png").getImage();
-    private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_down.png").getImage();
-    private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_left.png").getImage();
-    private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_right.png").getImage();
+    private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/images/playerTank_up.png").getImage();
+    private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/playerTank_down.png").getImage();
+    private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/playerTank_left.png").getImage();
+    private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/playerTank_right.png").getImage();
     private final int spawnX;
     private final int spawnY;
     private int points = 0;
 
     private int life = 4;
     private int speed = 1;
-    private int bulletSize = 7;
+    private int bulletSize = 5;
     private int bulletSpeed = 2;
     private int maxBullets = 2;
     private int fireSpeed = 45;
