@@ -4,6 +4,8 @@ import jsd.project.tank90.model.GameObject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bullet extends GameObject {
 
@@ -11,12 +13,16 @@ public class Bullet extends GameObject {
     private final Image BULLET_DOWN = new ImageIcon("src/jsd/project/tank90/images/bullet_down.png").getImage();
     private final Image BULLET_LEFT = new ImageIcon("src/jsd/project/tank90/images/bullet_left.png").getImage();
     private final Image BULLET_RIGHT = new ImageIcon("src/jsd/project/tank90/images/bullet_right.png").getImage();
+
+
+
     private final int speed;
     private final Direction direction;
 
     private Image bulletImage;
 
     private int damage;
+
 
     public Bullet(int x, int y, int size, int speed, Direction direction, int damage) {
         super(x, y, size);

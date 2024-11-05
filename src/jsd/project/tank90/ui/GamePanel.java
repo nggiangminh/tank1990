@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int FPS = 60;
     private final List<String> mapData;
     private final PlayerTank playerTank;
+    private final int[] playerSpawnPos = new int[] {200,500};
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
     private final List<PowerUp> powerUps = new ArrayList<>();
     private final List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
@@ -35,6 +36,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isFire = false;
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
+    private List<Explosion> explosions = new ArrayList<>();
+
 
     public GamePanel() {
         setBackground(Color.BLACK);
@@ -44,7 +47,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
-        playerTank = new PlayerTank(100, 100, tileSize*2);
+        playerTank = new PlayerTank(playerSpawnPos[0],playerSpawnPos[1], tileSize*2);
         // Spawn multiple BasicTanks at different locations
         spawnEnemyTanks();
 
@@ -59,6 +62,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         powerUps.add(new StarPowerUp(450, 250, 30)); // Position and size for Star power-up
         powerUps.add(new StarPowerUp(100, 450, 30)); // Position and size for Star power-up
         powerUps.add(new GrenadePowerUp(220, 450, 30)); // Position and size for Star power-up
+        powerUps.add(new ShieldPowerUp(150, 150, 30)); // Position and size for Star power-up
 
         // Start the game loop in a new thread
         new Thread(this).start();
@@ -144,7 +148,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 enemy.shoot();
             }
             enemy.updateBullets();
-            CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects);
+            CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects, explosions);
 
             // Remove dead enemy tanks
             if (enemy.isDead()) {
@@ -160,9 +164,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
 
         playerTank.updateBullets();
-        CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects);
+        CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects, explosions);
         for (EnemyTank enemy : enemyTanks) {
-            CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy);
+            CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy, explosions);
+            CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
         }
 
         if (fireCooldown > 0) {
@@ -173,6 +178,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        Iterator<Explosion> explosionIterator = explosions.iterator();
+        while (explosionIterator.hasNext()) {
+            Explosion explosion = explosionIterator.next();
+            explosion.render(g);
+            if (explosion.isFinished()) {
+                explosionIterator.remove(); // Remove finished explosion
+            }
+        }
 
         // Render environment objects except Tree
         for (GameObject obj : environmentObjects) {

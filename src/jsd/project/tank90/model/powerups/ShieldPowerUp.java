@@ -1,3 +1,4 @@
+// ShieldPowerUp.java
 package jsd.project.tank90.model.powerups;
 
 import jsd.project.tank90.model.tanks.PlayerTank;
@@ -7,20 +8,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ShieldPowerUp extends PowerUp {
-    private static final Image SHIELD_IMAGE_1 = new ImageIcon("src/jsd/project/tank90/images/shield_1.png").getImage();
-    private static final Image SHIELD_IMAGE_2 = new ImageIcon("src/jsd/project/tank90/images/shield_2.png").getImage();
-
-    private boolean toggle; // To alternate between the two images
+    private static final Image SHIELD_POWER_UP = new ImageIcon("src/jsd/project/tank90/images/powerup_helmet.png").getImage();
 
     public ShieldPowerUp(int x, int y, int size) {
         super(x, y, size);
-        toggle = false; // Start with the first image
     }
 
     @Override
     protected Image getImage() {
-        toggle = !toggle; // Switch the toggle
-        return toggle ? SHIELD_IMAGE_1 : SHIELD_IMAGE_2; // Return the image based on the toggle
+        return SHIELD_POWER_UP;
     }
 
     @Override
@@ -28,10 +24,10 @@ public class ShieldPowerUp extends PowerUp {
         return "Shield";
     }
 
+    // Activate shield with a duration, managed by a separate thread
     @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
-        int shieldDuration = 300; // Duration in frames (or adjust as needed)
-        playerTank.activateShield(shieldDuration);
-    }
+        playerTank.activateShield(); // Enable the shield
 
+    }
 }

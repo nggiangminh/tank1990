@@ -5,10 +5,14 @@ import java.awt.*;
 
 public class PlayerTank extends Tank {
 
+    private static final Image SHIELD_IMAGE_1 = new ImageIcon("src/jsd/project/tank90/images/shield_1.png").getImage();
+    private static final Image SHIELD_IMAGE_2 = new ImageIcon("src/jsd/project/tank90/images/shield_2.png").getImage();
     private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/images/tank_up.png").getImage();
     private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_down.png").getImage();
     private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_left.png").getImage();
     private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_right.png").getImage();
+    private final int spawnX;
+    private final int spawnY;
     private int points = 0;
 
     private int life = 4;
@@ -22,9 +26,16 @@ public class PlayerTank extends Tank {
 
     private int star = 0;
 
+    private boolean shielded = false;
+    private boolean shieldToggle = false; // Used to alternate between the two images
+
+
     public PlayerTank(int x, int y, int size) {
         super(x, y, size, Direction.UP);
+        this.spawnX = x;
+        this.spawnY = y;
         this.tankImage = TANK_UP;
+        activateShield();
     }
 
     // Define unique bullet size and speed for PlayerTank
@@ -135,5 +146,60 @@ public class PlayerTank extends Tank {
             case 2 -> setMaxBullets(2);
             case 3 -> setBulletDamage(2);
         }
+    }
+
+    // Activate shield
+    public void activateShield() {
+        new Thread(() -> {
+            this.shielded = true;
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // Handle thread interruption
+            } finally {
+                this.shielded = false; // Deactivate shield after the duration
+            }
+
+        }).start();
+    }
+
+
+    public boolean isShielded() {
+        return shielded;
+    }
+
+    @Override
+    public void render(Graphics g) {
+        super.render(g); // Render the tank
+
+        // Render shield effect if active
+        if (shielded) {
+            int offset = 5; // Adjust for positioning
+            Image currentShieldImage = toggleShieldImage(); // Get the blinking shield image
+            g.drawImage(currentShieldImage, x - offset, y - offset, size + 2 * offset, size + 2 * offset, null);
+            if (shieldToggle){
+                shieldToggle = false;
+            } else {
+                shieldToggle = true;
+            }
+        }
+    }
+
+    private Image toggleShieldImage() {
+        // Toggle between the two images for blinking effect
+        return shieldToggle ? SHIELD_IMAGE_1 : SHIELD_IMAGE_2;
+    }
+
+    private void respawn(){
+        setLife(getLife()-1);
+        this.x = spawnX;
+        this.y = spawnY;
+        setStar(0);
+        activateShield();
+    }
+
+    public void takeDamage() {
+        if (isShielded()) return;
+        respawn();
     }
 }
