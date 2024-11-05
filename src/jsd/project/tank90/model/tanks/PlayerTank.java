@@ -1,7 +1,5 @@
 package jsd.project.tank90.model.tanks;
 
-import jsd.project.tank90.ui.GamePanel;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,9 +15,12 @@ public class PlayerTank extends Tank {
     private int speed = 1;
     private int bulletSize = 7;
     private int bulletSpeed = 2;
+    private int maxBullets = 2;
     private int fireSpeed = 10;
 
     private int bulletDamage = 1;
+
+    private int star = 0;
 
     public PlayerTank(int x, int y, int size) {
         super(x, y, size, Direction.UP);
@@ -99,6 +100,14 @@ public class PlayerTank extends Tank {
         this.fireSpeed = fireSpeed;
     }
 
+    public int getMaxBullets() {
+        return maxBullets;
+    }
+
+    public void setMaxBullets(int maxBullets) {
+        this.maxBullets = maxBullets;
+    }
+
     public int getPoints() {
         return points;
     }
@@ -109,5 +118,22 @@ public class PlayerTank extends Tank {
 
     public void increasePoints(int p) {
         setPoints(getPoints() + p);
+    }
+
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    }
+
+    public void claimStar() {
+        setStar(Math.min(3, getStar() + 1));
+        switch (getStar()) {
+            case 1 -> setBulletSpeed(3);
+            case 2 -> setMaxBullets(2);
+            case 3 -> setBulletDamage(2);
+        }
     }
 }

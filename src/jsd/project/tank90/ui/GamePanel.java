@@ -2,10 +2,7 @@ package jsd.project.tank90.ui;
 
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
-import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.model.powerups.ShovelPowerUp;
-import jsd.project.tank90.model.powerups.TankPowerUp;
-import jsd.project.tank90.model.powerups.TimerPowerUp;
+import jsd.project.tank90.model.powerups.*;
 import jsd.project.tank90.model.tanks.*;
 import jsd.project.tank90.utils.CollisionHandling;
 import jsd.project.tank90.utils.MapLoader;
@@ -25,7 +22,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final PlayerTank playerTank;
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
     private final List<PowerUp> powerUps = new ArrayList<>();
+    private final List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
     public int freezeTimer = 0;
+    private final int tileSize = 20;
     private List<GameObject> environmentObjects;
     private boolean running = true;
     // Movement and firing control booleans
@@ -37,9 +36,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
 
-
-    private final List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
-
     public GamePanel() {
         setBackground(Color.BLACK);
 
@@ -48,8 +44,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
-        playerTank = new PlayerTank(100, 100, 35);
-
+        playerTank = new PlayerTank(100, 100, tileSize*2);
         // Spawn multiple BasicTanks at different locations
         spawnEnemyTanks();
 
@@ -59,7 +54,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         // Example power-up spawning
         powerUps.add(new TankPowerUp(200, 280, 30)); // Position and size for Tank power-up
         powerUps.add(new TimerPowerUp(200, 250, 30)); // Position and size for Timer power-up
-        powerUps.add(new ShovelPowerUp(100, 150, 30)); // Position and size for Timer power-up
+        powerUps.add(new ShovelPowerUp(100, 150, 30)); // Position and size for Shovel power-up
+        powerUps.add(new StarPowerUp(300, 150, 30)); // Position and size for Star power-up
+        powerUps.add(new StarPowerUp(450, 250, 30)); // Position and size for Star power-up
+        powerUps.add(new StarPowerUp(100, 450, 30)); // Position and size for Star power-up
 
         // Start the game loop in a new thread
         new Thread(this).start();
@@ -72,7 +70,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     private void initializeMapObjects() {
         environmentObjects = new ArrayList<>();
-        int tileSize = 20;
 
         for (int y = 0; y < mapData.size(); y++) {
             String line = mapData.get(y);
@@ -82,6 +79,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                     case '1' -> environmentObjects.add(new BrickWall(x * tileSize, y * tileSize, tileSize));
                     case '2' -> environmentObjects.add(new Water(x * tileSize, y * tileSize, tileSize));
                     case '5' -> environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize));
+                    case '6' -> environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize,false));
                     case '4' -> environmentObjects.add(new Tree(x * tileSize, y * tileSize, tileSize));
                     case '9' -> environmentObjects.add(new Base(x * tileSize, y * tileSize, tileSize * 2));
                 }
@@ -91,10 +89,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     // Method to spawn multiple BasicTanks
     private void spawnEnemyTanks() {
-        enemyTanks.add(new BasicTank(50, 20, 20, Direction.UP));
-        enemyTanks.add(new ArmorTank(300, 20, 20, Direction.RIGHT));
-        enemyTanks.add(new FastTank(400, 20, 20, Direction.LEFT));
-        enemyTanks.add(new PowerTank(150, 20, 20, Direction.DOWN));
+        enemyTanks.add(new BasicTank(50, 20, tileSize*2, Direction.UP));
+        enemyTanks.add(new ArmorTank(300, 20, tileSize*2, Direction.RIGHT));
+        enemyTanks.add(new FastTank(400, 20, tileSize*2, Direction.LEFT));
+        enemyTanks.add(new PowerTank(150, 20, tileSize*2, Direction.DOWN));
     }
 
     public void updateGame() {
@@ -146,7 +144,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             }
             enemy.updateBullets();
             CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects);
-            CollisionHandling.checkBulletTankCollision(enemy.getBullets(), playerTank);
 
             // Remove dead enemy tanks
             if (enemy.isDead()) {
@@ -156,7 +153,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
 
         // Handle continuous firing with cooldown
-        if (isFire && fireCooldown <= 0) {
+        if (isFire && fireCooldown <= 0 && playerTank.getBullets().size() < playerTank.getMaxBullets()) {
             playerTank.shoot();
             fireCooldown = Math.max(5, 50 - playerTank.getFireSpeed());
         }
@@ -164,7 +161,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         playerTank.updateBullets();
         CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects);
         for (EnemyTank enemy : enemyTanks) {
-            CollisionHandling.checkBulletTankCollision(playerTank.getBullets(), enemy);
+            CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy);
         }
 
         if (fireCooldown > 0) {

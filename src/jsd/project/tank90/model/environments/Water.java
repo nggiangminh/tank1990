@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Water extends GameObject {
 
-    private final Image waterImage = new ImageIcon("src/jsd/project/tank90/images/water.png").getImage();
+    private final Image WATER_IMAGE = new ImageIcon("src/jsd/project/tank90/images/water.png").getImage();
 
     public Water(int x, int y, int size) {
         super(x, y, size);
@@ -16,6 +16,6 @@ public class Water extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(waterImage, x, y, size, size, null);
+        g.drawImage(WATER_IMAGE, x, y, size, size, null);
     }
 }

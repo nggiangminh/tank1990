@@ -14,7 +14,6 @@ public class ArmorTank extends EnemyTank {
     private final int bulletSize = 5;
     private final int bulletSpeed = 2;
     private final int fireSpeed = 2;
-    private final int bulletDamage = 1;
     private int life = 4;
 
     public ArmorTank(int x, int y, int size, Direction direction) {
@@ -32,11 +31,6 @@ public class ArmorTank extends EnemyTank {
 
     public int getFireSpeed() {
         return fireSpeed;
-    }
-
-    @Override
-    public int getBulletDamage() {
-        return bulletDamage;
     }
 
     @Override

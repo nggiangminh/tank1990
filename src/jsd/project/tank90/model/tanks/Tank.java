@@ -107,9 +107,6 @@ public abstract class Tank extends GameObject {
     public abstract Image getTankLeftImage();
 
     public abstract Image getTankRightImage();
-
-    public abstract int getBulletDamage();
-
     // Abstract methods to be implemented in subclasses
     public void update() {
         move();
@@ -136,15 +133,5 @@ public abstract class Tank extends GameObject {
     public void setTankImage(Image tankImage) {
         this.tankImage = tankImage;
     }
-
-    public abstract int getLife();
-
-    public abstract void setLife(int life);
-    public void takeDamage(int damage) {
-        int newLife = Math.max(0, getLife() - damage);
-        setLife(newLife);
-    }
-    public boolean isDead() {
-        return getLife() == 0;
-    }
+    public abstract int getBulletDamage();
 }

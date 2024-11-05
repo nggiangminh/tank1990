@@ -3,7 +3,7 @@ package jsd.project.tank90.model.tanks;
 import javax.swing.*;
 import java.awt.*;
 
-public class FastTank extends EnemyTank{
+public class FastTank extends EnemyTank {
 
     private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/images/tank_fast_up.png").getImage();
     private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_fast_down.png").getImage();
@@ -15,8 +15,6 @@ public class FastTank extends EnemyTank{
     private final int bulletSpeed = 2;
     private final int fireSpeed = 2;
     private int life = 1;
-    private final int bulletDamage = 1;
-
 
     public FastTank(int x, int y, int size, Direction direction) {
         super(x, y, size, direction);
@@ -28,7 +26,7 @@ public class FastTank extends EnemyTank{
 
     @Override
     public void setLife(int life) {
-        this.life =life;
+        this.life = life;
     }
 
     public int getFireSpeed() {
@@ -48,11 +46,6 @@ public class FastTank extends EnemyTank{
     @Override
     public int getSpeed() {
         return speed;
-    }
-
-    @Override
-    public int getBulletDamage() {
-        return bulletDamage;
     }
 
     @Override

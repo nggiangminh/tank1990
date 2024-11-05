@@ -71,4 +71,19 @@ public abstract class EnemyTank extends Tank {
         }
     }
     public abstract int getPoints();
+
+    public abstract int getLife();
+
+    public abstract void setLife(int life);
+    public void takeDamage() {
+        setLife(getLife()-1);
+    }
+    public boolean isDead() {
+        return getLife() == 0;
+    }
+
+    @Override
+    public int getBulletDamage() {
+        return 1;
+    }
 }

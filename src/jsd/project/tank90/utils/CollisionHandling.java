@@ -6,6 +6,7 @@ import jsd.project.tank90.model.environments.SteelWall;
 import jsd.project.tank90.model.environments.Water;
 import jsd.project.tank90.model.powerups.PowerUp;
 import jsd.project.tank90.model.tanks.Bullet;
+import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.model.tanks.Tank;
 import jsd.project.tank90.ui.GamePanel;
@@ -31,11 +32,15 @@ public class CollisionHandling {
 
                 if (environmentObj instanceof BrickWall && bulletBounds.intersects(environmentObj.getBounds())) {
                     // Collision with BrickWall: Remove both the bullet and the brick
-                    bulletIterator.remove();
+                    bullet.setDamage(bullet.getDamage() - 1);
+                    if (bullet.getDamage() == 0) {
+                        bulletIterator.remove();
+                    }
                     envIterator.remove();
                     break; // Stop checking this bullet as it has been removed
-                } else if (environmentObj instanceof SteelWall && bulletBounds.intersects(environmentObj.getBounds())) {
+                } else if (environmentObj instanceof SteelWall steelWall && bulletBounds.intersects(environmentObj.getBounds())) {
                     // Collision with SteelWall: Only remove the bullet
+                    if (bullet.getDamage() == 2 && steelWall.isDestructable()) envIterator.remove();
                     bulletIterator.remove();
                     break; // Stop checking this bullet as it has been removed
                 }
@@ -58,7 +63,7 @@ public class CollisionHandling {
     }
 
 
-    public static void checkBulletTankCollision(List<Bullet> bullets, Tank tank) {
+    public static void checkBulletEnemyTankCollision(List<Bullet> bullets, EnemyTank tank) {
         Rectangle tankBounds = tank.getBounds();
         Iterator<Bullet> bulletIterator = bullets.iterator();
 
@@ -67,7 +72,21 @@ public class CollisionHandling {
             Rectangle bulletBounds = bullet.getBounds();
             if (bulletBounds.intersects(tankBounds)) {
                 bulletIterator.remove();
-                tank.takeDamage(bullet.getDamage());
+                tank.takeDamage();
+                break; // Stop checking this bullet as it has been removed
+            }
+        }
+    }
+
+    public static void checkBulletPlayerTankCollision(List<Bullet> bullets, PlayerTank tank) {
+        Rectangle tankBounds = tank.getBounds();
+        Iterator<Bullet> bulletIterator = bullets.iterator();
+
+        while (bulletIterator.hasNext()) {
+            Bullet bullet = bulletIterator.next();
+            Rectangle bulletBounds = bullet.getBounds();
+            if (bulletBounds.intersects(tankBounds)) {
+                bulletIterator.remove();
                 break; // Stop checking this bullet as it has been removed
             }
         }

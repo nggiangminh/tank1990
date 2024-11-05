@@ -15,8 +15,6 @@ public class PowerTank extends EnemyTank{
     private final int bulletSpeed = 3;
     private final int fireSpeed = 2;
     private int life = 1;
-    private final int bulletDamage = 1;
-
 
     public PowerTank(int x, int y, int size, Direction direction) {
         super(x, y, size, direction);
@@ -68,11 +66,6 @@ public class PowerTank extends EnemyTank{
     @Override
     public Image getTankRightImage() {
         return TANK_RIGHT;
-    }
-
-    @Override
-    public int getBulletDamage() {
-        return bulletDamage;
     }
 
     @Override
