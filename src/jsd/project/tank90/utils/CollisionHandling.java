@@ -65,13 +65,23 @@ public class CollisionHandling {
         while (bulletIterator.hasNext()) {
             Bullet bullet = bulletIterator.next();
             Rectangle bulletBounds = bullet.getBounds();
+
             if (bulletBounds.intersects(tankBounds)) {
-                bulletIterator.remove();
+                bulletIterator.remove(); // Remove the bullet upon collision
+
+                // Check if the tank is shielded
+                if (tank instanceof PlayerTank && ((PlayerTank) tank).isShielded()) {
+                    // The tank is shielded, so no damage is applied
+                    break; // Exit, as we’ve removed the bullet
+                }
+
+                // Apply damage if the tank is not shielded
                 tank.takeDamage(bullet.getDamage());
                 break; // Stop checking this bullet as it has been removed
             }
         }
     }
+
 
     public static void checkClaimPowerup(PlayerTank tank, List<PowerUp> powerUps, GamePanel gamePanel) {
         Rectangle tankBounds = tank.getBounds();

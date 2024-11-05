@@ -2,10 +2,7 @@ package jsd.project.tank90.ui;
 
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
-import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.model.powerups.ShovelPowerUp;
-import jsd.project.tank90.model.powerups.TankPowerUp;
-import jsd.project.tank90.model.powerups.TimerPowerUp;
+import jsd.project.tank90.model.powerups.*;
 import jsd.project.tank90.model.tanks.*;
 import jsd.project.tank90.utils.CollisionHandling;
 import jsd.project.tank90.utils.MapLoader;
@@ -60,6 +57,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         powerUps.add(new TankPowerUp(200, 280, 30)); // Position and size for Tank power-up
         powerUps.add(new TimerPowerUp(200, 250, 30)); // Position and size for Timer power-up
         powerUps.add(new ShovelPowerUp(100, 150, 30)); // Position and size for Timer power-up
+        powerUps.add(new ShieldPowerUp(100, 180, 30)); // Position and size for Timer power-up
 
         // Start the game loop in a new thread
         new Thread(this).start();
@@ -170,6 +168,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         if (fireCooldown > 0) {
             fireCooldown--;
         }
+
+        playerTank.updateShield();
     }
 
     @Override
