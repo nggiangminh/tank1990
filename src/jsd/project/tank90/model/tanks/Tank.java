@@ -12,8 +12,6 @@ public abstract class Tank extends GameObject {
 
     protected Image tankImage;
 
-
-
     public Tank(int x, int y, int size, Direction direction) {
         super(x, y, size);
         this.direction = direction;
@@ -23,7 +21,7 @@ public abstract class Tank extends GameObject {
     public Bullet shoot() {
         int bulletX, bulletY;
         int bulletSize = getBulletSize();
-        int bulletSpeed = getBulletSpeed();
+        int bulletSpeed = getBulletSpeed()*2;
 
         // Adjust bullet position based on the tank's direction
         switch (direction) {

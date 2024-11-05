@@ -70,5 +70,5 @@ public abstract class EnemyTank extends Tank {
             fireCooldown--;
         }
     }
-
+    public abstract int getPoints();
 }

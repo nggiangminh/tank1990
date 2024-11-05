@@ -9,11 +9,12 @@ public class BasicTank extends EnemyTank {
     private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_basic_down.png").getImage();
     private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_basic_left.png").getImage();
     private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_basic_right.png").getImage();
+    private final int points = 100;
     private final int speed = 1;
     private final int bulletSize = 5;
-    private final int bulletSpeed = 2;
+    private final int bulletSpeed = 1;
     private final int fireSpeed = 2;
-    private int life = 4;
+    private int life = 1;
     private final int bulletDamage = 1;
 
 
@@ -72,5 +73,10 @@ public class BasicTank extends EnemyTank {
     @Override
     public Image getTankRightImage() {
         return TANK_RIGHT;
+    }
+
+    @Override
+    public int getPoints() {
+        return points;
     }
 }

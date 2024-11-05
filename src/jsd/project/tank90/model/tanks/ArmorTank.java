@@ -9,6 +9,7 @@ public class ArmorTank extends EnemyTank {
     private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_armor_down.png").getImage();
     private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_armor_left.png").getImage();
     private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_armor_right.png").getImage();
+    private final int points = 400;
     private final int speed = 1;
     private final int bulletSize = 5;
     private final int bulletSpeed = 2;
@@ -73,5 +74,8 @@ public class ArmorTank extends EnemyTank {
         return TANK_RIGHT;
     }
 
-
+    @Override
+    public int getPoints() {
+        return points;
+    }
 }

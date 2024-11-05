@@ -1,14 +1,14 @@
 package jsd.project.tank90.ui;
 
-import jsd.project.tank90.model.powerups.ShovelPowerUp;
-import jsd.project.tank90.utils.MapLoader;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
+import jsd.project.tank90.model.powerups.ShovelPowerUp;
 import jsd.project.tank90.model.powerups.TankPowerUp;
 import jsd.project.tank90.model.powerups.TimerPowerUp;
 import jsd.project.tank90.model.tanks.*;
 import jsd.project.tank90.utils.CollisionHandling;
+import jsd.project.tank90.utils.MapLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,9 +38,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private int fireCooldown = 0;
 
 
-
-    private int shovelEffectTimer; // Timer for the shovel effect duration
-    private List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
+    private final List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
 
     public GamePanel() {
         setBackground(Color.BLACK);
@@ -152,6 +150,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
             // Remove dead enemy tanks
             if (enemy.isDead()) {
+                playerTank.increasePoints(enemy.getPoints());
                 enemyIterator.remove(); // Safely remove the dead enemy
             }
         }
@@ -170,26 +169,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         if (fireCooldown > 0) {
             fireCooldown--;
-        }
-
-        // thử active lại
-        activateShovelEffect();
-        // Shovel effect duration handling
-        if (shovelEffectTimer > 0) {
-            shovelEffectTimer--;
-
-            if (shovelEffectTimer == 0) {
-                // Revert steel walls back to original brick walls after effect ends
-                for (GameObject originalBrick : originalWalls) {
-                    for (int i = 0; i < environmentObjects.size(); i++) {
-                        GameObject obj = environmentObjects.get(i);
-                        if (obj instanceof SteelWall && isNearFortress(obj)) {
-                            environmentObjects.set(i, originalBrick);
-                        }
-                    }
-                }
-                originalWalls.clear(); // Clear stored walls after reverting
-            }
         }
     }
 
@@ -280,38 +259,83 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
     public void activateShovelEffect() {
-        shovelEffectTimer = 300; // Duration in frames (adjust as needed)
+        List<Point> fortressTiles = getFortressAreaCoordinates();
 
-        // Replace brick walls around the fortress with steel walls
-        for (int i = 0; i < environmentObjects.size(); i++) {
-            GameObject obj = environmentObjects.get(i);
-            if (obj instanceof BrickWall && isNearFortress(obj)) {
-                // Store the original brick wall for later restoration
-                originalWalls.add(obj);
-                // Replace with steel wall
-                environmentObjects.set(i, new SteelWall(obj.getX(), obj.getY(), obj.getSize()));
+        // Create a list to hold the replaced walls for later restoration
+        List<GameObject> replacedWalls = new ArrayList<>();
+
+        // Replace brick walls with steel walls in a separate thread
+        new Thread(() -> {
+            // Replace brick walls with steel walls
+            for (Point tile : fortressTiles) {
+                int x = tile.x;
+                int y = tile.y;
+                boolean brickFound = false;
+
+                // Find the wall object at this location
+                for (int i = 0; i < environmentObjects.size(); i++) {
+                    GameObject obj = environmentObjects.get(i);
+
+                    // Check if the object is a BrickWall at the target location
+                    if (obj instanceof BrickWall && obj.getX() == x && obj.getY() == y) {
+                        // Store the original BrickWall for later restoration
+                        replacedWalls.add(obj);
+
+                        // Replace with a SteelWall at the same position
+                        environmentObjects.set(i, new SteelWall(x, y, obj.getSize()));
+                        brickFound = true;
+                        break;
+                    }
+                }
+
+                // If no BrickWall was found, create a new SteelWall
+                if (!brickFound) {
+                    SteelWall newWall = new SteelWall(x, y, 20); // Assuming tile size is 20
+                    environmentObjects.add(newWall);
+                    replacedWalls.add(newWall); // Track newly added wall for removal
+                }
             }
-        }
+
+            // Wait for the effect duration
+            try {
+                Thread.sleep(5000); // Wait for 5 seconds (or desired duration in milliseconds)
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            // Revert steel walls back to their original state
+            for (GameObject wall : replacedWalls) {
+                if (wall instanceof BrickWall) {
+                    // Restore original brick walls
+                    for (int i = 0; i < environmentObjects.size(); i++) {
+                        GameObject obj = environmentObjects.get(i);
+                        if (obj instanceof SteelWall && obj.getX() == wall.getX() && obj.getY() == wall.getY()) {
+                            environmentObjects.set(i, wall);
+                            break;
+                        }
+                    }
+                } else if (wall instanceof SteelWall) {
+                    // Remove newly added steel walls
+                    environmentObjects.remove(wall);
+                }
+            }
+        }).start();
     }
 
-    private boolean isNearFortress(GameObject wall) {
-        // Coordinates around the base `9` in the provided map
-        int[][] fortressArea = {
-                 {12, 24}, {12, 25},{12, 26},
-                 {13, 24},
-                 {14, 24},
-                 {15, 24}, {15, 25},{15, 26}
-        };
+    public List<Point> getFortressAreaCoordinates() {
+        List<Point> fortressCoordinates = new ArrayList<>();
 
+        int[][] fortressArea = {{12, 24}, {12, 25}, {12, 26}, {13, 24}, {14, 24}, {15, 24}, {15, 25}, {15, 26}};
 
+        // Convert each coordinate to a Point and scale by tile size
+        int tileSize = 20; // Assuming each tile is 20x20 pixels
         for (int[] coordinate : fortressArea) {
-            int fortressX = coordinate[0] * 20; // Assuming each tile is 20 pixels wide
-            int fortressY = coordinate[1] * 20; // Assuming each tile is 20 pixels tall
-            if (wall.getX() == fortressX && wall.getY() == fortressY) {
-                return true;
-            }
+            int x = coordinate[0] * tileSize; // Column index (x-coordinate)
+            int y = coordinate[1] * tileSize; // Row index (y-coordinate)
+            fortressCoordinates.add(new Point(x, y));
         }
-        return false;
+
+        return fortressCoordinates;
     }
 
 }

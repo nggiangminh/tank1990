@@ -11,6 +11,7 @@ public class PlayerTank extends Tank {
     private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_down.png").getImage();
     private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_left.png").getImage();
     private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_right.png").getImage();
+    private int points = 0;
 
     private int life = 4;
     private int speed = 1;
@@ -98,4 +99,15 @@ public class PlayerTank extends Tank {
         this.fireSpeed = fireSpeed;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void increasePoints(int p) {
+        setPoints(getPoints() + p);
+    }
 }
