@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ShieldPowerUp extends PowerUp {
-    private static final Image SHIELD_POWER_UP = new ImageIcon("src/jsd/project/tank90/images/powerup_helmet.png").getImage();
+    private static final Image SHIELD_POWER_UP = new ImageIcon("src/jsd/project/tank90/resources/images/powerup_helmet.png").getImage();
 
     public ShieldPowerUp(int x, int y, int size) {
         super(x, y, size);

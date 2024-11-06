@@ -4,23 +4,17 @@ import jsd.project.tank90.model.GameObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Bullet extends GameObject {
 
-    private final Image BULLET_UP = new ImageIcon("src/jsd/project/tank90/images/bullet_up.png").getImage();
-    private final Image BULLET_DOWN = new ImageIcon("src/jsd/project/tank90/images/bullet_down.png").getImage();
-    private final Image BULLET_LEFT = new ImageIcon("src/jsd/project/tank90/images/bullet_left.png").getImage();
-    private final Image BULLET_RIGHT = new ImageIcon("src/jsd/project/tank90/images/bullet_right.png").getImage();
-
-
-
+    private final Image BULLET_UP = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_up.png").getImage();
+    private final Image BULLET_DOWN = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_down.png").getImage();
+    private final Image BULLET_LEFT = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_left.png").getImage();
+    private final Image BULLET_RIGHT = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_right.png").getImage();
     private final int speed;
     private final Direction direction;
-
+    private boolean isOnIce = false;
     private Image bulletImage;
-
     private int damage;
 
 
@@ -38,14 +32,16 @@ public class Bullet extends GameObject {
     }
 
 
-    public int getCenterX(){
-        return x+size/2;
+    public int getCenterX() {
+        return x + size / 2;
     }
-    public int getCenterY(){
-        return y+size/2;
+
+    public int getCenterY() {
+        return y + size / 2;
     }
+
     public Rectangle getBounds() {
-        return new Rectangle(x, y, size, size ); // Adjust `width` and `height` as per bullet size
+        return new Rectangle(x, y, size, size); // Adjust `width` and `height` as per bullet size
     }
 
 
@@ -92,7 +88,19 @@ public class Bullet extends GameObject {
     // Render the bullet on the screen
     @Override
     public void render(Graphics g) {
-        g.drawImage(bulletImage, x, y, size, size, null);
+        if (isOnIce) {
+            // Apply transparency or some effect when rendering
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+            g.drawImage(bulletImage, x, y, size, size, null);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        } else {
+            g.drawImage(bulletImage, x, y, size, size, null);
+        }
+    }
+
+    public void setOnIce(boolean onIce) {
+        isOnIce = onIce;
     }
 }
 

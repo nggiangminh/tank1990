@@ -19,7 +19,7 @@ public abstract class GameObject {
 
     // Get the bounding rectangle for collision detection
     public Rectangle getBounds() {
-        return new Rectangle(x+1, y+1, size-2, size-2);
+        return new Rectangle(x, y, size, size);
     }
 
     // Check if the object is out of screen bounds

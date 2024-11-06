@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class SteelWall extends GameObject {
 
-    private final Image STEEL_IMAGE = new ImageIcon("src/jsd/project/tank90/images/wall_steel.png").getImage();
+    private final Image STEEL_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/wall_steel.png").getImage();
 
     private boolean isDestructable = true;
 

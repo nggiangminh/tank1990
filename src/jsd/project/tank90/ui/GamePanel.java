@@ -3,27 +3,16 @@ package jsd.project.tank90.ui;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.*;
-import jsd.project.tank90.model.tanks.Direction;
-import jsd.project.tank90.model.tanks.EnemyTank;
-import jsd.project.tank90.model.tanks.Explosion;
-import jsd.project.tank90.model.tanks.PlayerTank;
-import jsd.project.tank90.utils.CollisionHandling;
-import jsd.project.tank90.utils.EnemySpawner;
-import jsd.project.tank90.utils.MapLoader;
-import jsd.project.tank90.utils.SoundManager;
+import jsd.project.tank90.model.tanks.*;
+import jsd.project.tank90.utils.*;
 
-import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
 
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
@@ -32,13 +21,17 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int tankSize = tileSize * 3 / 2;
     private final List<String> mapData;
     private final PlayerTank playerTank;
+    private Direction previousDirection = null; // Track the previous direction
+    private final int MAX_SLIDE_MOMENTUM = 30; // Maximum frames for sliding
     private final int[] playerSpawnPos = new int[]{200, 500};
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
     private final EnemySpawner enemySpawner = new EnemySpawner(enemyTanks, 4);
-
     private final List<PowerUp> powerUps = new ArrayList<>();
+    private final PowerUpSpawner powerUpSpawner = new PowerUpSpawner(powerUps);
     private final List<Explosion> explosions = new ArrayList<>();
+    private final SoundManager soundManager;
     public int freezeTimer = 0;
+    private int slideMomentum = 0; // Number of frames to continue sliding
     private List<GameObject> environmentObjects;
     private boolean running = true;
     // Movement and firing control booleans
@@ -50,21 +43,18 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
 
-    private SoundManager soundManager;
-
     public GamePanel() {
         setBackground(Color.BLACK);
         MapLoader mapLoader = new MapLoader();
-        mapLoader.loadMap("src/jsd/project/tank90/map_stage/map_1.txt");
+        mapLoader.loadMap("src/jsd/project/tank90/resources/map_stage/map_ice.txt");
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
         this.playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
 
         soundManager = new SoundManager();
-        soundManager.playBackgroundMusic("src/jsd/project/tank90/sounds/titlescreen.wav"); // Đường dẫn đến tệp âm thanh
+        soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/titlescreen.wav"); // Đường dẫn đến tệp âm thanh
         soundManager.setVolume(-35.0f);
-
 
 
         setFocusable(true);
@@ -98,6 +88,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 switch (tile) {
                     case '1' -> environmentObjects.add(new BrickWall(x * tileSize, y * tileSize, tileSize));
                     case '2' -> environmentObjects.add(new Water(x * tileSize, y * tileSize, tileSize));
+                    case '3' -> environmentObjects.add(new Ice(x * tileSize, y * tileSize, tileSize));
                     case '5' -> environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize));
                     case '6' -> environmentObjects.add(new SteelWall(x * tileSize, y * tileSize, tileSize, false));
                     case '4' -> environmentObjects.add(new Tree(x * tileSize, y * tileSize, tileSize));
@@ -109,39 +100,53 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     public void updateGame() {
         enemySpawner.spawnEnemy();
-        for (Explosion explosion : explosions){
-
+        for (Explosion explosion : explosions) {
             explosion.update();
-            }
+        }
 
         if (freezeTimer > 0) {
             freezeTimer--;
         }
         // Player movement
-        if (isUp) {
-            playerTank.setDirection(Direction.UP);
+        boolean onIce = CollisionHandling.checkPlayerOnIce(playerTank, environmentObjects);
+
+        // Check if movement keys are pressed
+        if (isUp || isDown || isLeft || isRight) {
+            // Determine the current intended direction
+            Direction currentDirection = null;
+            if (isUp) currentDirection = Direction.UP;
+            else if (isDown) currentDirection = Direction.DOWN;
+            else if (isLeft) currentDirection = Direction.LEFT;
+            else if (isRight) currentDirection = Direction.RIGHT;
+
+            // If direction has changed or it's the first movement, reset sliding momentum
+            if (currentDirection != previousDirection) {
+                slideMomentum = 0;
+                previousDirection = currentDirection;
+            }
+
+            // Move in the current direction
+            playerTank.setDirection(currentDirection);
             playerTank.move();
             if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
                 playerTank.undoMove(); // Undo movement if collision is detected
             }
-        } else if (isDown) {
-            playerTank.setDirection(Direction.DOWN);
+
+            // Update sliding momentum if on ice
+            if (onIce) {
+                slideMomentum = MAX_SLIDE_MOMENTUM;
+            }
+        } else if (slideMomentum > 0 && onIce) {
+            // Apply sliding when no keys are pressed and there's momentum left
             playerTank.move();
             if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
-                playerTank.undoMove();
+                playerTank.undoMove(); // Stop sliding if collision occurs
+                slideMomentum = 0;
             }
-        } else if (isLeft) {
-            playerTank.setDirection(Direction.LEFT);
-            playerTank.move();
-            if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
-                playerTank.undoMove();
-            }
-        } else if (isRight) {
-            playerTank.setDirection(Direction.RIGHT);
-            playerTank.move();
-            if (CollisionHandling.checkTankEnvironmentCollision(playerTank, environmentObjects)) {
-                playerTank.undoMove();
-            }
+            slideMomentum--;
+        } else {
+            // No movement keys pressed and no slide momentum left
+            previousDirection = null;
         }
         CollisionHandling.checkClaimPowerup(playerTank, powerUps, this);
         // Update each enemy tank's movement and check collisions
@@ -151,10 +156,11 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             if (enemy.isDead() && !enemy.isShowPoints()) {
                 enemy.markAsDead();
                 explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
-
             } else if (enemy.shouldRemove()) {
                 playerTank.increasePoints(enemy.getPoints());
                 enemyIterator.remove(); // Safely remove the dead enemy
+                if (enemy.isFlashing()) powerUpSpawner.spawnPowerUp();
+
             } else if (!enemy.isDead()) {
                 if (freezeTimer == 0) {
                     enemy.move();
@@ -174,10 +180,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
                 CollisionHandling.checkBulletEnemyBulletCollision(playerTank.getBullets(), enemy.getBullets(), explosions);
                 CollisionHandling.checkPlayerEnemyCollision(playerTank, enemyTanks, explosions);
+                for (Bullet bullet:enemy.getBullets()){
+                    bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet,environmentObjects));
+                }
                 if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
             }
         }
-
+        powerUps.removeIf(powerUp -> !powerUp.isActive());
         // Handle continuous firing with cooldown
         if (isFire && fireCooldown <= 0 && playerTank.getBullets().size() < playerTank.getMaxBullets()) {
             playerTank.shoot();
@@ -185,6 +194,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
 
         playerTank.updateBullets();
+        for (Bullet bullet:playerTank.getBullets()){
+            bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet,environmentObjects));
+        }
         CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects, explosions);
         if (fireCooldown > 0) {
             fireCooldown--;
@@ -210,7 +222,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         // Render player tank and bullets
         playerTank.render(g);
         playerTank.renderBullets(g);
-
+        enemySpawner.renderSpawnEffects(g);
         for (EnemyTank enemy : enemyTanks) {
             enemy.render(g);
             enemy.renderBullets(g);
@@ -228,7 +240,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             if (explosion.isFinished()) explosionIterator.remove();
         }
 
-        // Render environment objects except Tree
+        // Render Tree
         for (GameObject environmentObj : new ArrayList<>(environmentObjects)) {
             if ((environmentObj instanceof Tree)) {
                 environmentObj.render(g);
@@ -245,9 +257,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             case KeyEvent.VK_DOWN -> isDown = true;
             case KeyEvent.VK_LEFT -> isLeft = true;
             case KeyEvent.VK_RIGHT -> isRight = true;
-            case KeyEvent.VK_SPACE -> {
-                isFire = true;
-                SoundManager.playShotSound();}
+            case KeyEvent.VK_SPACE -> isFire = true;
+
         }
 
         repaint();
@@ -374,18 +385,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         while (enemyTankIterator.hasNext()) {
             EnemyTank enemy = enemyTankIterator.next();
             playerTank.increasePoints(enemy.getPoints());
-            playExplosionSound();
             explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
             enemy.markAsDead();
+
         }
     }
 
     public PlayerTank getPlayerTank() {
         return playerTank;
     }
-
-
-
 
 
 }

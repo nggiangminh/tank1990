@@ -61,7 +61,7 @@ public class SoundManager {
     public static void playShotSound() {
         try {
             // Đường dẫn đến file âm thanh shot.wav
-            File soundFile = new File("src/jsd/project/tank90/sounds/bullet_shot.wav");
+            File soundFile = new File("src/jsd/project/tank90/resources/sounds/bullet_shot.wav");
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
@@ -74,7 +74,7 @@ public class SoundManager {
     public static void playExplosionSound() {
         try {
             // Đường dẫn đến file âm thanh shot.wav
-            File soundFile = new File("src/jsd/project/tank90/sounds/explosion_1.wav");
+            File soundFile = new File("src/jsd/project/tank90/resources/sounds/explosion_1.wav");
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);

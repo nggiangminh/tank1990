@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.List;
 
 public class ShovelPowerUp extends PowerUp {
-    private static final Image SHOVEL_IMAGE = new ImageIcon("src/jsd/project/tank90/images/powerup_shovel.png").getImage();
+    private static final Image SHOVEL_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/powerup_shovel.png").getImage();
 
     public ShovelPowerUp(int x, int y, int size) {
         super(x, y, size);

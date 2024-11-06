@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GrenadePowerUp extends PowerUp{
 
-    private final Image GRENADE_IMAGE = new ImageIcon("src/jsd/project/tank90/images/powerup_grenade.png").getImage();
+    private final Image GRENADE_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/powerup_grenade.png").getImage();
     public GrenadePowerUp(int x, int y, int size) {
         super(x, y, size);
     }

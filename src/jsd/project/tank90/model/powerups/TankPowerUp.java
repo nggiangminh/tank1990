@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TankPowerUp extends PowerUp {
-    private static final Image TANK_IMAGE = new ImageIcon("src/jsd/project/tank90/images/powerup_tank.png").getImage();
+    private static final Image TANK_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/powerup_tank.png").getImage();
 
     public TankPowerUp(int x, int y, int size) {
         super(x, y, size);

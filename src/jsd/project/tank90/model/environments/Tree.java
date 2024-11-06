@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Tree extends GameObject {
 
-    private final Image TREE_IMAGE = new ImageIcon("src/jsd/project/tank90/images/trees2.png").getImage();
+    private final Image TREE_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/trees2.png").getImage();
 
     public Tree(int x, int y, int size) {
         super(x, y, size);

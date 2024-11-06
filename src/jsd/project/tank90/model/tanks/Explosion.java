@@ -5,6 +5,7 @@ import jsd.project.tank90.model.GameObject;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Explosion extends GameObject {
     private final Image[] images;
     private boolean isFinished = false;
@@ -16,12 +17,12 @@ public class Explosion extends GameObject {
     public Explosion(int centerX, int centerY, int size) {
         super(centerX - size / 2, centerY - size / 2, size); // Adjust so explosion is centered
         images = new Image[]{
-                new ImageIcon("src/jsd/project/tank90/images/exp1.png").getImage(),
-                new ImageIcon("src/jsd/project/tank90/images/exp2.png").getImage(),
-                new ImageIcon("src/jsd/project/tank90/images/exp3.png").getImage(),
-                new ImageIcon("src/jsd/project/tank90/images/exp4.png").getImage(),
-                new ImageIcon("src/jsd/project/tank90/images/exp5.png").getImage(),
-                new ImageIcon("src/jsd/project/tank90/images/bullet.png").getImage()
+                new ImageIcon("src/jsd/project/tank90/resources/images/exp1.png").getImage(),
+                new ImageIcon("src/jsd/project/tank90/resources/images/exp2.png").getImage(),
+                new ImageIcon("src/jsd/project/tank90/resources/images/exp3.png").getImage(),
+                new ImageIcon("src/jsd/project/tank90/resources/images/exp4.png").getImage(),
+                new ImageIcon("src/jsd/project/tank90/resources/images/exp5.png").getImage(),
+                new ImageIcon("src/jsd/project/tank90/resources/images/bullet.png").getImage()
         };
         currentImage = images[0];
     }

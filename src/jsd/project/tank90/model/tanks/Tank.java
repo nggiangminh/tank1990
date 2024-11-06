@@ -7,11 +7,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public abstract class Tank extends GameObject {
     protected Direction direction; // Current direction of the tank
     protected List<Bullet> bullets = new ArrayList<>(); // List of bullets fired by the tank
     protected Image tankImage;
-    protected final Image DEAD_IMAGE = new ImageIcon("src/jsd/project/tank90/images/tank_dead.png").getImage();
+    protected final Image DEAD_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/tank_dead.png").getImage();
 
     private boolean disabled = false;
 
@@ -55,7 +56,6 @@ public abstract class Tank extends GameObject {
                 bulletY = y + size / 2;
             }
         }
-
         // Create and add the bullet
         Bullet bullet = new Bullet(bulletX, bulletY, bulletSize, bulletSpeed, direction, getBulletDamage());
         bullets.add(bullet);
@@ -127,18 +127,13 @@ public abstract class Tank extends GameObject {
 
     public abstract int getSpeed();
 
-    public abstract Image getTankUpImage();
+    protected abstract Image getTankUpImage();
 
-    public abstract Image getTankDownImage();
+    protected abstract Image getTankDownImage();
 
-    public abstract Image getTankLeftImage();
+    protected abstract Image getTankLeftImage();
 
-    public abstract Image getTankRightImage();
-
-    // Abstract methods to be implemented in subclasses
-    public void update() {
-        move();
-    }
+    protected abstract Image getTankRightImage();
 
     @Override
     public void render(Graphics g) {

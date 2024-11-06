@@ -5,10 +5,14 @@ import java.awt.*;
 
 public class ArmorTank extends EnemyTank {
 
-    private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/images/tank_armor_up.png").getImage();
-    private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_armor_down.png").getImage();
-    private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_armor_left.png").getImage();
-    private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_armor_right.png").getImage();
+    private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_up.png").getImage();
+    private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_down.png").getImage();
+    private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_left.png").getImage();
+    private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_right.png").getImage();
+    private final Image TANK_UP_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_up_f.png").getImage();
+    private final Image TANK_DOWN_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_down_f.png").getImage();
+    private final Image TANK_LEFT_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_left_f.png").getImage();
+    private final Image TANK_RIGHT_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_armor_right_f.png").getImage();
     private final int points = 400;
     private final int speed = 1;
     private final int bulletSize = 5;
@@ -24,7 +28,7 @@ public class ArmorTank extends EnemyTank {
         return life;
     }
 
-    @Override
+
     public void setLife(int life) {
         this.life = life;
     }
@@ -49,26 +53,45 @@ public class ArmorTank extends EnemyTank {
     }
 
     @Override
-    public Image getTankUpImage() {
+    protected Image getTankUpImage() {
         return TANK_UP;
     }
 
     @Override
-    public Image getTankDownImage() {
+    protected Image getTankDownImage() {
         return TANK_DOWN;
     }
 
     @Override
-    public Image getTankLeftImage() {
+    protected Image getTankLeftImage() {
         return TANK_LEFT;
     }
 
     @Override
-    public Image getTankRightImage() {
+    protected Image getTankRightImage() {
         return TANK_RIGHT;
     }
 
     @Override
+    protected Image getTankUpFlashImage() {
+        return TANK_UP_FLASH;
+    }
+
+    @Override
+    protected Image getTankDownFlashImage() {
+        return TANK_DOWN_FLASH;
+    }
+
+    @Override
+    protected Image getTankLeftFlashImage() {
+        return TANK_LEFT_FLASH;
+    }
+
+    @Override
+    protected Image getTankRightFlashImage() {
+        return TANK_RIGHT_FLASH;
+    }
+
     public int getPoints() {
         return points;
     }

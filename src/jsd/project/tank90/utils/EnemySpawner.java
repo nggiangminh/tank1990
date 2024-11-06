@@ -1,32 +1,68 @@
 package jsd.project.tank90.utils;
 
 import jsd.project.tank90.model.tanks.*;
-import java.awt.Point;
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class EnemySpawner {
-    private final List<EnemyTank> enemyTanks;
-
-    private final int DELAY_FRAMES = 60;
-
+    private final List<EnemyTank> enemyTanks; // List to hold active enemies
+    private final List<SpawnEffect> spawnQueue = new ArrayList<>(); // Temporary list for spawn effects
+    private final int DELAY_FRAMES = 30;
     private int spawnCountDown;
     private final Point spawnPoint1 = new Point(20, 20);
     private final Point spawnPoint2 = new Point(265, 20);
     private final Point spawnPoint3 = new Point(510, 20);
-    private final Point[] spawnPoints = new Point[]{spawnPoint1, spawnPoint2};
+    private final Point[] spawnPoints = new Point[]{spawnPoint1, spawnPoint2, spawnPoint3};
     private final int maxEnemies;
     private final Random random = new Random();
+
+    // Spawn effect images
+    private final Image[] spawnImages = {
+            new ImageIcon("src/jsd/project/tank90/resources/images/appear_1.png").getImage(),
+            new ImageIcon("src/jsd/project/tank90/resources/images/appear_2.png").getImage(),
+            new ImageIcon("src/jsd/project/tank90/resources/images/appear_3.png").getImage(),
+            new ImageIcon("src/jsd/project/tank90/resources/images/appear_4.png").getImage()
+    };
 
     public EnemySpawner(List<EnemyTank> enemyTanks, int maxEnemies) {
         this.enemyTanks = enemyTanks;
         this.maxEnemies = maxEnemies;
     }
 
+    // Inner class to handle spawning effect and cooldown
+    private class SpawnEffect {
+        EnemyTank tank;
+        Point position;
+        int spawnFrames = DELAY_FRAMES;
+        int imageIndex = 0; // Track the current image
+
+        SpawnEffect(EnemyTank tank, Point position) {
+            this.tank = tank;
+            this.position = position;
+        }
+
+        void render(Graphics g) {
+            // Draw the current image in the cycle
+            g.drawImage(spawnImages[imageIndex], position.x, position.y, tank.getSize(), tank.getSize(), null);
+
+            // Cycle to the next image every few frames
+            if (spawnFrames % (DELAY_FRAMES / spawnImages.length) == 0) {
+                imageIndex = (imageIndex + 1) % spawnImages.length;
+            }
+            spawnFrames--;
+        }
+
+        boolean isFinished() {
+            return spawnFrames <= 0;
+        }
+    }
+
     // Spawn an enemy tank at a random spawn point
     public void spawnEnemy() {
-        if (enemyTanks.size() < maxEnemies && spawnCountDown<=0) {
+        if (enemyTanks.size() + spawnQueue.size() < maxEnemies && spawnCountDown <= 0) {
             Point spawnPoint = spawnPoints[random.nextInt(spawnPoints.length)];
             Direction direction = Direction.values()[random.nextInt(Direction.values().length)];
 
@@ -38,11 +74,22 @@ public class EnemySpawner {
                 default -> newEnemy = new PowerTank(spawnPoint.x, spawnPoint.y, 30, direction);
             }
 
-            enemyTanks.add(newEnemy);
-            spawnCountDown = DELAY_FRAMES;
+            spawnQueue.add(new SpawnEffect(newEnemy, spawnPoint));
+            spawnCountDown = DELAY_FRAMES; // Reset countdown
+        } else if (spawnCountDown > 0) {
+            spawnCountDown--;
         }
-        else if (spawnCountDown > 0){
-            spawnCountDown --;
-        }
+    }
+
+    // Render spawn effects for enemies in spawnQueue
+    public void renderSpawnEffects(Graphics g) {
+        spawnQueue.removeIf(spawnEffect -> {
+            spawnEffect.render(g); // Render the spawning effect
+            if (spawnEffect.isFinished()) {
+                enemyTanks.add(spawnEffect.tank); // Move tank to active list after effect
+                return true; // Remove from spawn queue
+            }
+            return false;
+        });
     }
 }

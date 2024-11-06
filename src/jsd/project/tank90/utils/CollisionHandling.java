@@ -1,10 +1,7 @@
 package jsd.project.tank90.utils;
 
 import jsd.project.tank90.model.GameObject;
-import jsd.project.tank90.model.environments.Base;
-import jsd.project.tank90.model.environments.BrickWall;
-import jsd.project.tank90.model.environments.SteelWall;
-import jsd.project.tank90.model.environments.Water;
+import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
 import jsd.project.tank90.model.tanks.*;
 import jsd.project.tank90.ui.GamePanel;
@@ -13,7 +10,6 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 
-import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
 
 public class CollisionHandling {
 
@@ -67,7 +63,8 @@ public class CollisionHandling {
                     break; // Stop checking this bullet as it has been removed
                 } else if (environmentObj instanceof SteelWall steelWall && bulletBounds.intersects(environmentObj.getBounds())) {
                     // Collision with SteelWall: Only remove the bullet
-                    if (bullet.getDamage() == 2 && steelWall.isDestructable()) envIterator.remove();
+                    if (tank instanceof PlayerTank && bullet.getDamage() == 2 && steelWall.isDestructable())
+                        envIterator.remove();
                     explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
                     bulletIterator.remove();
                     break; // Stop checking this bullet as it has been removed
@@ -144,15 +141,38 @@ public class CollisionHandling {
         return false;
     }
 
+    public static boolean checkPlayerOnIce(PlayerTank playerTank, List<GameObject> environmentObjects) {
+        Rectangle playerTankBounds = playerTank.getBounds();
+
+        for (GameObject environmentObj : environmentObjects) {
+            if (environmentObj instanceof Ice) {
+                if (playerTankBounds.intersects(environmentObj.getBounds())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean checkBulletOnIce(Bullet bullet, List<GameObject> environmentObjects) {
+        Rectangle bulletBounds = bullet.getBounds();
+
+        for (GameObject environmentObj : environmentObjects) {
+            if (environmentObj instanceof Ice) {
+                if (bulletBounds.intersects(environmentObj.getBounds())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public static void checkPlayerEnemyCollision(PlayerTank playerTank, List<EnemyTank> enemyTanks, List<Explosion> explosions) {
         Rectangle playerTankBounds = playerTank.getBounds();
         for (EnemyTank enemy : enemyTanks) {
-                if (playerTankBounds.intersects(enemy.getBounds()) && !playerTank.isDisabled() && !enemy.isDisabled()) {
-                    enemy.markAsDead();
-                    playerTank.takeDamage();
-                    playExplosionSound();
-                    explosions.add(new Explosion(enemy.getCenterX(),enemy.getCenterY(),enemy.getSize()));
-                    explosions.add(new Explosion(playerTank.getCenterX(),playerTank.getCenterY(),playerTank.getSize()));
+            if (playerTankBounds.intersects(enemy.getBounds()) && !playerTank.isDisabled() && !enemy.isDisabled()) {
+                enemy.markAsDead();
+                playerTank.takeDamage();
+                explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
+                explosions.add(new Explosion(playerTank.getCenterX(), playerTank.getCenterY(), playerTank.getSize()));
             }
         }
     }

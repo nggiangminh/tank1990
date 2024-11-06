@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class BrickWall extends GameObject {
 
-    private final Image BRICK_IMAGE = new ImageIcon("src/jsd/project/tank90/images/wall_brick.png").getImage();
+    private final Image BRICK_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/wall_brick.png").getImage();
 
     public BrickWall(int x, int y, int size) {
         super(x, y, size);

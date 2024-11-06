@@ -8,20 +8,35 @@ import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
 public abstract class EnemyTank extends Tank {
 
     private static final int FIRE_INTERVAL = 250; // Number of frames between shots
-    private static final int DIRECTION_CHANGE_INTERVAL = 50; // Frames between direction changes
+    private static final int DIRECTION_CHANGE_INTERVAL = 120; // Frames between direction changes
     private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
     protected Random random = new Random(); // Random generator for movement
-    private boolean disabled = false;
+
     private int fireCooldown; // Cooldown timer for firing bullets
     private int directionChangeCooldown = DIRECTION_CHANGE_INTERVAL; // Timer for direction changes
     private boolean showPoints = false; // Flag to show points when tank is destroyed
     private long pointsDisplayStartTime; // Time when points start displaying
 
+    private final boolean isFlashing;  // Flag to enable/disable flashing
+    private boolean flashToggle = false; // Toggle for switching between normal and flashing images
+    private int frameCounter = 0;        // Frame counter for toggling effect
+
+
     public EnemyTank(int x, int y, int size, Direction direction) {
         super(x, y, size, direction); // Initial position, size, and default direction
         this.fireCooldown = FIRE_INTERVAL;
+//        isFlashing = random.nextBoolean();
+        isFlashing = true;
     }
-
+    public void setDirection(Direction newDirection) {
+        this.direction = newDirection;
+        switch (newDirection) {
+            case UP -> tankImage = !flashToggle ? getTankUpImage() : getTankUpFlashImage();
+            case DOWN -> tankImage = !flashToggle ? getTankDownImage() : getTankDownFlashImage();
+            case LEFT -> tankImage = !flashToggle ? getTankLeftImage() : getTankLeftFlashImage();
+            case RIGHT -> tankImage = !flashToggle ? getTankRightImage() : getTankRightFlashImage();
+        }
+    }
     // Return a random direction
     public Direction randomDirection() {
         Direction[] directions = Direction.values();
@@ -70,6 +85,9 @@ public abstract class EnemyTank extends Tank {
         return null;
     }
 
+    public boolean isFlashing() {
+        return isFlashing;
+    }
     // Update cooldown for shooting and other enemy behaviors
     public void updateCooldown() {
         if (fireCooldown > 0) {
@@ -110,8 +128,6 @@ public abstract class EnemyTank extends Tank {
         showPoints = true;
         pointsDisplayStartTime = System.currentTimeMillis();
         disable();
-
-
     }
 
     // Check if the points display duration has passed and the tank should be removed
@@ -119,6 +135,11 @@ public abstract class EnemyTank extends Tank {
         return showPoints && (System.currentTimeMillis() - pointsDisplayStartTime > POINTS_DISPLAY_DURATION);
     }
 
+    // Abstract methods for flashing images
+    protected abstract Image getTankUpFlashImage();
+    protected abstract Image getTankDownFlashImage();
+    protected abstract Image getTankLeftFlashImage();
+    protected abstract Image getTankRightFlashImage();
     // Render the tank and points if dead
     @Override
     public void render(Graphics g) {
@@ -132,6 +153,14 @@ public abstract class EnemyTank extends Tank {
             String points = Integer.toString(getPoints());
             g.drawString(points, getCenterX(), getCenterY());
         } else {
+            // Toggle flashing images if isFlashing is enabled
+            if (isFlashing) {
+                // Every few frames, toggle between the normal and flash images
+                if (frameCounter % 10 == 0) {
+                    flashToggle = !flashToggle;
+                }
+                frameCounter++;
+            }
             // Render the tank image if it's still alive
             g.drawImage(getTankImage(), x, y, size, size, null);
         }

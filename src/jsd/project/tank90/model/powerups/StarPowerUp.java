@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StarPowerUp extends PowerUp{
-    private static final Image STAR_IMAGE=new ImageIcon("src/jsd/project/tank90/images/powerup_star.png").getImage();
+    private static final Image STAR_IMAGE=new ImageIcon("src/jsd/project/tank90/resources/images/powerup_star.png").getImage();
 
     public StarPowerUp(int x, int y, int size) {
         super(x, y, size);

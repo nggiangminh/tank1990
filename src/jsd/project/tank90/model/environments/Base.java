@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Base extends GameObject {
 
-    private final Image BASE_IMAGE = new ImageIcon("src/jsd/project/tank90/images/base.png").getImage();
+    private final Image BASE_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/base.png").getImage();
 
     public Base(int x, int y, int size) {
         super(x, y, size);
