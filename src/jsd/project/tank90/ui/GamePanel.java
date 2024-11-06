@@ -360,7 +360,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         while (enemyTankIterator.hasNext()) {
             EnemyTank enemy = enemyTankIterator.next();
             playerTank.increasePoints(enemy.getPoints());
-            enemy.kill();
+            explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
+            enemy.markAsDead();
         }
     }
 }

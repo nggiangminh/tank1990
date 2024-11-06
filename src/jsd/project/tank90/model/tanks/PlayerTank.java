@@ -17,12 +17,12 @@ public class PlayerTank extends Tank {
 
     private int life = 4;
     private int speed = 1;
-    private int bulletSize = 10;
+    private int bulletSize = 50;
     private int bulletSpeed = 2;
     private int maxBullets = 2;
     private int fireSpeed = 45;
 
-    private int bulletDamage = 1;
+    private int bulletDamage = 10;
 
     private int star = 0;
 

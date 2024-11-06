@@ -1,23 +1,19 @@
 package jsd.project.tank90.model.tanks;
 
-import jsd.project.tank90.model.GameObject;
-
 import java.awt.*;
 import java.util.Random;
 
 public abstract class EnemyTank extends Tank {
 
-    private boolean disabled = false;
-    private int fireCooldown; // Cooldown timer for firing bullets
     private static final int FIRE_INTERVAL = 100; // Number of frames between shots
     private static final int DIRECTION_CHANGE_INTERVAL = 50; // Frames between direction changes
-
-    private int directionChangeCooldown = DIRECTION_CHANGE_INTERVAL; // Timer for direction changes
+    private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
     protected Random random = new Random(); // Random generator for movement
-
+    private boolean disabled = false;
+    private int fireCooldown; // Cooldown timer for firing bullets
+    private int directionChangeCooldown = DIRECTION_CHANGE_INTERVAL; // Timer for direction changes
     private boolean showPoints = false; // Flag to show points when tank is destroyed
     private long pointsDisplayStartTime; // Time when points start displaying
-    private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
 
     public EnemyTank(int x, int y, int size, Direction direction) {
         super(x, y, size, direction); // Initial position, size, and default direction
@@ -81,24 +77,20 @@ public abstract class EnemyTank extends Tank {
 
     // Abstract methods for subclasses
     public abstract int getPoints();
+
     public abstract int getLife();
+
     public abstract void setLife(int life);
 
     // Handle damage and death
     public void takeDamage() {
         setLife(getLife() - 1);
-        if (getLife() == 0)
-            markAsDead();
+        if (getLife() == 0) markAsDead();
     }
 
     // Check if the tank is dead (i.e., has zero life)
     public boolean isDead() {
         return getLife() == 0;
-    }
-
-    // Instantly kill the tank
-    public void kill() {
-        setLife(0);
     }
 
     public boolean isShowPoints() {
@@ -109,14 +101,17 @@ public abstract class EnemyTank extends Tank {
         this.showPoints = showPoints;
     }
 
-    public void disable(){
+    public void disable() {
         disabled = true;
     }
-    public boolean isDisabled(){
+
+    public boolean isDisabled() {
         return disabled;
     }
+
     // Mark the tank as dead and start showing points
     public void markAsDead() {
+        setLife(0);
         showPoints = true;
         pointsDisplayStartTime = System.currentTimeMillis();
         disable();

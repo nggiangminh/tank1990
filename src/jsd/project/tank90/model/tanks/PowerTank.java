@@ -5,6 +5,11 @@ import java.awt.*;
 
 public class PowerTank extends EnemyTank{
 
+//    private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/images/tank_power_up.png").getImage();
+//    private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_power_down.png").getImage();
+//    private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_power_left.png").getImage();
+//    private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/images/tank_power_right.png").getImage();
+
     private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/images/tank_power_up.png").getImage();
     private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/images/tank_power_down.png").getImage();
     private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/images/tank_power_left.png").getImage();
@@ -71,5 +76,10 @@ public class PowerTank extends EnemyTank{
     @Override
     public int getPoints() {
         return points;
+    }
+
+    @Override
+    public int getBulletDamage() {
+        return 2;
     }
 }
