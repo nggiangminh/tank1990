@@ -187,6 +187,7 @@ public class PlayerTank extends Tank {
     }
 
     private void respawn() {
+        enable();
         setLife(getLife() - 1);
         this.x = spawnX;
         this.y = spawnY;
@@ -198,11 +199,12 @@ public class PlayerTank extends Tank {
         if (isShielded()) return;
         new Thread(() -> {
             try {
-                Thread.sleep(500);
+                disable();
+                Thread.sleep(3000);
+                respawn();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            respawn();
             System.out.println("Life: " + getLife());
         }).start();
     }

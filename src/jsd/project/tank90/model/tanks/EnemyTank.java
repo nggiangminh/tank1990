@@ -5,7 +5,7 @@ import java.util.Random;
 
 public abstract class EnemyTank extends Tank {
 
-    private static final int FIRE_INTERVAL = 100; // Number of frames between shots
+    private static final int FIRE_INTERVAL = 250; // Number of frames between shots
     private static final int DIRECTION_CHANGE_INTERVAL = 50; // Frames between direction changes
     private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
     protected Random random = new Random(); // Random generator for movement
@@ -101,14 +101,6 @@ public abstract class EnemyTank extends Tank {
         this.showPoints = showPoints;
     }
 
-    public void disable() {
-        disabled = true;
-    }
-
-    public boolean isDisabled() {
-        return disabled;
-    }
-
     // Mark the tank as dead and start showing points
     public void markAsDead() {
         setLife(0);
@@ -126,6 +118,7 @@ public abstract class EnemyTank extends Tank {
     @Override
     public void render(Graphics g) {
         if (showPoints) {
+            super.render(g);
             // Render points in white font
             g.setColor(Color.WHITE);
             g.setFont(new Font("Monospaced", Font.BOLD, 14));

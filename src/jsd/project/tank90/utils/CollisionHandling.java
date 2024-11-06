@@ -100,7 +100,7 @@ public class CollisionHandling {
         while (bulletIterator.hasNext()) {
             Bullet bullet = bulletIterator.next();
             Rectangle bulletBounds = bullet.getBounds();
-            if (bulletBounds.intersects(tankBounds)) {
+            if (bulletBounds.intersects(tankBounds) && !playerTank.isDisabled()) {
                 playerTank.takeDamage();
                 explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
                 bulletIterator.remove();
@@ -145,7 +145,7 @@ public class CollisionHandling {
     public static void checkPlayerEnemyCollision(PlayerTank playerTank, List<EnemyTank> enemyTanks, List<Explosion> explosions) {
         Rectangle playerTankBounds = playerTank.getBounds();
         for (EnemyTank enemy : enemyTanks) {
-                if (playerTankBounds.intersects(enemy.getBounds()) && !enemy.isDisabled()) {
+                if (playerTankBounds.intersects(enemy.getBounds()) && !playerTank.isDisabled() && !enemy.isDisabled()) {
                     enemy.markAsDead();
                     playerTank.takeDamage();
                     explosions.add(new Explosion(enemy.getCenterX(),enemy.getCenterY(),enemy.getSize()));

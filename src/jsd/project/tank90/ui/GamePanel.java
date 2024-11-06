@@ -3,8 +3,12 @@ package jsd.project.tank90.ui;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.*;
-import jsd.project.tank90.model.tanks.*;
+import jsd.project.tank90.model.tanks.Direction;
+import jsd.project.tank90.model.tanks.EnemyTank;
+import jsd.project.tank90.model.tanks.Explosion;
+import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.utils.CollisionHandling;
+import jsd.project.tank90.utils.EnemySpawner;
 import jsd.project.tank90.utils.MapLoader;
 
 import javax.swing.*;
@@ -18,14 +22,16 @@ import java.util.List;
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int FPS = 60;
+    private final int tileSize = 20;
+    private final int tankSize = tileSize * 3 / 2;
     private final List<String> mapData;
     private final PlayerTank playerTank;
     private final int[] playerSpawnPos = new int[]{200, 500};
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
+    private final EnemySpawner enemySpawner = new EnemySpawner(enemyTanks, 4);
+
     private final List<PowerUp> powerUps = new ArrayList<>();
-    private final List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
-    private final int tileSize = 20;
-    private final int tankSize = tileSize * 3 / 2;
+
     private final List<Explosion> explosions = new ArrayList<>();
     public int freezeTimer = 0;
     private List<GameObject> environmentObjects;
@@ -40,7 +46,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private int fireCooldown = 0;
 
 
-
     public GamePanel() {
         setBackground(Color.BLACK);
         MapLoader mapLoader = new MapLoader();
@@ -49,8 +54,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         initializeMapObjects();
         this.playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
-        // Spawn multiple BasicTanks at different locations
-        spawnEnemyTanks();
+
 
         setFocusable(true);
         addKeyListener(this);
@@ -76,7 +80,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     private void initializeMapObjects() {
         environmentObjects = new ArrayList<>();
-
+        environmentObjects.add(new Tree(540, 20, 20));
         for (int y = 0; y < mapData.size(); y++) {
             String line = mapData.get(y);
             for (int x = 0; x < line.length(); x++) {
@@ -93,15 +97,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-    // Method to spawn multiple BasicTanks
-    private void spawnEnemyTanks() {
-        enemyTanks.add(new BasicTank(50, 20, tankSize, Direction.UP));
-        enemyTanks.add(new ArmorTank(300, 20, tankSize, Direction.RIGHT));
-        enemyTanks.add(new FastTank(400, 20, tankSize, Direction.LEFT));
-        enemyTanks.add(new PowerTank(150, 20, tankSize, Direction.DOWN));
-    }
-
     public void updateGame() {
+        enemySpawner.spawnEnemy();
         for (Explosion explosion : explosions)
             explosion.update();
         if (freezeTimer > 0) {
@@ -189,9 +186,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
         // Render environment objects except Tree
-        Iterator<GameObject> environmentObjIterator = environmentObjects.iterator();
-        while (environmentObjIterator.hasNext()) {
-            GameObject environmentObj = environmentObjIterator.next();
+        for (GameObject environmentObj : environmentObjects) {
             if (!(environmentObj instanceof Tree)) environmentObj.render(g);
         }
 
@@ -199,18 +194,14 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         playerTank.render(g);
         playerTank.renderBullets(g);
 
-        Iterator<EnemyTank> enemyTankIterator = enemyTanks.iterator();
-        while (enemyTankIterator.hasNext()) {
-            EnemyTank enemy = enemyTankIterator.next();
+        for (EnemyTank enemy : enemyTanks) {
             enemy.render(g);
             enemy.renderBullets(g);
         }
 
 
         // Render all power-ups
-        Iterator<PowerUp> powerUpIterator = powerUps.iterator();
-        while (powerUpIterator.hasNext()) {
-            PowerUp powerUp = powerUpIterator.next();
+        for (PowerUp powerUp : powerUps) {
             powerUp.render(g);
         }
         Iterator<Explosion> explosionIterator = explosions.iterator();
@@ -220,9 +211,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             if (explosion.isFinished()) explosionIterator.remove();
         }
         // Render Tree objects last to make them appear on top of the tank
-        Iterator<GameObject> environmentObjIterator2 = environmentObjects.iterator();
-        while (environmentObjIterator2.hasNext()) {
-            GameObject environmentObj = environmentObjIterator2.next();
+        for (GameObject environmentObj : environmentObjects) {
             if (environmentObj instanceof Tree) environmentObj.render(g);
         }
     }

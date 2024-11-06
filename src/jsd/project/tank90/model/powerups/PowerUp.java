@@ -26,5 +26,7 @@ public abstract class PowerUp extends GameObject {
     // Abstract method to identify the power-up type
     public abstract String getType();
 
-    public abstract void activate(PlayerTank playerTank, GamePanel gamePanel);
+    public void activate(PlayerTank playerTank, GamePanel gamePanel){
+        playerTank.increasePoints(500);
+    };
 }

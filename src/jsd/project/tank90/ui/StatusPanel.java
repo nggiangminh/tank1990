@@ -25,5 +25,6 @@ public class StatusPanel extends JPanel {
 
         // Display the player's life
         g.drawString("Lives: " + lifeCount, 20, 50);
+        g.drawString("Points: " + playerTank.getPoints(), 20, 100);
     }
 }
