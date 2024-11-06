@@ -178,7 +178,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         if (fireCooldown > 0) {
             fireCooldown--;
         }
-        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
+//        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
         if (playerTank.getLife() == 0) stopGame();
 
     }
@@ -189,31 +189,28 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
         // Render environment objects except Tree
-        for (GameObject obj : environmentObjects) {
-            if (!(obj instanceof Tree)) {
-                obj.render(g);
-            }
+        Iterator<GameObject> environmentObjIterator = environmentObjects.iterator();
+        while (environmentObjIterator.hasNext()) {
+            GameObject environmentObj = environmentObjIterator.next();
+            if (!(environmentObj instanceof Tree)) environmentObj.render(g);
         }
 
         // Render player tank and bullets
         playerTank.render(g);
         playerTank.renderBullets(g);
 
-        // Render each enemy tank and its bullets
-        for (EnemyTank enemy : enemyTanks) {
+        Iterator<EnemyTank> enemyTankIterator = enemyTanks.iterator();
+        while (enemyTankIterator.hasNext()) {
+            EnemyTank enemy = enemyTankIterator.next();
             enemy.render(g);
             enemy.renderBullets(g);
         }
 
-        // Render Tree objects last to make them appear on top of the tank
-        for (GameObject obj : environmentObjects) {
-            if (obj instanceof Tree) {
-                obj.render(g);
-            }
-        }
 
         // Render all power-ups
-        for (PowerUp powerUp : powerUps) {
+        Iterator<PowerUp> powerUpIterator = powerUps.iterator();
+        while (powerUpIterator.hasNext()) {
+            PowerUp powerUp = powerUpIterator.next();
             powerUp.render(g);
         }
         Iterator<Explosion> explosionIterator = explosions.iterator();
@@ -221,6 +218,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             Explosion explosion = explosionIterator.next();
             explosion.render(g);
             if (explosion.isFinished()) explosionIterator.remove();
+        }
+        // Render Tree objects last to make them appear on top of the tank
+        Iterator<GameObject> environmentObjIterator2 = environmentObjects.iterator();
+        while (environmentObjIterator2.hasNext()) {
+            GameObject environmentObj = environmentObjIterator2.next();
+            if (environmentObj instanceof Tree) environmentObj.render(g);
         }
     }
 
