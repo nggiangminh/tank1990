@@ -77,8 +77,8 @@ public class CollisionHandling {
     // Checks collisions between the tank and solid environment objects
 
 
-    public static void checkBulletEnemyTankCollision(List<Bullet> bullets, EnemyTank tank, List<Explosion> explosions) {
-        Rectangle tankBounds = tank.getBounds();
+    public static void checkBulletEnemyTankCollision(List<Bullet> bullets, EnemyTank enemy, List<Explosion> explosions) {
+        Rectangle tankBounds = enemy.getBounds();
         Iterator<Bullet> bulletIterator = bullets.iterator();
 
         while (bulletIterator.hasNext()) {
@@ -87,21 +87,21 @@ public class CollisionHandling {
             if (bulletBounds.intersects(tankBounds)) {
                 explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
                 bulletIterator.remove();
-                tank.takeDamage();
+                enemy.takeDamage();
                 break; // Stop checking this bullet as it has been removed
             }
         }
     }
 
-    public static void checkBulletPlayerTankCollision(List<Bullet> bullets, PlayerTank tank, List<Explosion> explosions) {
-        Rectangle tankBounds = tank.getBounds();
+    public static void checkBulletPlayerTankCollision(List<Bullet> bullets, PlayerTank playerTank, List<Explosion> explosions) {
+        Rectangle tankBounds = playerTank.getBounds();
         Iterator<Bullet> bulletIterator = bullets.iterator();
 
         while (bulletIterator.hasNext()) {
             Bullet bullet = bulletIterator.next();
             Rectangle bulletBounds = bullet.getBounds();
             if (bulletBounds.intersects(tankBounds)) {
-                tank.takeDamage();
+                playerTank.takeDamage();
                 explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
                 bulletIterator.remove();
                 break; // Stop checking this bullet as it has been removed
@@ -145,8 +145,8 @@ public class CollisionHandling {
     public static void checkPlayerEnemyCollision(PlayerTank playerTank, List<EnemyTank> enemyTanks, List<Explosion> explosions) {
         Rectangle playerTankBounds = playerTank.getBounds();
         for (EnemyTank enemy : enemyTanks) {
-                if (playerTankBounds.intersects(enemy.getBounds())) {
-                    enemy.takeDamage();
+                if (playerTankBounds.intersects(enemy.getBounds()) && !enemy.isDisabled()) {
+                    enemy.markAsDead();
                     playerTank.takeDamage();
                     explosions.add(new Explosion(enemy.getCenterX(),enemy.getCenterY(),enemy.getSize()));
                     explosions.add(new Explosion(playerTank.getCenterX(),playerTank.getCenterY(),playerTank.getSize()));

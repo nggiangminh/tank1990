@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final List<PowerUp> powerUps = new ArrayList<>();
     private final List<GameObject> originalWalls = new ArrayList<>(); // To store the original brick walls
     private final int tileSize = 20;
+    private final int tankSize = tileSize * 3 / 2;
     private final List<Explosion> explosions = new ArrayList<>();
     public int freezeTimer = 0;
     private List<GameObject> environmentObjects;
@@ -47,7 +48,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
-        playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tileSize * 2);
+        playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
         // Spawn multiple BasicTanks at different locations
         spawnEnemyTanks();
 
@@ -94,10 +95,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     // Method to spawn multiple BasicTanks
     private void spawnEnemyTanks() {
-        enemyTanks.add(new BasicTank(50, 20, tileSize * 2, Direction.UP));
-        enemyTanks.add(new ArmorTank(300, 20, tileSize * 2, Direction.RIGHT));
-        enemyTanks.add(new FastTank(400, 20, tileSize * 2, Direction.LEFT));
-        enemyTanks.add(new PowerTank(150, 20, tileSize * 2, Direction.DOWN));
+        enemyTanks.add(new BasicTank(50, 20, tankSize, Direction.UP));
+        enemyTanks.add(new ArmorTank(300, 20, tankSize, Direction.RIGHT));
+        enemyTanks.add(new FastTank(400, 20, tankSize, Direction.LEFT));
+        enemyTanks.add(new PowerTank(150, 20, tankSize, Direction.DOWN));
     }
 
     public void updateGame() {
@@ -143,7 +144,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             } else if (enemy.shouldRemove()) {
                 playerTank.increasePoints(enemy.getPoints());
                 enemyIterator.remove(); // Safely remove the dead enemy
-            } else if (!enemy.isDead()){
+            } else if (!enemy.isDead()) {
                 if (freezeTimer == 0) {
                     enemy.move();
                     enemy.changeDirection();

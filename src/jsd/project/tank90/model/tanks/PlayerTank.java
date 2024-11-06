@@ -203,6 +203,7 @@ public class PlayerTank extends Tank {
                 throw new RuntimeException(e);
             }
             respawn();
+            System.out.println("Life: " + getLife());
         }).start();
     }
 }

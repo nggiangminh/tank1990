@@ -6,9 +6,11 @@ import java.awt.*;
 import java.util.Random;
 
 public abstract class EnemyTank extends Tank {
+
+    private boolean disabled = false;
     private int fireCooldown; // Cooldown timer for firing bullets
     private static final int FIRE_INTERVAL = 100; // Number of frames between shots
-    private static final int DIRECTION_CHANGE_INTERVAL = 500; // Frames between direction changes
+    private static final int DIRECTION_CHANGE_INTERVAL = 50; // Frames between direction changes
 
     private int directionChangeCooldown = DIRECTION_CHANGE_INTERVAL; // Timer for direction changes
     protected Random random = new Random(); // Random generator for movement
@@ -85,6 +87,8 @@ public abstract class EnemyTank extends Tank {
     // Handle damage and death
     public void takeDamage() {
         setLife(getLife() - 1);
+        if (getLife() == 0)
+            markAsDead();
     }
 
     // Check if the tank is dead (i.e., has zero life)
@@ -105,10 +109,17 @@ public abstract class EnemyTank extends Tank {
         this.showPoints = showPoints;
     }
 
+    public void disable(){
+        disabled = true;
+    }
+    public boolean isDisabled(){
+        return disabled;
+    }
     // Mark the tank as dead and start showing points
     public void markAsDead() {
         showPoints = true;
         pointsDisplayStartTime = System.currentTimeMillis();
+        disable();
     }
 
     // Check if the points display duration has passed and the tank should be removed
