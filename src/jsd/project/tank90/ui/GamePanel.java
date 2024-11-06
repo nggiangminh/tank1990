@@ -10,14 +10,20 @@ import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.utils.CollisionHandling;
 import jsd.project.tank90.utils.EnemySpawner;
 import jsd.project.tank90.utils.MapLoader;
+import jsd.project.tank90.utils.SoundManager;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
 
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
@@ -31,7 +37,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final EnemySpawner enemySpawner = new EnemySpawner(enemyTanks, 4);
 
     private final List<PowerUp> powerUps = new ArrayList<>();
-
     private final List<Explosion> explosions = new ArrayList<>();
     public int freezeTimer = 0;
     private List<GameObject> environmentObjects;
@@ -45,15 +50,21 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
 
+    private SoundManager soundManager;
 
     public GamePanel() {
         setBackground(Color.BLACK);
         MapLoader mapLoader = new MapLoader();
-        mapLoader.loadMap("src/jsd/project/tank90/map_stage/map.txt");
+        mapLoader.loadMap("src/jsd/project/tank90/map_stage/map_1.txt");
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
         this.playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
+
+        soundManager = new SoundManager();
+        soundManager.playBackgroundMusic("src/jsd/project/tank90/sounds/titlescreen.wav"); // Đường dẫn đến tệp âm thanh
+        soundManager.setVolume(-35.0f);
+
 
 
         setFocusable(true);
@@ -80,7 +91,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     private void initializeMapObjects() {
         environmentObjects = new ArrayList<>();
-        environmentObjects.add(new Tree(540, 20, 20));
         for (int y = 0; y < mapData.size(); y++) {
             String line = mapData.get(y);
             for (int x = 0; x < line.length(); x++) {
@@ -99,8 +109,11 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     public void updateGame() {
         enemySpawner.spawnEnemy();
-        for (Explosion explosion : explosions)
+        for (Explosion explosion : explosions){
+
             explosion.update();
+            }
+
         if (freezeTimer > 0) {
             freezeTimer--;
         }
@@ -138,6 +151,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             if (enemy.isDead() && !enemy.isShowPoints()) {
                 enemy.markAsDead();
                 explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
+
             } else if (enemy.shouldRemove()) {
                 playerTank.increasePoints(enemy.getPoints());
                 enemyIterator.remove(); // Safely remove the dead enemy
@@ -222,7 +236,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -232,7 +245,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             case KeyEvent.VK_DOWN -> isDown = true;
             case KeyEvent.VK_LEFT -> isLeft = true;
             case KeyEvent.VK_RIGHT -> isRight = true;
-            case KeyEvent.VK_SPACE -> isFire = true;
+            case KeyEvent.VK_SPACE -> {
+                isFire = true;
+                SoundManager.playShotSound();}
         }
 
         repaint();
@@ -359,6 +374,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         while (enemyTankIterator.hasNext()) {
             EnemyTank enemy = enemyTankIterator.next();
             playerTank.increasePoints(enemy.getPoints());
+            playExplosionSound();
             explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
             enemy.markAsDead();
         }
@@ -367,6 +383,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public PlayerTank getPlayerTank() {
         return playerTank;
     }
+
+
+
 
 
 }

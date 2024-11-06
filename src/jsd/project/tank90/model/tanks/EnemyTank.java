@@ -3,6 +3,8 @@ package jsd.project.tank90.model.tanks;
 import java.awt.*;
 import java.util.Random;
 
+import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
+
 public abstract class EnemyTank extends Tank {
 
     private static final int FIRE_INTERVAL = 250; // Number of frames between shots
@@ -104,9 +106,12 @@ public abstract class EnemyTank extends Tank {
     // Mark the tank as dead and start showing points
     public void markAsDead() {
         setLife(0);
+        playExplosionSound();
         showPoints = true;
         pointsDisplayStartTime = System.currentTimeMillis();
         disable();
+
+
     }
 
     // Check if the points display duration has passed and the tank should be removed

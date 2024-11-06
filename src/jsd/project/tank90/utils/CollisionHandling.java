@@ -13,6 +13,8 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 
+import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
+
 public class CollisionHandling {
 
     public static boolean checkBulletBaseCollision(Tank tank, List<GameObject> environmentObjects, List<Explosion> explosions) {
@@ -148,6 +150,7 @@ public class CollisionHandling {
                 if (playerTankBounds.intersects(enemy.getBounds()) && !playerTank.isDisabled() && !enemy.isDisabled()) {
                     enemy.markAsDead();
                     playerTank.takeDamage();
+                    playExplosionSound();
                     explosions.add(new Explosion(enemy.getCenterX(),enemy.getCenterY(),enemy.getSize()));
                     explosions.add(new Explosion(playerTank.getCenterX(),playerTank.getCenterY(),playerTank.getSize()));
             }
