@@ -40,15 +40,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private int fireCooldown = 0;
 
 
+
     public GamePanel() {
         setBackground(Color.BLACK);
-
         MapLoader mapLoader = new MapLoader();
         mapLoader.loadMap("src/jsd/project/tank90/map_stage/map.txt");
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
-        playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
+        this.playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
         // Spawn multiple BasicTanks at different locations
         spawnEnemyTanks();
 
@@ -225,8 +225,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             GameObject environmentObj = environmentObjIterator2.next();
             if (environmentObj instanceof Tree) environmentObj.render(g);
         }
-
-        displayPlayerLife(g);
     }
 
     @Override
@@ -370,16 +368,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-    // Method to draw player life count near the base
-    private void displayPlayerLife(Graphics g) {
-        int lifeCount = playerTank.getLife();
-        int baseX = 30 * tileSize; // X position beside the base
-        int baseY = 26 * tileSize; // Y position beside the base
-
-        // Set font and color for life count
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
-        g.drawString("Lives: " + lifeCount, baseX, baseY);
+    public PlayerTank getPlayerTank() {
+        return playerTank;
     }
+
 
 }
