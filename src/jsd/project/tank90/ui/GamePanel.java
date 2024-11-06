@@ -186,9 +186,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
         // Render environment objects except Tree
-        for (GameObject environmentObj : environmentObjects) {
-            if (!(environmentObj instanceof Tree)) environmentObj.render(g);
+        for (GameObject environmentObj : new ArrayList<>(environmentObjects)) {
+            if (!(environmentObj instanceof Tree)) {
+                environmentObj.render(g);
+            }
         }
+
 
         // Render player tank and bullets
         playerTank.render(g);
@@ -210,11 +213,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             explosion.render(g);
             if (explosion.isFinished()) explosionIterator.remove();
         }
-        // Render Tree objects last to make them appear on top of the tank
-        for (GameObject environmentObj : environmentObjects) {
-            if (environmentObj instanceof Tree) environmentObj.render(g);
+
+        // Render environment objects except Tree
+        for (GameObject environmentObj : new ArrayList<>(environmentObjects)) {
+            if ((environmentObj instanceof Tree)) {
+                environmentObj.render(g);
+            }
         }
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {
