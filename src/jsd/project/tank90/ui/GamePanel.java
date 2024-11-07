@@ -2,7 +2,8 @@ package jsd.project.tank90.ui;
 
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
-import jsd.project.tank90.model.powerups.*;
+import jsd.project.tank90.model.powerups.GrenadePowerUp;
+import jsd.project.tank90.model.powerups.PowerUp;
 import jsd.project.tank90.model.tanks.*;
 import jsd.project.tank90.utils.*;
 
@@ -21,16 +22,18 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int tankSize = tileSize * 3 / 2;
     private final List<String> mapData;
     private final PlayerTank playerTank;
-    private Direction previousDirection = null; // Track the previous direction
     private final int MAX_SLIDE_MOMENTUM = 30; // Maximum frames for sliding
     private final int[] playerSpawnPos = new int[]{200, 500};
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
+    private final List<EnemyTank> killedEnemies = new ArrayList<>(); // List to hold multiple EnemyTank enemies
     private final EnemySpawner enemySpawner = new EnemySpawner(enemyTanks, 4);
     private final List<PowerUp> powerUps = new ArrayList<>();
     private final PowerUpSpawner powerUpSpawner = new PowerUpSpawner(powerUps);
     private final List<Explosion> explosions = new ArrayList<>();
     private final SoundManager soundManager;
+    private final String mapFile;
     public int freezeTimer = 0;
+    private Direction previousDirection = null; // Track the previous direction
     private int slideMomentum = 0; // Number of frames to continue sliding
     private List<GameObject> environmentObjects;
     private boolean running = true;
@@ -42,7 +45,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isFire = false;
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
-    private final String mapFile;
 
     public GamePanel(String mapFile) {
         setBackground(Color.BLACK);
@@ -65,11 +67,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/soundtrack.wav"); // Đường dẫn đến tệp âm thanh
         soundManager.setVolume(-35.0f);
 
-
+        powerUps.add(new GrenadePowerUp(220, 450, 30));
         setFocusable(true);
         addKeyListener(this);
-        powerUps.add(new ShieldPowerUp(150, 150, 30)); // Position and size for Shield power-up
-
         // Start the game loop in a new thread
         new Thread(this).start();
     }
@@ -159,6 +159,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             } else if (enemy.shouldRemove()) {
                 playerTank.increasePoints(enemy.getPoints());
                 enemyIterator.remove(); // Safely remove the dead enemy
+                killedEnemies.add(enemy);
                 if (enemy.isFlashing()) powerUpSpawner.spawnPowerUp();
 
             } else if (!enemy.isDead()) {
@@ -183,7 +184,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 for (Bullet bullet : enemy.getBullets()) {
                     bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet, environmentObjects));
                 }
-                if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
+
             }
         }
         powerUps.removeIf(powerUp -> !powerUp.isActive());
@@ -201,10 +202,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         if (fireCooldown > 0) {
             fireCooldown--;
         }
-//        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
-        if (playerTank.getLife() == 0) {
-            stopGame();
-        }
+        checkStopGame();
 
     }
 
@@ -302,7 +300,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         running = false;
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gameFrame.getContentPane().removeAll();
-        gameFrame.getContentPane().add(new GameOverPanel(mapFile));
+        gameFrame.getContentPane().add(new GameOverPanel(mapFile, killedEnemies));
         gameFrame.revalidate();
         gameFrame.repaint();
     }
@@ -400,7 +398,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             playerTank.increasePoints(enemy.getPoints());
             explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
             enemy.markAsDead();
-
         }
     }
 
@@ -408,6 +405,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         return playerTank;
     }
 
+    private void checkStopGame() {
+        for (EnemyTank enemy : enemyTanks)
+            if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
+//        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
+        if (playerTank.getLife() == 0) {
+            stopGame();
+        }
 
-
+    }
 }

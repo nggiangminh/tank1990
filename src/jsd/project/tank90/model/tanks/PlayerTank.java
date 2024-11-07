@@ -12,14 +12,14 @@ public class PlayerTank extends Tank {
 
     private static final Image SHIELD_IMAGE_1 = Images.SHIELD_1;
     private static final Image SHIELD_IMAGE_2 = Images.SHIELD_2;
-    private final Image TANK_UP_1 = Images.PLAYER_UP_1;
-    private final Image TANK_DOWN_1 = Images.PLAYER_DOWN_1;
-    private final Image TANK_LEFT_1 = Images.PLAYER_LEFT_1;
-    private final Image TANK_RIGHT_1 = Images.PLAYER_RIGHT_1;
-    private final Image TANK_UP_2 = Images.PLAYER_UP_2;
-    private final Image TANK_DOWN_2 = Images.PLAYER_DOWN_2;
-    private final Image TANK_LEFT_2 = Images.PLAYER_LEFT_2;
-    private final Image TANK_RIGHT_2 = Images.PLAYER_RIGHT_2;
+    private Image TANK_UP_1 = Images.PLAYER_UP_1_S1;
+    private Image TANK_DOWN_1 = Images.PLAYER_DOWN_1_S1;
+    private Image TANK_LEFT_1 = Images.PLAYER_LEFT_1_S1;
+    private Image TANK_RIGHT_1 = Images.PLAYER_RIGHT_1_S1;
+    private Image TANK_UP_2 = Images.PLAYER_UP_2_S1;
+    private Image TANK_DOWN_2 = Images.PLAYER_DOWN_2_S1;
+    private Image TANK_LEFT_2 = Images.PLAYER_LEFT_2_S1;
+    private Image TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S1;
     private final int spawnX;
     private final int spawnY;
     private int lifePlusPoints = 0;
@@ -195,9 +195,39 @@ public class PlayerTank extends Tank {
     public void claimStar() {
         setStar(Math.min(3, getStar() + 1));
         switch (getStar()) {
-            case 1 -> setBulletSpeed(3);
-            case 2 -> setMaxBullets(2);
-            case 3 -> setBulletDamage(2);
+            case 1 -> {
+                setBulletSpeed(3);
+                TANK_UP_1 = Images.PLAYER_UP_1_S1;
+                TANK_DOWN_1 = Images.PLAYER_DOWN_1_S1;
+                TANK_LEFT_1 = Images.PLAYER_LEFT_1_S1;
+                TANK_RIGHT_1 = Images.PLAYER_RIGHT_1_S1;
+                TANK_UP_2 = Images.PLAYER_UP_2_S1;
+                TANK_DOWN_2 = Images.PLAYER_DOWN_2_S1;
+                TANK_LEFT_2 = Images.PLAYER_LEFT_2_S1;
+                TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S1;
+            }
+            case 2 -> {
+                setMaxBullets(2);
+                TANK_UP_1 = Images.PLAYER_UP_1_S2;
+                TANK_DOWN_1 = Images.PLAYER_DOWN_1_S2;
+                TANK_LEFT_1 = Images.PLAYER_LEFT_1_S2;
+                TANK_RIGHT_1 = Images.PLAYER_RIGHT_1_S2;
+                TANK_UP_2 = Images.PLAYER_UP_2_S2;
+                TANK_DOWN_2 = Images.PLAYER_DOWN_2_S2;
+                TANK_LEFT_2 = Images.PLAYER_LEFT_2_S2;
+                TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S2;
+            }
+            case 3 -> {
+                setBulletDamage(2);
+                TANK_UP_1 = Images.PLAYER_UP_1_S3;
+                TANK_DOWN_1 = Images.PLAYER_DOWN_1_S3;
+                TANK_LEFT_1 = Images.PLAYER_LEFT_1_S3;
+                TANK_RIGHT_1 = Images.PLAYER_RIGHT_1_S3;
+                TANK_UP_2 = Images.PLAYER_UP_2_S3;
+                TANK_DOWN_2 = Images.PLAYER_DOWN_2_S3;
+                TANK_LEFT_2 = Images.PLAYER_LEFT_2_S3;
+                TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S3;
+            }
         }
     }
 
@@ -259,7 +289,6 @@ public class PlayerTank extends Tank {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("Life: " + getLife());
         }).start();
     }
 

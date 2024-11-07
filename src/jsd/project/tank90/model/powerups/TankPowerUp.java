@@ -25,6 +25,7 @@ public class TankPowerUp extends PowerUp {
 
     @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
+        super.activate(playerTank,gamePanel);
         playerTank.setLife(playerTank.getLife() + 1);
     }
 }

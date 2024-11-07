@@ -25,6 +25,7 @@ public class TimerPowerUp extends PowerUp {
 
     @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
+        super.activate(playerTank,gamePanel);
         gamePanel.activateFreeze();
     }
 }

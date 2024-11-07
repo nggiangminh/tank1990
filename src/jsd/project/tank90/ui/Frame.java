@@ -21,33 +21,34 @@ public class Frame extends JFrame {
     }
 //    cmt để test màn
 
-//    private void initComponents() {
-//        // Create GamePanel and access PlayerTank
-////        GamePanel gamePanel = new GamePanel();
-////        PlayerTank playerTank = gamePanel.getPlayerTank();
-////
-////        // Create StatusPanel and pass PlayerTank to it
-////        StatusPanel statusPanel = new StatusPanel(playerTank);
-////
-////        // Use BorderLayout to position panels
-////        setLayout(new BorderLayout());
-////        add(gamePanel, BorderLayout.CENTER);
-////        add(statusPanel, BorderLayout.EAST);
-////
-////        Timer timer = new Timer(100, e -> statusPanel.repaint());
-////        timer.start();
-////    }
+    private void initComponents() {
+        // Create GamePanel and access PlayerTank
+        GamePanel gamePanel = new GamePanel("src/jsd/project/tank90/resources/map_stage/map_1.txt");
+        PlayerTank playerTank = gamePanel.getPlayerTank();
+
+        // Create StatusPanel and pass PlayerTank to it
+        StatusPanel statusPanel = new StatusPanel(playerTank);
+
+        // Use BorderLayout to position panels
+        setLayout(new BorderLayout());
+        add(gamePanel, BorderLayout.CENTER);
+        add(statusPanel, BorderLayout.EAST);
+
+        Timer timer = new Timer(100, e -> statusPanel.repaint());
+        timer.start();
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Frame frame = new Frame();
+            frame.initComponents();
 
             // cmt để test màn
 //            frame.add(new GamePanel());
 //            frame.add(new GameOverPanel());
 
 
-            frame.getContentPane().add(new MenuPanel());
+//            frame.getContentPane().add(new MenuPanel());
             frame.setVisible(true);
         });
     }

@@ -6,16 +6,6 @@ import java.awt.*;
 
 public class ArmorTank extends EnemyTank {
 
-
-    private final Image TANK_UP_1 = Images.ARMOR_UP_1;
-    private final Image TANK_DOWN_1 = Images.ARMOR_DOWN_1;
-    private final Image TANK_LEFT_1 = Images.ARMOR_LEFT_1;
-    private final Image TANK_RIGHT_1 = Images.ARMOR_RIGHT_1;
-    private final Image TANK_UP_2 = Images.ARMOR_UP_2;
-    private final Image TANK_DOWN_2 = Images.ARMOR_DOWN_2;
-    private final Image TANK_LEFT_2 = Images.ARMOR_LEFT_2;
-    private final Image TANK_RIGHT_2 = Images.ARMOR_RIGHT_2;
-
     private final Image TANK_UP_1_F = Images.ARMOR_UP_1_F;
     private final Image TANK_DOWN_1_F = Images.ARMOR_DOWN_1_F;
     private final Image TANK_LEFT_1_F = Images.ARMOR_LEFT_1_F;
@@ -65,22 +55,121 @@ public class ArmorTank extends EnemyTank {
 
     @Override
     protected Image getTankUpImage1() {
-        return TANK_UP_1;
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_UP_1_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_UP_1_H2;
+            }
+            default -> {
+                return Images.ARMOR_UP_1_H3;
+            }
+        }
     }
 
     @Override
     protected Image getTankDownImage1() {
-        return TANK_DOWN_1;
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_DOWN_1_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_DOWN_1_H2;
+            }
+            default -> {
+                return Images.ARMOR_DOWN_1_H3;
+            }
+        }
     }
 
     @Override
     protected Image getTankLeftImage1() {
-        return TANK_LEFT_1;
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_LEFT_1_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_LEFT_1_H2;
+            }
+            default -> {
+                return Images.ARMOR_LEFT_1_H3;
+            }
+        }
     }
 
     @Override
     protected Image getTankRightImage1() {
-        return TANK_RIGHT_1;
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_RIGHT_1_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_RIGHT_1_H2;
+            }
+            default -> {
+                return Images.ARMOR_RIGHT_1_H3;
+            }
+        }
+    }
+    @Override
+    protected Image getTankUpImage2() {
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_UP_2_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_UP_2_H2;
+            }
+            default -> {
+                return Images.ARMOR_UP_2_H3;
+            }
+        }
+    }
+
+    @Override
+    protected Image getTankDownImage2() {
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_DOWN_2_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_DOWN_2_H2;
+            }
+            default -> {
+                return Images.ARMOR_DOWN_2_H3;
+            }
+        }
+    }
+
+    @Override
+    protected Image getTankLeftImage2() {
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_LEFT_2_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_LEFT_2_H2;
+            }
+            default -> {
+                return Images.ARMOR_LEFT_2_H3;
+            }
+        }
+    }
+
+    @Override
+    protected Image getTankRightImage2() {
+        switch (life) {
+            case 1 -> {
+                return Images.ARMOR_RIGHT_2_H1;
+            }
+            case 2 -> {
+                return Images.ARMOR_RIGHT_2_H2;
+            }
+            default -> {
+                return Images.ARMOR_RIGHT_2_H3;
+            }
+        }
     }
 
     @Override
@@ -101,26 +190,6 @@ public class ArmorTank extends EnemyTank {
     @Override
     protected Image getTankRightFlashImage1() {
         return TANK_RIGHT_1_F;
-    }
-
-    @Override
-    protected Image getTankUpImage2() {
-        return TANK_UP_2;
-    }
-
-    @Override
-    protected Image getTankDownImage2() {
-        return TANK_DOWN_2;
-    }
-
-    @Override
-    protected Image getTankLeftImage2() {
-        return TANK_LEFT_2;
-    }
-
-    @Override
-    protected Image getTankRightImage2() {
-        return TANK_RIGHT_2;
     }
 
     @Override

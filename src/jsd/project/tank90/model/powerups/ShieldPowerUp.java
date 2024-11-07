@@ -27,7 +27,7 @@ public class ShieldPowerUp extends PowerUp {
     // Activate shield with a duration, managed by a separate thread
     @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
+        super.activate(playerTank,gamePanel);
         playerTank.activateShield(); // Enable the shield
-
     }
 }
