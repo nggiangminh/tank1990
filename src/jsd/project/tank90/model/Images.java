@@ -26,7 +26,7 @@ public class Images {
 
     //Shield images
     public static final Image SHIELD_1 = new ImageIcon(folderPath + "shield_1.png").getImage();
-    public static final Image SHIELD_2 = new ImageIcon(folderPath + "shield_1.png").getImage();
+    public static final Image SHIELD_2 = new ImageIcon(folderPath + "shield_2.png").getImage();
 
     //Player Tank Images
     public static final Image PLAYER_UP_1 = new ImageIcon(folderPath + "playerTank_up.png").getImage();

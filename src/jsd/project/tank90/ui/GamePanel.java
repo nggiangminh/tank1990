@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public GamePanel() {
         setBackground(Color.BLACK);
         MapLoader mapLoader = new MapLoader();
-        mapLoader.loadMap("src/jsd/project/tank90/resources/map_stage/map_ice.txt");
+        mapLoader.loadMap("src/jsd/project/tank90/resources/map_stage/map_1.txt");
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
@@ -59,8 +59,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         setFocusable(true);
         addKeyListener(this);
-
-        // Example power-up spawning
+//
+//         Example power-up spawning
         powerUps.add(new TankPowerUp(200, 280, 30)); // Position and size for Tank power-up
         powerUps.add(new TimerPowerUp(200, 250, 30)); // Position and size for Timer power-up
         powerUps.add(new ShovelPowerUp(100, 150, 30)); // Position and size for Shovel power-up
