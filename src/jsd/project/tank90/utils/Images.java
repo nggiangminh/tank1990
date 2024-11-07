@@ -1,4 +1,4 @@
-package jsd.project.tank90.model;
+package jsd.project.tank90.utils;
 
 import javax.swing.*;
 import java.awt.*;

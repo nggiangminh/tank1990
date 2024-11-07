@@ -42,33 +42,33 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isFire = false;
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
+    private final String mapFile;
 
-    public GamePanel() {
+    public GamePanel(String mapFile) {
         setBackground(Color.BLACK);
+        this.mapFile = mapFile;
+        addKeyListener(this);
+        setFocusable(true);  // Ensure GamePanel can gain focus
+        requestFocusInWindow();  // Request focus immediately upon creation
+//        MapLoader mapLoader = new MapLoader();
+//        mapLoader.loadMap("src/jsd/project/tank90/resources/map_stage/map_1.txt");
+//        mapData = mapLoader.getMapData();
+
         MapLoader mapLoader = new MapLoader();
-        mapLoader.loadMap("src/jsd/project/tank90/resources/map_stage/map_1.txt");
+        mapLoader.loadMap(mapFile);  // Load the specific map file
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
         this.playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
 
         soundManager = new SoundManager();
-        soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/titlescreen.wav"); // Đường dẫn đến tệp âm thanh
+        soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/soundtrack.wav"); // Đường dẫn đến tệp âm thanh
         soundManager.setVolume(-35.0f);
 
 
         setFocusable(true);
         addKeyListener(this);
-//
-//         Example power-up spawning
-        powerUps.add(new TankPowerUp(200, 280, 30)); // Position and size for Tank power-up
-        powerUps.add(new TimerPowerUp(200, 250, 30)); // Position and size for Timer power-up
-        powerUps.add(new ShovelPowerUp(100, 150, 30)); // Position and size for Shovel power-up
-        powerUps.add(new StarPowerUp(300, 150, 30)); // Position and size for Star power-up
-        powerUps.add(new StarPowerUp(450, 250, 30)); // Position and size for Star power-up
-        powerUps.add(new StarPowerUp(100, 450, 30)); // Position and size for Star power-up
-        powerUps.add(new GrenadePowerUp(220, 450, 30)); // Position and size for Star power-up
-        powerUps.add(new ShieldPowerUp(150, 150, 30)); // Position and size for Star power-up
+        powerUps.add(new ShieldPowerUp(150, 150, 30)); // Position and size for Shield power-up
 
         // Start the game loop in a new thread
         new Thread(this).start();
@@ -180,8 +180,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
                 CollisionHandling.checkBulletEnemyBulletCollision(playerTank.getBullets(), enemy.getBullets(), explosions);
                 CollisionHandling.checkPlayerEnemyCollision(playerTank, enemyTanks, explosions);
-                for (Bullet bullet:enemy.getBullets()){
-                    bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet,environmentObjects));
+                for (Bullet bullet : enemy.getBullets()) {
+                    bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet, environmentObjects));
                 }
                 if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
             }
@@ -194,15 +194,29 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
 
         playerTank.updateBullets();
-        for (Bullet bullet:playerTank.getBullets()){
-            bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet,environmentObjects));
+        for (Bullet bullet : playerTank.getBullets()) {
+            bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet, environmentObjects));
         }
         CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects, explosions);
         if (fireCooldown > 0) {
             fireCooldown--;
         }
 //        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
-        if (playerTank.getLife() == 0) stopGame();
+        if (playerTank.getLife() == 0) {
+            stopGame();
+            soundManager.stopBackgroundMusic();
+            JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            gameFrame.getContentPane().removeAll();
+            gameFrame.getContentPane().add(new GameOverPanel(mapFile));
+            gameFrame.revalidate();
+            gameFrame.repaint();
+            GamePanel gamePanel = new GamePanel(mapFile);  // Pass the map file path to GamePanel
+            PlayerTank playerTank = gamePanel.getPlayerTank();
+            StatusPanel statusPanel = new StatusPanel(playerTank);// Ensure GamePanel can gain focus
+            Timer timer = new Timer(100, e -> statusPanel.repaint());
+            timer.start();
+            gamePanel.requestFocusInWindow();
+        }
 
     }
 

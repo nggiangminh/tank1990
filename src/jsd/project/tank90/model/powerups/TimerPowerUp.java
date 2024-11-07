@@ -1,10 +1,9 @@
 package jsd.project.tank90.model.powerups;
 
-import jsd.project.tank90.model.Images;
+import jsd.project.tank90.utils.Images;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.ui.GamePanel;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class TimerPowerUp extends PowerUp {

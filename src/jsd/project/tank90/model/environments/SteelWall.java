@@ -1,9 +1,8 @@
 package jsd.project.tank90.model.environments;
 
 import jsd.project.tank90.model.GameObject;
-import jsd.project.tank90.model.Images;
+import jsd.project.tank90.utils.Images;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class SteelWall extends GameObject {

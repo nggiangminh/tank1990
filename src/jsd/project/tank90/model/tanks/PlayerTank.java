@@ -1,6 +1,6 @@
 package jsd.project.tank90.model.tanks;
 
-import jsd.project.tank90.model.Images;
+import jsd.project.tank90.utils.Images;
 
 import java.awt.*;
 
@@ -29,7 +29,7 @@ public class PlayerTank extends Tank {
     private int speed = 1;
     private int bulletSize = 5;
     private int bulletSpeed = 2;
-    private int maxBullets = 2;
+    private int maxBullets = 1;
     private int fireSpeed = 45;
 
     private int bulletDamage = 1;
@@ -186,9 +186,11 @@ public class PlayerTank extends Tank {
 
     @Override
     public Bullet shoot() {
-        if (super.shoot() != null) playShotSound();
-        return super.shoot();
+        Bullet bullet = super.shoot();
+        if (bullet != null) playShotSound();
+        return bullet;
     }
+
 
     public void claimStar() {
         setStar(Math.min(3, getStar() + 1));

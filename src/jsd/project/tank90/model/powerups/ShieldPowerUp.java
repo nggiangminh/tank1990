@@ -1,7 +1,7 @@
 // ShieldPowerUp.java
 package jsd.project.tank90.model.powerups;
 
-import jsd.project.tank90.model.Images;
+import jsd.project.tank90.utils.Images;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.ui.GamePanel;
 

@@ -1,8 +1,7 @@
 package jsd.project.tank90.model.tanks;
 
-import jsd.project.tank90.model.Images;
+import jsd.project.tank90.utils.Images;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class BasicTank extends EnemyTank {
