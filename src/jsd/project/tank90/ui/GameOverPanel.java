@@ -1,5 +1,7 @@
 package jsd.project.tank90.ui;
 
+import jsd.project.tank90.utils.SoundManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +14,7 @@ public class GameOverPanel extends JPanel {
     private final JButton retryButton;
     private final JButton exitButton;
     public final String mapFile;
-
+    private SoundManager soundManager;
     public GameOverPanel(String mapFile) {
         this.mapFile = mapFile;
         setBackground(Color.BLACK);
@@ -70,11 +72,9 @@ public class GameOverPanel extends JPanel {
     }
 
     private void retryGame() {
-        GamePanel gamePanel = new GamePanel(mapFile);
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new LevelSelectionPanel());
-        gamePanel.requestFocusInWindow();
         frame.revalidate();
         frame.repaint();
 

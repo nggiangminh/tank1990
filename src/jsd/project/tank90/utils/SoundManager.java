@@ -34,19 +34,7 @@ public class SoundManager {
         }
     }
 
-    // Tạm dừng nhạc nền
-    public void pauseBackgroundMusic() {
-        if (clip != null && clip.isRunning()) {
-            clip.stop();
-        }
-    }
 
-    // Tiếp tục nhạc nền
-    public void resumeBackgroundMusic() {
-        if (clip != null && !clip.isRunning()) {
-            clip.start();
-        }
-    }
 
     // Điều chỉnh âm lượng (giảm/ tăng âm lượng)
     public void setVolume(float volume) {

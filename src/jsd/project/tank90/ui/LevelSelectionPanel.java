@@ -74,7 +74,6 @@ public class LevelSelectionPanel extends JPanel {
     private void openGamePlay(String mapFile) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
-
         GamePanel gamePanel = new GamePanel(mapFile);  // Pass the map file path to GamePanel
         PlayerTank playerTank = gamePanel.getPlayerTank();
         StatusPanel statusPanel = new StatusPanel(playerTank);// Pass the map file path to GamePanel

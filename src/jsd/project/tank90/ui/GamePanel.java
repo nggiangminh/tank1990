@@ -204,18 +204,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 //        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
         if (playerTank.getLife() == 0) {
             stopGame();
-            soundManager.stopBackgroundMusic();
-            JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            gameFrame.getContentPane().removeAll();
-            gameFrame.getContentPane().add(new GameOverPanel(mapFile));
-            gameFrame.revalidate();
-            gameFrame.repaint();
-            GamePanel gamePanel = new GamePanel(mapFile);  // Pass the map file path to GamePanel
-            PlayerTank playerTank = gamePanel.getPlayerTank();
-            StatusPanel statusPanel = new StatusPanel(playerTank);// Ensure GamePanel can gain focus
-            Timer timer = new Timer(100, e -> statusPanel.repaint());
-            timer.start();
-            gamePanel.requestFocusInWindow();
         }
 
     }
@@ -310,9 +298,20 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void stopGame() {
+        stopMusic();
         running = false;
+        JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        gameFrame.getContentPane().removeAll();
+        gameFrame.getContentPane().add(new GameOverPanel(mapFile));
+        gameFrame.revalidate();
+        gameFrame.repaint();
     }
 
+    public void stopMusic() {
+        if (soundManager != null) {
+            soundManager.stopBackgroundMusic(); // Ensure the background music stops
+        }
+    }
 
     public void activateShovelEffect() {
         List<Point> fortressTiles = getFortressAreaCoordinates();
@@ -408,6 +407,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public PlayerTank getPlayerTank() {
         return playerTank;
     }
+
 
 
 }

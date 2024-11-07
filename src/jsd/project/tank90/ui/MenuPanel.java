@@ -64,9 +64,6 @@ public class MenuPanel extends JPanel {
     }
 
     private void openLevelSelection() {
-
-
-
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new LevelSelectionPanel());
