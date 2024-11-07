@@ -1,19 +1,19 @@
 package jsd.project.tank90.model.tanks;
 
 import jsd.project.tank90.model.GameObject;
+import jsd.project.tank90.model.Images;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public abstract class Tank extends GameObject {
+    protected final Image DEAD_IMAGE = Images.TANK_DEAD;
     protected Direction direction; // Current direction of the tank
     protected List<Bullet> bullets = new ArrayList<>(); // List of bullets fired by the tank
     protected Image tankImage;
-    protected final Image DEAD_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/tank_dead.png").getImage();
-
+    protected boolean toggleImage = false;
     private boolean disabled = false;
 
     public Tank(int x, int y, int size, Direction direction) {
@@ -82,13 +82,27 @@ public abstract class Tank extends GameObject {
         return direction;
     }
 
+    public void toggleImage() {
+        toggleImage = !toggleImage;
+    }
+
     public void setDirection(Direction newDirection) {
         this.direction = newDirection;
-        switch (newDirection) {
-            case UP -> tankImage = getTankUpImage();
-            case DOWN -> tankImage = getTankDownImage();
-            case LEFT -> tankImage = getTankLeftImage();
-            case RIGHT -> tankImage = getTankRightImage();
+        if(toggleImage){
+            switch (newDirection) {
+                case UP -> tankImage = this.getTankUpImage1();
+                case DOWN -> tankImage = this.getTankDownImage1();
+                case LEFT -> tankImage = this.getTankLeftImage1();
+                case RIGHT -> tankImage = this.getTankRightImage1();
+            }
+        }
+        else {
+            switch (newDirection) {
+                case UP -> tankImage = this.getTankUpImage2();
+                case DOWN -> tankImage = this.getTankDownImage2();
+                case LEFT -> tankImage = this.getTankLeftImage2();
+                case RIGHT -> tankImage = this.getTankRightImage2();
+            }
         }
     }
 
@@ -101,6 +115,7 @@ public abstract class Tank extends GameObject {
                 case RIGHT -> x += getSpeed();
             }
             setDirection(direction);
+            toggleImage();
         }
     }
 
@@ -127,13 +142,21 @@ public abstract class Tank extends GameObject {
 
     public abstract int getSpeed();
 
-    protected abstract Image getTankUpImage();
+    protected abstract Image getTankUpImage1();
 
-    protected abstract Image getTankDownImage();
+    protected abstract Image getTankDownImage1();
 
-    protected abstract Image getTankLeftImage();
+    protected abstract Image getTankLeftImage1();
 
-    protected abstract Image getTankRightImage();
+    protected abstract Image getTankRightImage1();
+
+    protected abstract Image getTankUpImage2();
+
+    protected abstract Image getTankDownImage2();
+
+    protected abstract Image getTankLeftImage2();
+
+    protected abstract Image getTankRightImage2();
 
     @Override
     public void render(Graphics g) {

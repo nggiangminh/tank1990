@@ -10,14 +10,12 @@ public abstract class EnemyTank extends Tank {
     private static final int FIRE_INTERVAL = 250; // Number of frames between shots
     private static final int DIRECTION_CHANGE_INTERVAL = 120; // Frames between direction changes
     private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
+    private final boolean isFlashing;  // Flag to enable/disable flashing
     protected Random random = new Random(); // Random generator for movement
-
     private int fireCooldown; // Cooldown timer for firing bullets
     private int directionChangeCooldown = DIRECTION_CHANGE_INTERVAL; // Timer for direction changes
     private boolean showPoints = false; // Flag to show points when tank is destroyed
     private long pointsDisplayStartTime; // Time when points start displaying
-
-    private final boolean isFlashing;  // Flag to enable/disable flashing
     private boolean flashToggle = false; // Toggle for switching between normal and flashing images
     private int frameCounter = 0;        // Frame counter for toggling effect
 
@@ -25,18 +23,28 @@ public abstract class EnemyTank extends Tank {
     public EnemyTank(int x, int y, int size, Direction direction) {
         super(x, y, size, direction); // Initial position, size, and default direction
         this.fireCooldown = FIRE_INTERVAL;
-//        isFlashing = random.nextBoolean();
-        isFlashing = true;
+        isFlashing = random.nextBoolean();
     }
+
     public void setDirection(Direction newDirection) {
         this.direction = newDirection;
-        switch (newDirection) {
-            case UP -> tankImage = !flashToggle ? getTankUpImage() : getTankUpFlashImage();
-            case DOWN -> tankImage = !flashToggle ? getTankDownImage() : getTankDownFlashImage();
-            case LEFT -> tankImage = !flashToggle ? getTankLeftImage() : getTankLeftFlashImage();
-            case RIGHT -> tankImage = !flashToggle ? getTankRightImage() : getTankRightFlashImage();
+        if (toggleImage) {
+            switch (newDirection) {
+                case UP -> tankImage = !flashToggle ? this.getTankUpImage1() : getTankUpFlashImage1();
+                case DOWN -> tankImage = !flashToggle ? this.getTankDownImage1() : getTankDownFlashImage1();
+                case LEFT -> tankImage = !flashToggle ? this.getTankLeftImage1() : getTankLeftFlashImage1();
+                case RIGHT -> tankImage = !flashToggle ? this.getTankRightImage1() : getTankRightFlashImage1();
+            }
+        } else {
+            switch (newDirection) {
+                case UP -> tankImage = !flashToggle ? this.getTankUpImage2() : getTankUpFlashImage2();
+                case DOWN -> tankImage = !flashToggle ? this.getTankDownImage2() : getTankDownFlashImage2();
+                case LEFT -> tankImage = !flashToggle ? this.getTankLeftImage2() : getTankLeftFlashImage2();
+                case RIGHT -> tankImage = !flashToggle ? this.getTankRightImage2() : getTankRightFlashImage2();
+            }
         }
     }
+
     // Return a random direction
     public Direction randomDirection() {
         Direction[] directions = Direction.values();
@@ -88,6 +96,7 @@ public abstract class EnemyTank extends Tank {
     public boolean isFlashing() {
         return isFlashing;
     }
+
     // Update cooldown for shooting and other enemy behaviors
     public void updateCooldown() {
         if (fireCooldown > 0) {
@@ -136,10 +145,21 @@ public abstract class EnemyTank extends Tank {
     }
 
     // Abstract methods for flashing images
-    protected abstract Image getTankUpFlashImage();
-    protected abstract Image getTankDownFlashImage();
-    protected abstract Image getTankLeftFlashImage();
-    protected abstract Image getTankRightFlashImage();
+    protected abstract Image getTankUpFlashImage1();
+
+    protected abstract Image getTankDownFlashImage1();
+
+    protected abstract Image getTankLeftFlashImage1();
+
+    protected abstract Image getTankRightFlashImage1();
+    protected abstract Image getTankUpFlashImage2();
+
+    protected abstract Image getTankDownFlashImage2();
+
+    protected abstract Image getTankLeftFlashImage2();
+
+    protected abstract Image getTankRightFlashImage2();
+
     // Render the tank and points if dead
     @Override
     public void render(Graphics g) {

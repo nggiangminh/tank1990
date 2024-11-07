@@ -1,18 +1,30 @@
 package jsd.project.tank90.model.tanks;
 
+import jsd.project.tank90.model.Images;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class FastTank extends EnemyTank {
 
-    private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_up.png").getImage();
-    private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_down.png").getImage();
-    private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_left.png").getImage();
-    private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_right.png").getImage();
-    private final Image TANK_UP_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_up_f.png").getImage();
-    private final Image TANK_DOWN_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_down_f.png").getImage();
-    private final Image TANK_LEFT_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_left_f.png").getImage();
-    private final Image TANK_RIGHT_FLASH = new ImageIcon("src/jsd/project/tank90/resources/images/tank_fast_right_f.png").getImage();
+    private final Image TANK_UP_1 = Images.FAST_UP_1;
+    private final Image TANK_DOWN_1 = Images.FAST_DOWN_1;
+    private final Image TANK_LEFT_1 = Images.FAST_LEFT_1;
+    private final Image TANK_RIGHT_1 = Images.FAST_RIGHT_1;
+    private final Image TANK_UP_2 = Images.FAST_UP_2;
+    private final Image TANK_DOWN_2 = Images.FAST_DOWN_2;
+    private final Image TANK_LEFT_2 = Images.FAST_LEFT_2;
+    private final Image TANK_RIGHT_2 = Images.FAST_RIGHT_2;
+
+    private final Image TANK_UP_1_F = Images.FAST_UP_1_F;
+    private final Image TANK_DOWN_1_F = Images.FAST_DOWN_1_F;
+    private final Image TANK_LEFT_1_F = Images.FAST_LEFT_1_F;
+    private final Image TANK_RIGHT_1_F = Images.FAST_RIGHT_1_F;
+    private final Image TANK_UP_2_F = Images.FAST_UP_2_F;
+    private final Image TANK_DOWN_2_F = Images.FAST_DOWN_2_F;
+    private final Image TANK_LEFT_2_F = Images.FAST_LEFT_2_F;
+    private final Image TANK_RIGHT_2_F = Images.FAST_RIGHT_2_F;
+
     private final int points = 200;
     private final int speed = 3;
     private final int bulletSize = 5;
@@ -53,43 +65,83 @@ public class FastTank extends EnemyTank {
     }
 
     @Override
-    protected Image getTankUpImage() {
-        return TANK_UP;
+    protected Image getTankUpImage1() {
+        return TANK_UP_1;
     }
 
     @Override
-    protected Image getTankDownImage() {
-        return TANK_DOWN;
+    protected Image getTankDownImage1() {
+        return TANK_DOWN_1;
     }
 
     @Override
-    protected Image getTankLeftImage() {
-        return TANK_LEFT;
+    protected Image getTankLeftImage1() {
+        return TANK_LEFT_1;
     }
 
     @Override
-    protected Image getTankRightImage() {
-        return TANK_RIGHT;
+    protected Image getTankRightImage1() {
+        return TANK_RIGHT_1;
     }
 
     @Override
-    protected Image getTankUpFlashImage() {
-        return TANK_UP_FLASH;
+    protected Image getTankUpFlashImage1() {
+        return TANK_UP_1_F;
     }
 
     @Override
-    protected Image getTankDownFlashImage() {
-        return TANK_DOWN_FLASH;
+    protected Image getTankDownFlashImage1() {
+        return TANK_DOWN_1_F;
     }
 
     @Override
-    protected Image getTankLeftFlashImage() {
-        return TANK_LEFT_FLASH;
+    protected Image getTankLeftFlashImage1() {
+        return TANK_LEFT_1_F;
     }
 
     @Override
-    protected Image getTankRightFlashImage() {
-        return TANK_RIGHT_FLASH;
+    protected Image getTankRightFlashImage1() {
+        return TANK_RIGHT_1_F;
+    }
+
+    @Override
+    protected Image getTankUpImage2() {
+        return TANK_UP_2;
+    }
+
+    @Override
+    protected Image getTankDownImage2() {
+        return TANK_DOWN_2;
+    }
+
+    @Override
+    protected Image getTankLeftImage2() {
+        return TANK_LEFT_2;
+    }
+
+    @Override
+    protected Image getTankRightImage2() {
+        return TANK_RIGHT_2;
+    }
+
+    @Override
+    protected Image getTankUpFlashImage2() {
+        return TANK_UP_2_F;
+    }
+
+    @Override
+    protected Image getTankDownFlashImage2() {
+        return TANK_DOWN_2_F;
+    }
+
+    @Override
+    protected Image getTankLeftFlashImage2() {
+        return TANK_LEFT_2_F;
+    }
+
+    @Override
+    protected Image getTankRightFlashImage2() {
+        return TANK_RIGHT_2_F;
     }
 
     public int getPoints() {

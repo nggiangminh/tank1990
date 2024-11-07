@@ -1,13 +1,14 @@
 package jsd.project.tank90.model.environments;
 
 import jsd.project.tank90.model.GameObject;
+import jsd.project.tank90.model.Images;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SteelWall extends GameObject {
 
-    private final Image STEEL_IMAGE = new ImageIcon("src/jsd/project/tank90/resources/images/wall_steel.png").getImage();
+    private final Image STEEL_IMAGE = Images.STEEL;
 
     private boolean isDestructable = true;
 

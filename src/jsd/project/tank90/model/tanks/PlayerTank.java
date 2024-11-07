@@ -1,6 +1,7 @@
 package jsd.project.tank90.model.tanks;
 
-import javax.swing.*;
+import jsd.project.tank90.model.Images;
+
 import java.awt.*;
 
 import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
@@ -9,12 +10,16 @@ import static jsd.project.tank90.utils.SoundManager.playShotSound;
 
 public class PlayerTank extends Tank {
 
-    private static final Image SHIELD_IMAGE_1 = new ImageIcon("src/jsd/project/tank90/resources/images/shield_1.png").getImage();
-    private static final Image SHIELD_IMAGE_2 = new ImageIcon("src/jsd/project/tank90/resources/images/shield_2.png").getImage();
-    private final Image TANK_UP = new ImageIcon("src/jsd/project/tank90/resources/images/playerTank_up.png").getImage();
-    private final Image TANK_DOWN = new ImageIcon("src/jsd/project/tank90/resources/images/playerTank_down.png").getImage();
-    private final Image TANK_LEFT = new ImageIcon("src/jsd/project/tank90/resources/images/playerTank_left.png").getImage();
-    private final Image TANK_RIGHT = new ImageIcon("src/jsd/project/tank90/resources/images/playerTank_right.png").getImage();
+    private static final Image SHIELD_IMAGE_1 = Images.SHIELD_1;
+    private static final Image SHIELD_IMAGE_2 = Images.SHIELD_2;
+    private final Image TANK_UP_1 = Images.PLAYER_UP_1;
+    private final Image TANK_DOWN_1 = Images.PLAYER_DOWN_1;
+    private final Image TANK_LEFT_1 = Images.PLAYER_LEFT_1;
+    private final Image TANK_RIGHT_1 = Images.PLAYER_RIGHT_1;
+    private final Image TANK_UP_2 = Images.PLAYER_UP_2;
+    private final Image TANK_DOWN_2 = Images.PLAYER_DOWN_2;
+    private final Image TANK_LEFT_2 = Images.PLAYER_LEFT_2;
+    private final Image TANK_RIGHT_2 = Images.PLAYER_RIGHT_2;
     private final int spawnX;
     private final int spawnY;
     private int lifePlusPoints = 0;
@@ -33,11 +38,12 @@ public class PlayerTank extends Tank {
 
     private boolean shielded = false;
     private boolean shieldToggle = false; // Used to alternate between the two images
+
     public PlayerTank(int x, int y, int size) {
         super(x, y, size, Direction.UP);
         this.spawnX = x;
         this.spawnY = y;
-        this.tankImage = TANK_UP;
+        this.tankImage = TANK_UP_1;
         activateShield();
     }
 
@@ -79,23 +85,43 @@ public class PlayerTank extends Tank {
     }
 
     @Override
-    public Image getTankUpImage() {
-        return TANK_UP;
+    public Image getTankUpImage1() {
+        return TANK_UP_1;
     }
 
     @Override
-    public Image getTankDownImage() {
-        return TANK_DOWN;
+    public Image getTankDownImage1() {
+        return TANK_DOWN_1;
     }
 
     @Override
-    public Image getTankLeftImage() {
-        return TANK_LEFT;
+    public Image getTankLeftImage1() {
+        return TANK_LEFT_1;
     }
 
     @Override
-    public Image getTankRightImage() {
-        return TANK_RIGHT;
+    public Image getTankRightImage1() {
+        return TANK_RIGHT_1;
+    }
+
+    @Override
+    protected Image getTankUpImage2() {
+        return TANK_UP_2;
+    }
+
+    @Override
+    protected Image getTankDownImage2() {
+        return TANK_DOWN_2;
+    }
+
+    @Override
+    protected Image getTankLeftImage2() {
+        return TANK_LEFT_2;
+    }
+
+    @Override
+    protected Image getTankRightImage2() {
+        return TANK_RIGHT_2;
     }
 
     public int getLife() {

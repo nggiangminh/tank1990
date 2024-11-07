@@ -1,14 +1,14 @@
 // ShieldPowerUp.java
 package jsd.project.tank90.model.powerups;
 
+import jsd.project.tank90.model.Images;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.ui.GamePanel;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class ShieldPowerUp extends PowerUp {
-    private static final Image SHIELD_POWER_UP = new ImageIcon("src/jsd/project/tank90/resources/images/powerup_helmet.png").getImage();
+    private static final Image SHIELD_POWER_UP = Images.SHIELD_PU;
 
     public ShieldPowerUp(int x, int y, int size) {
         super(x, y, size);
