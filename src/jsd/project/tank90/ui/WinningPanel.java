@@ -22,8 +22,8 @@ public class WinningPanel extends JPanel {
         setBackground(new Color(20, 20, 20));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        gameOverImage = new ImageIcon("src/jsd/project/tank90/resources/images/game_over.png").getImage();
-        Image scaledGameOverImage = gameOverImage.getScaledInstance(250, 100, Image.SCALE_SMOOTH);
+        gameOverImage = new ImageIcon("src/jsd/project/tank90/resources/images/Game_Win.png").getImage();
+        Image scaledGameOverImage = gameOverImage.getScaledInstance(500, 200, Image.SCALE_SMOOTH);
 
         // Create and style killed tanks information labels
         JLabel titleLabel = new JLabel(new ImageIcon(scaledGameOverImage));
@@ -57,7 +57,7 @@ public class WinningPanel extends JPanel {
         labelPanel.add(Box.createVerticalStrut(20));
 
         // Tank kill labels
-        String[] labels = {"Basic Tanks Killed: " + killedBasicTanks, "Fast  Tanks Killed: " + killedFastTanks, "Power Tanks Killed: " + killedPowerTanks, "Armor Tanks Killed: " + killedArmorTanks, "Total Tanks Killed: " + totalKilled};
+        String[] labels = {"Basic Tanks Killed: " + killedBasicTanks, "Fast Tanks Killed: " + killedFastTanks, "Power Tanks Killed: " + killedPowerTanks, "Armor Tanks Killed: " + killedArmorTanks, "Total Tanks Killed: " + totalKilled};
 
         for (String text : labels) {
             JLabel label = new JLabel(text);
@@ -75,9 +75,10 @@ public class WinningPanel extends JPanel {
         // Next Level Button
         JButton nextLevelButton = new JButton("Next Level");
         styleButton(nextLevelButton);
+        nextLevelButton.setAlignmentX(CENTER_ALIGNMENT); // Center alignment
         add(nextLevelButton);
         nextLevelButton.addActionListener(e -> nextLevel());
-
+        add(Box.createVerticalStrut(20)); // Vertical spacing below button
     }
 
     private void styleButton(JButton button) {
@@ -85,7 +86,10 @@ public class WinningPanel extends JPanel {
         button.setForeground(Color.WHITE);
         button.setBackground(new Color(60, 60, 60));
         button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 2), BorderFactory.createEmptyBorder(5, 15, 5, 15)));
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.WHITE, 2),
+                BorderFactory.createEmptyBorder(10, 20, 10, 20) // Extra padding for better vertical styling
+        ));
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
@@ -102,6 +106,5 @@ public class WinningPanel extends JPanel {
         gamePanel.requestFocusInWindow();
         frame.revalidate();
         frame.repaint();
-
     }
 }
