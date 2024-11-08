@@ -17,6 +17,11 @@ public class LevelSelectionPanel extends JPanel {
             "src/jsd/project/tank90/resources/map_stage/map_3.txt",
             "src/jsd/project/tank90/resources/map_stage/map_4.txt",
             "src/jsd/project/tank90/resources/map_stage/map_5.txt",
+            "src/jsd/project/tank90/resources/map_stage/map_6.txt",
+            "src/jsd/project/tank90/resources/map_stage/map_7.txt",
+            "src/jsd/project/tank90/resources/map_stage/map_8.txt",
+            "src/jsd/project/tank90/resources/map_stage/map_9.txt",
+            "src/jsd/project/tank90/resources/map_stage/map_10.txt"
     };
 
     public LevelSelectionPanel() {
@@ -31,9 +36,9 @@ public class LevelSelectionPanel extends JPanel {
         arrowLabel.setBounds(50, 80, 20, 20);
         add(arrowLabel);
 
-        levelLabels = new JLabel[5];
-        String[] levelNames = {"Level 1", "Level 2", "Level 3", "Level 4", "Level 5"};
-        for (int i = 0; i < 5; i++) {
+        levelLabels = new JLabel[10];
+        String[] levelNames = {"Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8", "Level 9","Level 10"};
+        for (int i = 0; i < 10; i++) {
             levelLabels[i] = new JLabel(levelNames[i]);
             levelLabels[i].setForeground(Color.LIGHT_GRAY);
             levelLabels[i].setFont(new Font("Monospaced", Font.BOLD, 16));

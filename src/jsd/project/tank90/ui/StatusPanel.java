@@ -23,8 +23,18 @@ public class StatusPanel extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 18));
 
-        // Display the player's life
+        // Display the player's life and points
         g.drawString("Lives: " + lifeCount, 20, 50);
         g.drawString("Points: " + playerTank.getPoints(), 20, 100);
+
+        // Add controls guide below statistics
+        g.setFont(new Font("Arial", Font.PLAIN, 14));
+        g.drawString("Controls:", 20, 150);
+        g.drawString("Up Arrow - Move Up", 20, 180);
+        g.drawString("Down Arrow - Move Down", 20, 200);
+        g.drawString("Left Arrow - Move Left", 20, 220);
+        g.drawString("Right Arrow - Move Right", 20, 240);
+        g.drawString("Space - Shoot", 20, 270);
+        g.drawString("P - Pause", 20, 290);
     }
 }

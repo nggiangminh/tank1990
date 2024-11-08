@@ -63,7 +63,7 @@ public class GameOverPanel extends JPanel {
         // Tank kill labels
         String[] labels = {
                 "Basic Tanks Killed: " + killedBasicTanks,
-                "Fast Tanks Killed: " + killedFastTanks,
+                "Fast  Tanks Killed: " + killedFastTanks,
                 "Power Tanks Killed: " + killedPowerTanks,
                 "Armor Tanks Killed: " + killedArmorTanks,
                 "Total Tanks Killed: " + totalKilled

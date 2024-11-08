@@ -115,6 +115,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             return ;
         }
 
+        if (playerTank.getPoints() >= 300) {
+            WinningPanel winningScreen = new WinningPanel();
+            JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            winningScreen.displayWinningScreen(gameFrame);  // Display the winning screen
+            stopMusic();
+            running = false;
+            return;
+        }
+
         enemySpawner.spawnEnemy();
         for (Explosion explosion : explosions) {
             explosion.update();
@@ -441,4 +450,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
 
     }
+
+
+
+
 }
