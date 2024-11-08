@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.List;
 
 public class WinningPanel extends JPanel {
+
     public final int mapLevel;
     private final Image gameOverImage;
     private final List<EnemyTank> killedEnemies; // Store the killed enemies list
@@ -97,7 +98,7 @@ public class WinningPanel extends JPanel {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
         GamePanel gamePanel = new GamePanel(mapLevel+1);  // Pass the map file path to GamePanel
-        PlayerTank playerTank = gamePanel.getPlayerTank();
+        gamePanel.setPlayerTank(playerTank);
         StatusPanel statusPanel = new StatusPanel(playerTank);// Pass the map file path to GamePanel
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(statusPanel, BorderLayout.EAST);

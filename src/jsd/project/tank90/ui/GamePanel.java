@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int tileSize = 20;
     private final int tankSize = tileSize * 3 / 2;
     private final List<String> mapData;
-    private final PlayerTank playerTank;
+    private PlayerTank playerTank;
     private final int MAX_SLIDE_MOMENTUM = 30; // Maximum frames for sliding
     private final int[] playerSpawnPos = new int[]{200, 500};
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
@@ -327,7 +327,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         running = false;
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gameFrame.getContentPane().removeAll();
-        if (winning) gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies, playerTank));
+        if (winning && mapLevel < 10) gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies, playerTank));
         else gameFrame.getContentPane().add(new GameOverPanel(mapLevel, killedEnemies, playerTank));
         gameFrame.revalidate();
         gameFrame.repaint();
@@ -448,5 +448,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
-
+    public void setPlayerTank(PlayerTank playerTank) {
+        this.playerTank = playerTank;
+    }
 }
