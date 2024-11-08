@@ -269,6 +269,12 @@ public class PlayerTank extends Tank {
         return shieldToggle ? SHIELD_IMAGE_1 : SHIELD_IMAGE_2;
     }
 
+    public void spawn(){
+        this.x = spawnX;
+        this.y = spawnY;
+        setDirection(Direction.UP);
+        activateShield();
+    }
     private void respawn() {
         enable();
         setLife(getLife() - 1);

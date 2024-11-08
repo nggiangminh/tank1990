@@ -99,6 +99,7 @@ public class WinningPanel extends JPanel {
         frame.getContentPane().removeAll();
         GamePanel gamePanel = new GamePanel(mapLevel+1);  // Pass the map file path to GamePanel
         gamePanel.setPlayerTank(playerTank);
+        playerTank.spawn();
         StatusPanel statusPanel = new StatusPanel(playerTank);// Pass the map file path to GamePanel
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(statusPanel, BorderLayout.EAST);
