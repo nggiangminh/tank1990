@@ -25,7 +25,7 @@ public class PlayerTank extends Tank {
     private int lifePlusPoints = 0;
     private int points = 0;
 
-    private int life = 1;
+    private int life = 4;
     private int speed = 1;
     private int bulletSize = 5;
     private int bulletSpeed = 2;

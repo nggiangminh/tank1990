@@ -62,6 +62,10 @@ public class EnemySpawner {
         });
     }
 
+    public int getEnemyLeft() {
+        return enemyLeft;
+    }
+
     // Inner class to handle spawning effect and cooldown
     private class SpawnEffect {
         EnemyTank tank;
@@ -89,4 +93,5 @@ public class EnemySpawner {
             return spawnFrames <= 0;
         }
     }
+
 }

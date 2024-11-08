@@ -37,6 +37,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private int slideMomentum = 0; // Number of frames to continue sliding
     private List<GameObject> environmentObjects;
     private boolean running = true;
+    private boolean winning = false;
     // Movement and firing control booleans
     private boolean isUp = false;
     private boolean isDown = false;
@@ -115,14 +116,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             return ;
         }
 
-        if (playerTank.getPoints() >= 300) {
-            WinningPanel winningScreen = new WinningPanel();
-            JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            winningScreen.displayWinningScreen(gameFrame);  // Display the winning screen
-            stopMusic();
-            running = false;
-            return;
-        }
 
         enemySpawner.spawnEnemy();
         for (Explosion explosion : explosions) {
@@ -336,7 +329,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         running = false;
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gameFrame.getContentPane().removeAll();
-        gameFrame.getContentPane().add(new GameOverPanel(mapFile, killedEnemies,playerTank));
+        if (winning) gameFrame.getContentPane().add(new WinningPanel(mapFile, killedEnemies,playerTank));
+        else gameFrame.getContentPane().add(new GameOverPanel(mapFile, killedEnemies,playerTank));
         gameFrame.revalidate();
         gameFrame.repaint();
     }
@@ -445,10 +439,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         for (EnemyTank enemy : enemyTanks)
             if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
 //        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
-        if (playerTank.getLife() == 0) {
+        if (playerTank.getLife() == 0)
+            stopGame();
+
+        if (enemyTanks.size() == 0 && enemySpawner.getEnemyLeft() == 0) {
+            winning = true;
             stopGame();
         }
-
     }
 
 
