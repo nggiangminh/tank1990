@@ -4,7 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="cap nhat shovel" />
+    <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="cap nhat shovel">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/Base.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/environments/Base.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_10.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_9.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/CollisionHandling.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/CollisionHandling.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/EnemySpawner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/EnemySpawner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/Images.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/Images.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/environments/Base.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/EnemyTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/EnemyTank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_10.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_6.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_7.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_7.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_8.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_8.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_9.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_9.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/utils/CollisionHandling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/utils/CollisionHandling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/utils/EnemySpawner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/utils/EnemySpawner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/utils/Images.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/utils/Images.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +87,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/nguye/Videos/Tank1990",
+    "last_opened_file_path": "C:/Users/nhda6/Documents/HOC/F24/JSD/tank1990/src/jsd/project/tank90/resources/images",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
@@ -71,10 +96,10 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\tank1990\src\jsd\project\tank90\resources\images" />
       <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\resources\sounds" />
       <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\resources\images" />
       <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\resources\map_stage" />
-      <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\tank1990\src\jsd\project\tank90\resources\images" />
       <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">

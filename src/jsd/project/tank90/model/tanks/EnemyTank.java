@@ -55,7 +55,7 @@ public abstract class EnemyTank extends Tank {
     public void changeDirection() {
         if (directionChangeCooldown <= 0) {
             setDirection(randomDirection());
-            directionChangeCooldown = random.nextInt(100,DIRECTION_CHANGE_INTERVAL);
+            directionChangeCooldown = random.nextInt(100, DIRECTION_CHANGE_INTERVAL);
         } else {
             directionChangeCooldown--;
         }

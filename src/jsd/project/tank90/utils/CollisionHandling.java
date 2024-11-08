@@ -3,7 +3,10 @@ package jsd.project.tank90.utils;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.model.tanks.*;
+import jsd.project.tank90.model.tanks.Bullet;
+import jsd.project.tank90.model.tanks.EnemyTank;
+import jsd.project.tank90.model.tanks.PlayerTank;
+import jsd.project.tank90.model.tanks.Tank;
 import jsd.project.tank90.ui.GamePanel;
 
 import java.awt.*;
@@ -26,12 +29,10 @@ public class CollisionHandling {
                 GameObject environmentObj = envIterator.next();
 
                 if (environmentObj instanceof Base && bulletBounds.intersects(environmentObj.getBounds())) {
-                    // Collision with BrickWall: Remove both the bullet and the brick
-                    bullet.setDamage(bullet.getDamage() - 1);
-                    if (bullet.getDamage() == 0) {
-                        explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
-                        bulletIterator.remove();
-                    }
+                    // Collision with Base: Remove bullet, change Base
+                    ((Base) environmentObj).destroy();
+                    explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
+                    bulletIterator.remove();
                     return true;
                 }
             }
@@ -152,6 +153,7 @@ public class CollisionHandling {
         }
         return false;
     }
+
     public static boolean checkBulletOnIce(Bullet bullet, List<GameObject> environmentObjects) {
         Rectangle bulletBounds = bullet.getBounds();
 
@@ -164,6 +166,7 @@ public class CollisionHandling {
         }
         return false;
     }
+
     public static void checkPlayerEnemyCollision(PlayerTank playerTank, List<EnemyTank> enemyTanks, List<Explosion> explosions) {
         Rectangle playerTankBounds = playerTank.getBounds();
         for (EnemyTank enemy : enemyTanks) {

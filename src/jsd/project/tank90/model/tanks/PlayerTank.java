@@ -12,6 +12,8 @@ public class PlayerTank extends Tank {
 
     private static final Image SHIELD_IMAGE_1 = Images.SHIELD_1;
     private static final Image SHIELD_IMAGE_2 = Images.SHIELD_2;
+    private final int spawnX;
+    private final int spawnY;
     private Image TANK_UP_1 = Images.PLAYER_UP_1_S1;
     private Image TANK_DOWN_1 = Images.PLAYER_DOWN_1_S1;
     private Image TANK_LEFT_1 = Images.PLAYER_LEFT_1_S1;
@@ -20,8 +22,6 @@ public class PlayerTank extends Tank {
     private Image TANK_DOWN_2 = Images.PLAYER_DOWN_2_S1;
     private Image TANK_LEFT_2 = Images.PLAYER_LEFT_2_S1;
     private Image TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S1;
-    private final int spawnX;
-    private final int spawnY;
     private int lifePlusPoints = 0;
     private int points = 0;
 
@@ -38,6 +38,7 @@ public class PlayerTank extends Tank {
 
     private boolean shielded = false;
     private boolean shieldToggle = false; // Used to alternate between the two images
+    private boolean baseDestroyed = false;
 
     public PlayerTank(int x, int y, int size) {
         super(x, y, size, Direction.UP);
@@ -250,10 +251,17 @@ public class PlayerTank extends Tank {
     public boolean isShielded() {
         return shielded;
     }
+    public boolean destroyBase() {
+        return baseDestroyed = true;
+    }
 
     @Override
     public void render(Graphics g) {
-        super.render(g); // Render the tank
+        if (isDisabled() && !baseDestroyed) g.drawImage(DEAD_IMAGE, x, y, size, size, null);
+        else {
+            g.drawImage(tankImage, x, y, size, size, null);
+            renderBullets(g); // Render bullets fired by the player tank
+        }
         checkBonusLife();
         // Render shield effect if active
         if (shielded) {
@@ -269,12 +277,13 @@ public class PlayerTank extends Tank {
         return shieldToggle ? SHIELD_IMAGE_1 : SHIELD_IMAGE_2;
     }
 
-    public void spawn(){
+    public void spawn() {
         this.x = spawnX;
         this.y = spawnY;
         setDirection(Direction.UP);
         activateShield();
     }
+
     private void respawn() {
         enable();
         setLife(getLife() - 1);
@@ -290,7 +299,7 @@ public class PlayerTank extends Tank {
             try {
                 disable();
                 playExplosionSound();
-                Thread.sleep(3000);
+                Thread.sleep(1000);
                 respawn();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

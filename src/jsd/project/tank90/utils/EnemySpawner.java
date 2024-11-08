@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class EnemySpawner {
-    private int enemyLeft = 5;
+    private int enemyLeft = 20;
     private final List<EnemyTank> enemyTanks; // List to hold active enemies
     private final List<SpawnEffect> spawnQueue = new ArrayList<>(); // Temporary list for spawn effects
     private final int DELAY_FRAMES = 30;

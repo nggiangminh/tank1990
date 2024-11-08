@@ -9,6 +9,7 @@ public class Images {
 
     //Environment images
     public static final Image BASE = new ImageIcon(folderPath + "base.png").getImage();
+    public static final Image BASE_DESTROYED = new ImageIcon(folderPath + "base_destroyed.png").getImage();
     public static final Image BRICK = new ImageIcon(folderPath + "brick.png").getImage();
     public static final Image ICE = new ImageIcon(folderPath + "ice.png").getImage();
     public static final Image STEEL = new ImageIcon(folderPath + "steel.png").getImage();
