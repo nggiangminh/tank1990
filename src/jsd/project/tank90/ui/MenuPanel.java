@@ -24,7 +24,7 @@ public class MenuPanel extends JPanel {
 
         // Load images
         titleImage = new ImageIcon("src/jsd/project/tank90/resources/images/battle_city.png").getImage();
-        tankIcon = new ImageIcon("src/jsd/project/tank90/resources/images/playerTank_right.png").getImage();
+        tankIcon = new ImageIcon("src/jsd/project/tank90/resources/images/tank_player_right_1_s1.png").getImage();
 
         // Timer for smooth animation
         Timer timer = new Timer(20, e -> {

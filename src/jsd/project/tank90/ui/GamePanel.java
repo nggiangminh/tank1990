@@ -46,15 +46,19 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
 
+
+    private boolean isPaused = false;
+    private boolean pPressed = false;
+    private final PauseOverlay pauseOverlay;
+
+
+
     public GamePanel(String mapFile) {
         setBackground(Color.BLACK);
         this.mapFile = mapFile;
         addKeyListener(this);
         setFocusable(true);  // Ensure GamePanel can gain focus
         requestFocusInWindow();  // Request focus immediately upon creation
-//        MapLoader mapLoader = new MapLoader();
-//        mapLoader.loadMap("src/jsd/project/tank90/resources/map_stage/map_1.txt");
-//        mapData = mapLoader.getMapData();
 
         MapLoader mapLoader = new MapLoader();
         mapLoader.loadMap(mapFile);  // Load the specific map file
@@ -68,6 +72,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         soundManager.setVolume(-35.0f);
 
         powerUps.add(new GrenadePowerUp(220, 450, 30));
+
+        // Initialize and add the pause overlay
+        pauseOverlay = new PauseOverlay();
+        pauseOverlay.setBounds(0, 0, getWidth(), getHeight());
+        add(pauseOverlay);
+
+
         setFocusable(true);
         addKeyListener(this);
         // Start the game loop in a new thread
@@ -99,6 +110,11 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void updateGame() {
+
+        if (isPaused) {
+            return ;
+        }
+
         enemySpawner.spawnEnemy();
         for (Explosion explosion : explosions) {
             explosion.update();
@@ -202,8 +218,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         if (fireCooldown > 0) {
             fireCooldown--;
         }
-        checkStopGame();
 
+        checkStopGame();
     }
 
     @Override
@@ -246,6 +262,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 environmentObj.render(g);
             }
         }
+        pauseOverlay.setBounds(0, 0, getWidth(), getHeight());
     }
 
     @Override
@@ -258,6 +275,14 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             case KeyEvent.VK_LEFT -> isLeft = true;
             case KeyEvent.VK_RIGHT -> isRight = true;
             case KeyEvent.VK_SPACE -> isFire = true;
+            case KeyEvent.VK_P -> {
+                if (!pPressed) {  // Only trigger if "P" wasn't already pressed
+                    isPaused = !isPaused;
+                    pauseOverlay.togglePause(isPaused);// Toggle pause state
+                    System.out.println("OK");  // Print "OK"
+                    pPressed = true;  // Set the flag to prevent repeat actions
+                }
+            }
 
         }
 
@@ -274,6 +299,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             case KeyEvent.VK_LEFT -> isLeft = false;
             case KeyEvent.VK_RIGHT -> isRight = false;
             case KeyEvent.VK_SPACE -> isFire = false;
+            case KeyEvent.VK_P -> pPressed = false;
         }
     }
 
@@ -284,9 +310,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     @Override
     public void run() {
         while (running) {
-            updateGame();   // Update game elements
-            repaint();      // Redraw the screen
-
+            if(!isPaused) {
+                updateGame();   // Update game elements
+                repaint();      // Redraw the screen
+            }
             try {
                 Thread.sleep(1000 / FPS); // Pause to maintain 60 FPS
             } catch (InterruptedException e) {
@@ -300,7 +327,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         running = false;
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gameFrame.getContentPane().removeAll();
-        gameFrame.getContentPane().add(new GameOverPanel(mapFile, killedEnemies));
+        gameFrame.getContentPane().add(new GameOverPanel(mapFile, killedEnemies,playerTank));
         gameFrame.revalidate();
         gameFrame.repaint();
     }

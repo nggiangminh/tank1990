@@ -8,13 +8,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class LevelSelectionPanel extends JPanel {
-    private JLabel[] levelLabels;
-    private JLabel arrowLabel;
+    private final JLabel[] levelLabels;
+    private final JLabel arrowLabel;
     private int currentIndex = 0;
     private final String[] mapFiles = {
             "src/jsd/project/tank90/resources/map_stage/map_1.txt",
             "src/jsd/project/tank90/resources/map_stage/map_2.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_ice.txt"
+            "src/jsd/project/tank90/resources/map_stage/map_3.txt",
+            "src/jsd/project/tank90/resources/map_stage/map_4.txt",
+            "src/jsd/project/tank90/resources/map_stage/map_5.txt",
     };
 
     public LevelSelectionPanel() {
@@ -29,9 +31,9 @@ public class LevelSelectionPanel extends JPanel {
         arrowLabel.setBounds(50, 80, 20, 20);
         add(arrowLabel);
 
-        levelLabels = new JLabel[3];
-        String[] levelNames = {"Level 1", "Level 2", "Level 3"};
-        for (int i = 0; i < 3; i++) {
+        levelLabels = new JLabel[5];
+        String[] levelNames = {"Level 1", "Level 2", "Level 3", "Level 4", "Level 5"};
+        for (int i = 0; i < 5; i++) {
             levelLabels[i] = new JLabel(levelNames[i]);
             levelLabels[i].setForeground(Color.LIGHT_GRAY);
             levelLabels[i].setFont(new Font("Monospaced", Font.BOLD, 16));

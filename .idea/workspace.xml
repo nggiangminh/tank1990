@@ -26,6 +26,7 @@
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/BasicTank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/BasicTank.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Bullet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Direction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/EnemyTank$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/EnemyTank$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/EnemyTank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/EnemyTank.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Explosion.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Explosion.class" afterDir="false" />
@@ -34,13 +35,17 @@
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PowerTank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PowerTank.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/Tank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/playerTank_down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/playerTank_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/playerTank_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/playerTank_up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/alien10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/alien5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/tank_armor_down_f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/tank_armor_left_f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/tank_armor_right_f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/images/tank_armor_up_f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_6.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/Frame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/Frame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel$2.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GameOverPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/LevelSelectionPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/LevelSelectionPanel$1.class" afterDir="false" />
@@ -54,34 +59,12 @@
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/Images.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/Images.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/PowerUpSpawner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/PowerUpSpawner.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/SoundManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/SoundManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/GrenadePowerUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/GrenadePowerUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/ShieldPowerUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/ShieldPowerUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/ShovelPowerUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/ShovelPowerUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/StarPowerUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/StarPowerUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/TankPowerUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/TankPowerUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/TimerPowerUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/powerups/TimerPowerUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/ArmorTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/ArmorTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/alien10.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/alien5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/bullet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/playerTank_down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/playerTank_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/playerTank_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/playerTank_up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_down_f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_left_f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_right_f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/tank_armor_up_f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/Frame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GameOverPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GameOverPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/utils/EnemySpawner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/utils/EnemySpawner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/utils/Images.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/utils/Images.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/LevelSelectionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/LevelSelectionPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/MenuPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,10 +115,10 @@
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dang&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/nhda6/Documents/HOC/F24/JSD/tank1990/src/jsd/project/tank90/resources/images&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/nguye/Downloads/Tank1990/Tank1990&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -144,11 +127,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\resources\map_stage" />
       <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\tank1990\src\jsd\project\tank90\resources\images" />
       <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\resources\images" />
       <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\ui" />
       <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\Tank1990\src\jsd\project\tank90\resources\images" />
-      <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\Tank1990\src\jsd\project" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\nhda6\Documents\HOC\F24\JSD\Tank1990\src\jsd\project\tank90\images" />
@@ -184,14 +167,6 @@
         <item itemvalue="Application.Frame" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555" />
-        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
