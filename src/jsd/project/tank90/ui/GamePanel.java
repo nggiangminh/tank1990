@@ -4,7 +4,10 @@ import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.GrenadePowerUp;
 import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.model.tanks.*;
+import jsd.project.tank90.model.tanks.Bullet;
+import jsd.project.tank90.model.tanks.Direction;
+import jsd.project.tank90.model.tanks.EnemyTank;
+import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.utils.*;
 
 import javax.swing.*;
@@ -21,7 +24,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int tileSize = 20;
     private final int tankSize = tileSize * 3 / 2;
     private final List<String> mapData;
-    private PlayerTank playerTank;
     private final int MAX_SLIDE_MOMENTUM = 30; // Maximum frames for sliding
     private final int[] playerSpawnPos = new int[]{200, 500};
     private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
@@ -34,6 +36,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final int mapLevel;
     private final PauseOverlay pauseOverlay;
     public int freezeTimer = 0;
+    private PlayerTank playerTank;
     private Direction previousDirection = null; // Track the previous direction
     private int slideMomentum = 0; // Number of frames to continue sliding
     private List<GameObject> environmentObjects;
@@ -180,13 +183,14 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
             } else if (!enemy.isDead()) {
                 if (freezeTimer == 0) {
-                    enemy.move();
-                    enemy.changeDirection();
-
                     if (CollisionHandling.checkTankEnvironmentCollision(enemy, environmentObjects)) {
                         enemy.undoMove();
                         enemy.turn();
+                    } else {
+                        enemy.move();
                     }
+                    enemy.changeDirection();
+
 
                     // Check for bullet collisions with the player tank
                     enemy.shoot();
@@ -327,7 +331,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         running = false;
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gameFrame.getContentPane().removeAll();
-        if (winning && mapLevel < 10) gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies, playerTank));
+        if (winning && mapLevel < 10)
+            gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies, playerTank));
         else gameFrame.getContentPane().add(new GameOverPanel(mapLevel, killedEnemies, playerTank));
         gameFrame.revalidate();
         gameFrame.repaint();
@@ -433,6 +438,10 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         return playerTank;
     }
 
+    public void setPlayerTank(PlayerTank playerTank) {
+        this.playerTank = playerTank;
+    }
+
     private void checkStopGame() {
         for (EnemyTank enemy : enemyTanks)
             if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
@@ -446,9 +455,5 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             winning = true;
             stopGame();
         }
-    }
-
-    public void setPlayerTank(PlayerTank playerTank) {
-        this.playerTank = playerTank;
     }
 }

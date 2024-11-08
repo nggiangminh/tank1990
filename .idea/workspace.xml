@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="cap nhat shovel">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/EnemyTank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/EnemyTank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/resources/map_stage/map_6.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/CollisionHandling.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/utils/CollisionHandling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/EnemyTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/EnemyTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/map_stage/map_6.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/utils/CollisionHandling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/utils/CollisionHandling.java" afterDir="false" />
-    </list>
+    <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="cap nhat shovel" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
