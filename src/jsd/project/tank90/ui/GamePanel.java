@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final PowerUpSpawner powerUpSpawner = new PowerUpSpawner(powerUps);
     private final List<Explosion> explosions = new ArrayList<>();
     private final SoundManager soundManager;
-    private final String mapFile;
+    private final int mapLevel;
     public int freezeTimer = 0;
     private Direction previousDirection = null; // Track the previous direction
     private int slideMomentum = 0; // Number of frames to continue sliding
@@ -54,15 +54,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
 
-    public GamePanel(String mapFile) {
+    public GamePanel(int mapLevel) {
         setBackground(Color.BLACK);
-        this.mapFile = mapFile;
+        this.mapLevel = mapLevel;
         addKeyListener(this);
         setFocusable(true);  // Ensure GamePanel can gain focus
         requestFocusInWindow();  // Request focus immediately upon creation
 
         MapLoader mapLoader = new MapLoader();
-        mapLoader.loadMap(mapFile);  // Load the specific map file
+        mapLoader.loadMap(mapLevel);  // Load the specific map file
         mapData = mapLoader.getMapData();
 
         initializeMapObjects();
@@ -329,8 +329,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         running = false;
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gameFrame.getContentPane().removeAll();
-        if (winning) gameFrame.getContentPane().add(new WinningPanel(mapFile, killedEnemies,playerTank));
-        else gameFrame.getContentPane().add(new GameOverPanel(mapFile, killedEnemies,playerTank));
+        if (winning) gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies,playerTank));
+        else gameFrame.getContentPane().add(new GameOverPanel(mapLevel, killedEnemies,playerTank));
         gameFrame.revalidate();
         gameFrame.repaint();
     }

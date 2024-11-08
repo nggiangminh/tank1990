@@ -11,13 +11,13 @@ import java.util.List;
 
 public class WinningPanel extends JPanel {
     private final Image gameOverImage;
-    public final String mapFile;
+    public final int mapLevel;
     private final List<EnemyTank> killedEnemies; // Store the killed enemies list
     private SoundManager soundManager;
     private final PlayerTank playerTank;
 
-    public WinningPanel(String mapFile, List<EnemyTank> killedEnemies, PlayerTank playerTank) {
-        this.mapFile = mapFile;
+    public WinningPanel(int maplLevel, List<EnemyTank> killedEnemies, PlayerTank playerTank) {
+        this.mapLevel = maplLevel;
         this.killedEnemies = killedEnemies;
         this.playerTank = playerTank;
 

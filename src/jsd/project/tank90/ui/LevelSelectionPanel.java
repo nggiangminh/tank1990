@@ -10,19 +10,7 @@ import java.awt.event.KeyEvent;
 public class LevelSelectionPanel extends JPanel {
     private final JLabel[] levelLabels;
     private final JLabel arrowLabel;
-    private int currentIndex = 0;
-    private final String[] mapFiles = {
-            "src/jsd/project/tank90/resources/map_stage/map_1.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_2.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_3.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_4.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_5.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_6.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_7.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_8.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_9.txt",
-            "src/jsd/project/tank90/resources/map_stage/map_10.txt"
-    };
+    private int currentIndex = 1;
 
     public LevelSelectionPanel() {
         setBackground(Color.BLACK);
@@ -37,7 +25,7 @@ public class LevelSelectionPanel extends JPanel {
         add(arrowLabel);
 
         levelLabels = new JLabel[10];
-        String[] levelNames = {"Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8", "Level 9","Level 10"};
+        String[] levelNames = {"Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7", "Level 8", "Level 9", "Level 10"};
         for (int i = 0; i < 10; i++) {
             levelLabels[i] = new JLabel(levelNames[i]);
             levelLabels[i].setForeground(Color.LIGHT_GRAY);
@@ -54,7 +42,7 @@ public class LevelSelectionPanel extends JPanel {
                 } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     moveSelectionDown();
                 } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    openGamePlay(mapFiles[currentIndex]);
+                    openGamePlay(currentIndex);
                 }
             }
         });
@@ -78,10 +66,10 @@ public class LevelSelectionPanel extends JPanel {
         arrowLabel.setLocation(50, 80 + currentIndex * 30);
     }
 
-    private void openGamePlay(String mapFile) {
+    private void openGamePlay(int mapLevel) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
-        GamePanel gamePanel = new GamePanel(mapFile);  // Pass the map file path to GamePanel
+        GamePanel gamePanel = new GamePanel(mapLevel);  // Pass the map file path to GamePanel
         PlayerTank playerTank = gamePanel.getPlayerTank();
         StatusPanel statusPanel = new StatusPanel(playerTank);// Pass the map file path to GamePanel
         frame.add(gamePanel, BorderLayout.CENTER);

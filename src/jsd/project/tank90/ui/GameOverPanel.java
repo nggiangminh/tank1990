@@ -13,13 +13,13 @@ public class GameOverPanel extends JPanel {
     private final Image gameOverImage;
     private final JButton retryButton;
     private final JButton exitButton;
-    public final String mapFile;
+    public final int mapLevel;
     private final List<EnemyTank> killedEnemies; // Store the killed enemies list
     private SoundManager soundManager;
     private final PlayerTank playerTank;
 
-    public GameOverPanel(String mapFile, List<EnemyTank> killedEnemies, PlayerTank playerTank) {
-        this.mapFile = mapFile;
+    public GameOverPanel(int mapLevel, List<EnemyTank> killedEnemies, PlayerTank playerTank) {
+        this.mapLevel = mapLevel;
         this.killedEnemies = killedEnemies;
         this.playerTank = playerTank;
 
