@@ -68,7 +68,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         soundManager = new SoundManager();
         soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/soundtrack.wav"); // Đường dẫn đến tệp âm thanh
-        soundManager.setVolume(-20.0f);
+        soundManager.setVolume(-35.0f);
 
         powerUps.add(new GrenadePowerUp(220, 450, 30));
 

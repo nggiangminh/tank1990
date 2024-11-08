@@ -130,7 +130,6 @@ public class CollisionHandling {
 
     public static boolean checkTankEnvironmentCollision(Tank tank, List<GameObject> environmentObjects) {
         Rectangle tankBounds = tank.getBounds();
-
         for (GameObject environmentObj : environmentObjects) {
             if (environmentObj instanceof BrickWall || environmentObj instanceof SteelWall || environmentObj instanceof Water) {
                 if (tankBounds.intersects(environmentObj.getBounds())) {
