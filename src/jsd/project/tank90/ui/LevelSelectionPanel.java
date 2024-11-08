@@ -49,21 +49,21 @@ public class LevelSelectionPanel extends JPanel {
     }
 
     private void moveSelectionUp() {
-        if (currentIndex > 0) {
+        if (currentIndex > 1) {
             currentIndex--;
             updateArrowPosition();
         }
     }
 
     private void moveSelectionDown() {
-        if (currentIndex < levelLabels.length - 1) {
+        if (currentIndex < levelLabels.length) {
             currentIndex++;
             updateArrowPosition();
         }
     }
 
     private void updateArrowPosition() {
-        arrowLabel.setLocation(50, 80 + currentIndex * 30);
+        arrowLabel.setLocation(50, 80 + (currentIndex-1) * 30);
     }
 
     private void openGamePlay(int mapLevel) {

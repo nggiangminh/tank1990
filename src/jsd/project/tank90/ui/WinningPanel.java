@@ -5,16 +5,14 @@ import jsd.project.tank90.utils.SoundManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class WinningPanel extends JPanel {
-    private final Image gameOverImage;
     public final int mapLevel;
+    private final Image gameOverImage;
     private final List<EnemyTank> killedEnemies; // Store the killed enemies list
-    private SoundManager soundManager;
     private final PlayerTank playerTank;
+    private SoundManager soundManager;
 
     public WinningPanel(int maplLevel, List<EnemyTank> killedEnemies, PlayerTank playerTank) {
         this.mapLevel = maplLevel;
@@ -59,13 +57,7 @@ public class WinningPanel extends JPanel {
         labelPanel.add(Box.createVerticalStrut(20));
 
         // Tank kill labels
-        String[] labels = {
-                "Basic Tanks Killed: " + killedBasicTanks,
-                "Fast  Tanks Killed: " + killedFastTanks,
-                "Power Tanks Killed: " + killedPowerTanks,
-                "Armor Tanks Killed: " + killedArmorTanks,
-                "Total Tanks Killed: " + totalKilled
-        };
+        String[] labels = {"Basic Tanks Killed: " + killedBasicTanks, "Fast  Tanks Killed: " + killedFastTanks, "Power Tanks Killed: " + killedPowerTanks, "Armor Tanks Killed: " + killedArmorTanks, "Total Tanks Killed: " + totalKilled};
 
         for (String text : labels) {
             JLabel label = new JLabel(text);
@@ -79,6 +71,37 @@ public class WinningPanel extends JPanel {
         add(Box.createVerticalStrut(20));
         add(labelPanel);
         add(Box.createVerticalStrut(30));
+
+        // Next Level Button
+        JButton nextLevelButton = new JButton("Next Level");
+        styleButton(nextLevelButton);
+        add(nextLevelButton);
+        nextLevelButton.addActionListener(e -> nextLevel());
+
+    }
+
+    private void styleButton(JButton button) {
+        button.setFont(new Font("Monospaced", Font.BOLD, 16));
+        button.setForeground(Color.WHITE);
+        button.setBackground(new Color(60, 60, 60));
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.WHITE, 2), BorderFactory.createEmptyBorder(5, 15, 5, 15)));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void nextLevel() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.getContentPane().removeAll();
+        GamePanel gamePanel = new GamePanel(mapLevel+1);  // Pass the map file path to GamePanel
+        PlayerTank playerTank = gamePanel.getPlayerTank();
+        StatusPanel statusPanel = new StatusPanel(playerTank);// Pass the map file path to GamePanel
+        frame.add(gamePanel, BorderLayout.CENTER);
+        frame.add(statusPanel, BorderLayout.EAST);
+        Timer timer = new Timer(100, e -> statusPanel.repaint());
+        timer.start();
+        gamePanel.requestFocusInWindow();
+        frame.revalidate();
+        frame.repaint();
 
     }
 }

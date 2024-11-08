@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final List<Explosion> explosions = new ArrayList<>();
     private final SoundManager soundManager;
     private final int mapLevel;
+    private final PauseOverlay pauseOverlay;
     public int freezeTimer = 0;
     private Direction previousDirection = null; // Track the previous direction
     private int slideMomentum = 0; // Number of frames to continue sliding
@@ -46,15 +47,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isFire = false;
     // Firing cooldown to manage fire rate
     private int fireCooldown = 0;
-
-
     private boolean isPaused = false;
     private boolean pPressed = false;
-    private final PauseOverlay pauseOverlay;
-
 
 
     public GamePanel(int mapLevel) {
+        System.out.println("Level" + mapLevel);
         setBackground(Color.BLACK);
         this.mapLevel = mapLevel;
         addKeyListener(this);
@@ -113,7 +111,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public void updateGame() {
 
         if (isPaused) {
-            return ;
+            return;
         }
 
 
@@ -312,7 +310,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     @Override
     public void run() {
         while (running) {
-            if(!isPaused) {
+            if (!isPaused) {
                 updateGame();   // Update game elements
                 repaint();      // Redraw the screen
             }
@@ -329,8 +327,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         running = false;
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gameFrame.getContentPane().removeAll();
-        if (winning) gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies,playerTank));
-        else gameFrame.getContentPane().add(new GameOverPanel(mapLevel, killedEnemies,playerTank));
+        if (winning) gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies, playerTank));
+        else gameFrame.getContentPane().add(new GameOverPanel(mapLevel, killedEnemies, playerTank));
         gameFrame.revalidate();
         gameFrame.repaint();
     }
@@ -438,17 +436,17 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private void checkStopGame() {
         for (EnemyTank enemy : enemyTanks)
             if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) stopGame();
-//        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) stopGame();
-        if (playerTank.getLife() == 0)
+        if (CollisionHandling.checkBulletBaseCollision(playerTank, environmentObjects, explosions)) {
+            winning = true;
             stopGame();
+        }
+        if (playerTank.getLife() == 0) stopGame();
 
         if (enemyTanks.size() == 0 && enemySpawner.getEnemyLeft() == 0) {
             winning = true;
             stopGame();
         }
     }
-
-
 
 
 }
