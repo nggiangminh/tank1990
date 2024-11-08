@@ -8,7 +8,7 @@ import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
 public abstract class EnemyTank extends Tank {
 
     private static final int FIRE_INTERVAL = 250; // Number of frames between shots
-    private static final int DIRECTION_CHANGE_INTERVAL = 120; // Frames between direction changes
+    private static final int DIRECTION_CHANGE_INTERVAL = 50; // Frames between direction changes
     private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
     private final boolean isFlashing;  // Flag to enable/disable flashing
     protected Random random = new Random(); // Random generator for movement
