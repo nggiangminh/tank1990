@@ -181,7 +181,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             } else if (!enemy.isDead()) {
                 if (freezeTimer == 0) {
                     enemy.move();
-//                    enemy.changeDirection();
+                    enemy.changeDirection();
 
                     if (CollisionHandling.checkTankEnvironmentCollision(enemy, environmentObjects)) {
                         enemy.undoMove();
