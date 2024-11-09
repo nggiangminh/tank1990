@@ -31,7 +31,7 @@ public class PlayerTank extends Tank {
     private Image TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S1;
     private int lifePlusPoints = 0; // To check if 20k points got
     private int points = 0;
-    private int life = 4;
+    private int life = 1;
     private int bulletSpeed = 2;
     private int maxBullets = 1;
     private int bulletDamage = 1;
@@ -167,7 +167,7 @@ public class PlayerTank extends Tank {
 
         if (fireCooldown <= 0) {
             Bullet bullet = super.shoot();
-            if (bullet != null ) {
+            if (bullet != null) {
                 playShotSound(); // play sound
                 fireCooldown = FIRE_INTERVAL;
             }
@@ -303,7 +303,6 @@ public class PlayerTank extends Tank {
     // Respawn method
     private void respawn() {
         enable();
-        setLife(getLife() - 1);//Decrease life
         this.x = spawnX;
         this.y = spawnY;
         setStar(0);// Reset star
@@ -315,10 +314,11 @@ public class PlayerTank extends Tank {
         if (isShielded()) return;
         new Thread(() -> {
             try {
+                setLife(getLife() - 1);//Decrease life
                 disable();
                 playExplosionSound(); // play sound
                 Thread.sleep(1000);// delay 1s before respawn
-                respawn();
+                if (life > 0) respawn();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

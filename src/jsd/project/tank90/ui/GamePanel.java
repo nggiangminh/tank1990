@@ -4,7 +4,6 @@ import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
 import jsd.project.tank90.model.tanks.Bullet;
-import jsd.project.tank90.utils.Direction;
 import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.utils.*;
@@ -51,7 +50,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isPaused = false;
     private boolean pPressed = false;
 
-    private StatusPanel statusPanel;
+    private final StatusPanel statusPanel;
 
     public GamePanel(int mapLevel) {
         setBackground(Color.BLACK);
@@ -85,7 +84,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     }
 
 
-
     private void initializeMapObjects() {
         environmentObjects = new ArrayList<>();
         for (int y = 0; y < mapData.size(); y++) {
@@ -104,8 +102,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             }
         }
     }
-
-
 
 
     public void updateGame() {
@@ -320,11 +316,11 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public void stopGame() {
         stopMusic();
         playerTank.disable();
+        running = false;//stop game loop
         // Create a timer to delay the stop by 1 second (1000 ms)
         Timer timer = new Timer(2000, e -> {
-            running = false;
-
             JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            System.out.println(gameFrame);
             gameFrame.getContentPane().removeAll();
 
             if (winning && mapLevel < 10) {
@@ -332,7 +328,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             } else {
                 gameFrame.getContentPane().add(new GameOverPanel(mapLevel, killedEnemies, playerTank));
             }
-
             gameFrame.revalidate();
             gameFrame.repaint();
         });
@@ -352,6 +347,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public void activateFreeze() {
         freezeTimer = 300; // 300 frame
     }
+
     public void activateShovelEffect() {
         List<Point> fortressTiles = getFortressAreaCoordinates();
 
@@ -452,6 +448,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     }
 
     private void checkStopGame() {
+        //stop game if player is out of life
+        if (playerTank.getLife() == 0) stopGame();
         // stop game if base is destroyed
         for (EnemyTank enemy : enemyTanks)
             if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) {
@@ -463,8 +461,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             stopGame();
         }
 
-        //stop game if player is out of life
-        if (playerTank.getLife() == 0) stopGame();
 
         // stop game is there's no enemy left
         if (enemyTanks.isEmpty() && enemySpawner.getEnemyLeft() == 0) {
