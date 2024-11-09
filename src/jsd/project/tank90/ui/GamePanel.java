@@ -52,10 +52,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isPaused = false;
     private boolean pPressed = false;
 
-    private boolean keyEnabled = true;
     private StatusPanel statusPanel;
-    private int enemyLeft = 20;
-    private int frame = 0;
 
     public GamePanel(int mapLevel) {
         setBackground(Color.BLACK);
@@ -70,7 +67,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
         initializeMapObjects();
         this.playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
-        this.statusPanel = new StatusPanel(playerTank);
+        this.statusPanel = new StatusPanel(playerTank, this);
         soundManager = new SoundManager();
         soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/soundtrack.wav"); // Đường dẫn đến tệp âm thanh
         soundManager.setVolume(-35.0f);
@@ -117,7 +114,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     public void updateGame() {
 
-        frame++;
         if (isPaused) {
             return;
         }
@@ -476,4 +472,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    public int getEnemyLeft() {
+        return enemySpawner.getEnemyLeft();
+    }
 }

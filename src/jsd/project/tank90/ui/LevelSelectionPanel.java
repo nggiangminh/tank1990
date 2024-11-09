@@ -79,7 +79,7 @@ public class LevelSelectionPanel extends JPanel {
         frame.getContentPane().removeAll();
         GamePanel gamePanel = new GamePanel(mapLevel);
         PlayerTank playerTank = gamePanel.getPlayerTank();
-        StatusPanel statusPanel = new StatusPanel(playerTank);
+        StatusPanel statusPanel = new StatusPanel(playerTank, gamePanel);
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(statusPanel, BorderLayout.EAST);
         Timer timer = new Timer(100, e -> statusPanel.repaint());

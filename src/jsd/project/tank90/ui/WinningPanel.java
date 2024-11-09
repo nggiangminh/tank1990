@@ -100,7 +100,7 @@ public class WinningPanel extends JPanel {
         GamePanel gamePanel = new GamePanel(mapLevel+1);  // Pass the map file path to GamePanel
         gamePanel.setPlayerTank(playerTank);
         playerTank.spawn();
-        StatusPanel statusPanel = new StatusPanel(playerTank);// Pass the map file path to GamePanel
+        StatusPanel statusPanel = new StatusPanel(playerTank, gamePanel);// Pass the map file path to GamePanel
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(statusPanel, BorderLayout.EAST);
         Timer timer = new Timer(100, e -> statusPanel.repaint());

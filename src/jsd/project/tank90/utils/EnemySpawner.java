@@ -63,9 +63,12 @@ public class EnemySpawner {
     }
 
     public int getEnemyLeft() {
-        return enemyLeft;
+        return enemyLeft + enemyTanks.size() +spawnQueue.size();
     }
 
+    public int getMaxEnemies() {
+        return maxEnemies;
+    }
 
     // Inner class to handle spawning effect and cooldown
     private class SpawnEffect {
