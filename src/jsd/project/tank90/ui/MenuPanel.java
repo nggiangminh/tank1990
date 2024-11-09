@@ -17,7 +17,7 @@ public class MenuPanel extends JPanel {
 
     public MenuPanel() {
         soundManager = new SoundManager();
-        soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/titlescreen.wav"); // Đường dẫn đến tệp âm thanh
+        soundManager.playMenuBackgroundMusic();
 
 
 

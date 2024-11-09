@@ -1,6 +1,5 @@
 package jsd.project.tank90.model.tanks;
 
-import jsd.project.tank90.utils.Bullet;
 import jsd.project.tank90.utils.Direction;
 
 import java.awt.*;
@@ -10,10 +9,10 @@ import static jsd.project.tank90.utils.SoundManager.playExplosionSound;
 
 public abstract class EnemyTank extends Tank {
 
-    private static final int FIRE_INTERVAL = 100; // Number of frames between shots
+    private static final int FIRE_INTERVAL = 100; // Frames between shots
     private static final int DIRECTION_CHANGE_INTERVAL = 400; // Frames between direction changes
-    private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration in milliseconds (1 second)
-    private final boolean isFlashing;  // Flag to enable/disable flashing
+    private static final int POINTS_DISPLAY_DURATION = 1000; // Points display duration (1sec)
+    private final boolean isFlashing;  // Enable/disable flashing
     protected Random random = new Random(); // Random generator for movement
     private int fireCooldown; // Cooldown timer for firing bullets
     private int directionChangeCooldown = DIRECTION_CHANGE_INTERVAL; // Timer for direction changes
@@ -28,10 +27,9 @@ public abstract class EnemyTank extends Tank {
         this.fireCooldown = FIRE_INTERVAL;
         isFlashing = random.nextBoolean();
     }
-
     public void setDirection(Direction newDirection) {
         this.direction = newDirection;
-        if (toggleImage) {
+        if (toggleImage) { // toggle image, with or without flash
             switch (newDirection) {
                 case UP -> tankImage = !flashToggle ? this.getTankUpImage1() : getTankUpFlashImage1();
                 case DOWN -> tankImage = !flashToggle ? this.getTankDownImage1() : getTankDownFlashImage1();
@@ -64,49 +62,28 @@ public abstract class EnemyTank extends Tank {
         }
     }
 
-    // Turn the tank 90 degrees, either clockwise or counterclockwise
-    public void turn() {
-        if (random.nextBoolean()) {
-            // Turn clockwise
-            switch (direction) {
-                case UP -> direction = Direction.RIGHT;
-                case RIGHT -> direction = Direction.DOWN;
-                case DOWN -> direction = Direction.LEFT;
-                case LEFT -> direction = Direction.UP;
-            }
-        } else {
-            // Turn counterclockwise
-            switch (direction) {
-                case UP -> direction = Direction.LEFT;
-                case LEFT -> direction = Direction.DOWN;
-                case DOWN -> direction = Direction.RIGHT;
-                case RIGHT -> direction = Direction.UP;
-            }
-        }
-    }
-
-    // Shoot method with cooldown management
+    // Shoot method with cooldown
     @Override
     public Bullet shoot() {
         if (fireCooldown <= 0) {
             fireCooldown = FIRE_INTERVAL; // Reset cooldown
-            return super.shoot(); // Use the shoot method from Tank to create a bullet
+            return super.shoot();//shoot
         }
         updateCooldown();
         return null;
     }
 
-    public boolean isFlashing() {
-        return isFlashing;
-    }
 
-    // Update cooldown for shooting and other enemy behaviors
+    // Update cooldown for shooting
     public void updateCooldown() {
         if (fireCooldown > 0) {
             fireCooldown--;
         }
     }
 
+    public boolean isFlashing() {
+        return isFlashing;
+    }
     // Abstract methods for subclasses
     public abstract int getPoints();
 
@@ -129,14 +106,10 @@ public abstract class EnemyTank extends Tank {
         return showPoints;
     }
 
-    public void setShowPoints(boolean showPoints) {
-        this.showPoints = showPoints;
-    }
-
     // Mark the tank as dead and start showing points
     public void markAsDead() {
         setLife(0);
-        playExplosionSound();
+        playExplosionSound();// PLay sound for explosion
         showPoints = true;
         pointsDisplayStartTime = System.currentTimeMillis();
         disable();
@@ -163,9 +136,10 @@ public abstract class EnemyTank extends Tank {
 
     protected abstract Image getTankRightFlashImage2();
 
-    // Render the tank and points if dead
+
     @Override
     public void render(Graphics g) {
+        // Render the tank and points if dead
         if (showPoints) {
             super.render(g);
             // Render points in white font
@@ -188,9 +162,8 @@ public abstract class EnemyTank extends Tank {
             g.drawImage(getTankImage(), x, y, size, size, null);
         }
     }
-
     @Override
     public int getBulletDamage() {
-        return 1;
+        return 1;// Default bullet damage
     }
 }

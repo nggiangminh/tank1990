@@ -20,13 +20,13 @@ public class PowerUpSpawner {
         int y = 20 + random.nextInt(gameHeight - 50); // Adjust to ensure power-up fits within the height
 
         PowerUp newPowerUp;
-        switch (random.nextInt(5)) { // Assuming 5 types of power-ups
+        switch (random.nextInt(6)) { // 6 types
             case 0 -> newPowerUp = new TankPowerUp(x, y, 30);
             case 1 -> newPowerUp = new TimerPowerUp(x, y, 30);
             case 2 -> newPowerUp = new ShovelPowerUp(x, y, 30);
             case 3 -> newPowerUp = new StarPowerUp(x, y, 30);
             case 4 -> newPowerUp = new GrenadePowerUp(x, y, 30);
-            default -> throw new IllegalStateException("Unexpected power-up type");
+            default -> newPowerUp = new ShieldPowerUp(x, y, 30);
         }
 
         powerUps.add(newPowerUp); // Add the new power-up to the active list

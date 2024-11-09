@@ -15,16 +15,19 @@ public abstract class GameObject {
 
     public int getX() { return x; }
     public int getY() { return y; }
+
+    public int getCenterX() {
+        return x + size / 2;
+    }
+
+    public int getCenterY() {
+        return y + size / 2;
+    }
     public int getSize() {return size;}
 
     // Get the bounding rectangle for collision detection
     public Rectangle getBounds() {
         return new Rectangle(x, y, size, size);
-    }
-
-    // Check if the object is out of screen bounds
-    public boolean isOutOfBounds(int width, int height) {
-        return x < 0 || y < 0 || x + size > width || y + size > height;
     }
 
     public abstract void render(Graphics g);

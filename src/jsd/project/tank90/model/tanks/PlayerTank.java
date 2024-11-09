@@ -1,6 +1,5 @@
 package jsd.project.tank90.model.tanks;
 
-import jsd.project.tank90.utils.Bullet;
 import jsd.project.tank90.utils.Direction;
 import jsd.project.tank90.utils.Images;
 
@@ -12,10 +11,16 @@ import static jsd.project.tank90.utils.SoundManager.playShotSound;
 
 public class PlayerTank extends Tank {
 
+    private static final int FIRE_INTERVAL = 6; // Frames between shots (to avoid too much shoot)
+    // Get images
     private static final Image SHIELD_IMAGE_1 = Images.SHIELD_1;
     private static final Image SHIELD_IMAGE_2 = Images.SHIELD_2;
+    // Define spawn position
     private final int spawnX;
     private final int spawnY;
+    private final int speed = 1;
+    private final int bulletSize = 5;
+    private int fireCooldown; // Cooldown timer for firing bullets
     private Image TANK_UP_1 = Images.PLAYER_UP_1_S1;
     private Image TANK_DOWN_1 = Images.PLAYER_DOWN_1_S1;
     private Image TANK_LEFT_1 = Images.PLAYER_LEFT_1_S1;
@@ -24,41 +29,32 @@ public class PlayerTank extends Tank {
     private Image TANK_DOWN_2 = Images.PLAYER_DOWN_2_S1;
     private Image TANK_LEFT_2 = Images.PLAYER_LEFT_2_S1;
     private Image TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S1;
-    private int lifePlusPoints = 0;
+    private int lifePlusPoints = 0; // To check if 20k points got
     private int points = 0;
-
     private int life = 4;
-    private int speed = 1;
-    private int bulletSize = 5;
     private int bulletSpeed = 2;
     private int maxBullets = 1;
-    private int fireSpeed = 45;
-
     private int bulletDamage = 1;
 
-    private int star = 0;
+    private int star = 0; // Number of star claimed
 
-    private boolean shielded = false;
+    private boolean shielded = false; // Shield status
     private boolean shieldToggle = false; // Used to alternate between the two images
-    private boolean baseDestroyed = false;
+    private boolean baseDestroyed = false; // Base status
 
     public PlayerTank(int x, int y, int size) {
         super(x, y, size, Direction.UP);
         this.spawnX = x;
         this.spawnY = y;
         this.tankImage = TANK_UP_1;
-        activateShield();
+        activateShield(); // Shield when spawned
     }
 
-    // Define unique bullet size and speed for PlayerTank
     @Override
     protected int getBulletSize() {
         return bulletSize;
     }
 
-    public void setBulletSize(int bulletSize) {
-        this.bulletSize = bulletSize;
-    }
 
     @Override
     protected int getBulletSpeed() {
@@ -81,10 +77,6 @@ public class PlayerTank extends Tank {
     @Override
     public int getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 
     @Override
@@ -135,13 +127,6 @@ public class PlayerTank extends Tank {
         this.life = life;
     }
 
-    public int getFireSpeed() {
-        return fireSpeed;
-    }
-
-    public void setFireSpeed(int fireSpeed) {
-        this.fireSpeed = fireSpeed;
-    }
 
     public int getMaxBullets() {
         return maxBullets;
@@ -155,30 +140,6 @@ public class PlayerTank extends Tank {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public int getLifePlusPoints() {
-        return lifePlusPoints;
-    }
-
-    public void setLifePlusPoints(int lifePlusPoints) {
-        this.lifePlusPoints = lifePlusPoints;
-    }
-
-    public void increasePoints(int p) {
-        points += p;
-        lifePlusPoints += p;
-    }
-
-    public void checkBonusLife() {
-        if (lifePlusPoints >= 20000) {
-            life++;
-            lifePlusPoints -= 20000;
-        }
-    }
-
     public int getStar() {
         return star;
     }
@@ -187,17 +148,58 @@ public class PlayerTank extends Tank {
         this.star = star;
     }
 
-    @Override
-    public Bullet shoot() {
-        Bullet bullet = super.shoot();
-        if (bullet != null) playShotSound();
-        return bullet;
+    // Increase points
+    public void increasePoints(int p) {
+        points += p;
+        lifePlusPoints += p;
     }
 
+    // Increase 1 life every 20k points
+    public void checkBonusLife() {
+        if (lifePlusPoints >= 20000) {
+            life++;
+            lifePlusPoints -= 20000;
+        }
+    }
 
-    public void claimStar() {
-        setStar(Math.min(3, getStar() + 1));
+    @Override
+    public Bullet shoot() {
+
+        if (fireCooldown <= 0) {
+            Bullet bullet = super.shoot();
+            if (bullet != null ) {
+                playShotSound(); // play sound
+                fireCooldown = FIRE_INTERVAL;
+            }
+            return bullet;
+        }
+        updateCooldown();
+        return null;
+    }
+
+    // Update cooldown for shooting
+    public void updateCooldown() {
+        if (fireCooldown > 0) {
+            fireCooldown--;
+        }
+    }
+
+    // Change images and stats based on star
+    public void starCheck() {
         switch (getStar()) {
+            case 0 -> {
+                setBulletSpeed(2);
+                setMaxBullets(1);
+                setBulletDamage(1);
+                TANK_UP_1 = Images.PLAYER_UP_1_S1;
+                TANK_DOWN_1 = Images.PLAYER_DOWN_1_S1;
+                TANK_LEFT_1 = Images.PLAYER_LEFT_1_S1;
+                TANK_RIGHT_1 = Images.PLAYER_RIGHT_1_S1;
+                TANK_UP_2 = Images.PLAYER_UP_2_S1;
+                TANK_DOWN_2 = Images.PLAYER_DOWN_2_S1;
+                TANK_LEFT_2 = Images.PLAYER_LEFT_2_S1;
+                TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S1;
+            }
             case 1 -> {
                 setBulletSpeed(3);
                 TANK_UP_1 = Images.PLAYER_UP_1_S1;
@@ -234,12 +236,17 @@ public class PlayerTank extends Tank {
         }
     }
 
+    public void claimStar() {
+        setStar(Math.min(3, getStar() + 1));// Increase star up to 3
+        starCheck();
+    }
+
     // Activate shield
     public void activateShield() {
         new Thread(() -> {
             this.shielded = true;
             try {
-                Thread.sleep(5000);
+                Thread.sleep(5000); // Shield duration
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // Handle thread interruption
             } finally {
@@ -253,18 +260,24 @@ public class PlayerTank extends Tank {
     public boolean isShielded() {
         return shielded;
     }
-    public boolean destroyBase() {
-        return baseDestroyed = true;
+
+    // Turn base status to destroyed
+    public void destroyBase() {
+        baseDestroyed = true;
+        playExplosionSound();
     }
 
     @Override
     public void render(Graphics g) {
-        if (isDisabled() && !baseDestroyed) g.drawImage(DEAD_IMAGE, x, y, size, size, null);
+        if (isDisabled() && !baseDestroyed)
+            g.drawImage(DEAD_IMAGE, x, y, size, size, null); // render the dead tank image
         else {
             g.drawImage(tankImage, x, y, size, size, null);
             renderBullets(g); // Render bullets fired by the player tank
         }
+
         checkBonusLife();
+
         // Render shield effect if active
         if (shielded) {
             int offset = 5; // Adjust for positioning
@@ -279,6 +292,7 @@ public class PlayerTank extends Tank {
         return shieldToggle ? SHIELD_IMAGE_1 : SHIELD_IMAGE_2;
     }
 
+    // Spawn method (get back to the spawn position)
     public void spawn() {
         this.x = spawnX;
         this.y = spawnY;
@@ -286,12 +300,14 @@ public class PlayerTank extends Tank {
         activateShield();
     }
 
+    // Respawn method
     private void respawn() {
         enable();
-        setLife(getLife() - 1);
+        setLife(getLife() - 1);//Decrease life
         this.x = spawnX;
         this.y = spawnY;
-        setStar(0);
+        setStar(0);// Reset star
+        starCheck();
         activateShield();
     }
 
@@ -300,8 +316,8 @@ public class PlayerTank extends Tank {
         new Thread(() -> {
             try {
                 disable();
-                playExplosionSound();
-                Thread.sleep(1000);
+                playExplosionSound(); // play sound
+                Thread.sleep(1000);// delay 1s before respawn
                 respawn();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

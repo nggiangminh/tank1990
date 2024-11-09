@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class FastTank extends EnemyTank {
 
+    // Get images
     private final Image TANK_UP_1 = Images.FAST_UP_1;
     private final Image TANK_DOWN_1 = Images.FAST_DOWN_1;
     private final Image TANK_LEFT_1 = Images.FAST_LEFT_1;
@@ -29,7 +30,6 @@ public class FastTank extends EnemyTank {
     private final int speed = 3;
     private final int bulletSize = 5;
     private final int bulletSpeed = 2;
-    private final int fireSpeed = 2;
     private int life = 1;
 
     public FastTank(int x, int y, int size, Direction direction) {
@@ -45,9 +45,6 @@ public class FastTank extends EnemyTank {
         this.life = life;
     }
 
-    public int getFireSpeed() {
-        return fireSpeed;
-    }
 
     @Override
     protected int getBulletSize() {

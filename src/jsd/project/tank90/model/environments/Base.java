@@ -5,6 +5,7 @@ import jsd.project.tank90.utils.Images;
 
 import java.awt.*;
 
+
 public class Base extends GameObject {
 
     private final Image BASE_IMAGE = Images.BASE;
@@ -16,6 +17,7 @@ public class Base extends GameObject {
     }
 
     public void destroy() {
+
         this.isdestroyed = true;
     }
 

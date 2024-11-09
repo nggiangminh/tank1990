@@ -1,16 +1,19 @@
-package jsd.project.tank90.utils;
+package jsd.project.tank90.model.tanks;
 
 import jsd.project.tank90.model.GameObject;
+import jsd.project.tank90.utils.Direction;
+import jsd.project.tank90.utils.Images;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Bullet extends GameObject {
 
-    private final Image BULLET_UP = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_up.png").getImage();
-    private final Image BULLET_DOWN = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_down.png").getImage();
-    private final Image BULLET_LEFT = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_left.png").getImage();
-    private final Image BULLET_RIGHT = new ImageIcon("src/jsd/project/tank90/resources/images/bullet_right.png").getImage();
+    //Get images
+    private final Image BULLET_UP = Images.BULLET_UP;
+    private final Image BULLET_DOWN = Images.BULLET_DOWN;
+    private final Image BULLET_LEFT = Images.BULLET_LEFT;
+    private final Image BULLET_RIGHT = Images.BULLET_RIGHT;
     private final int speed;
     private final Direction direction;
     private boolean isOnIce = false;
@@ -30,28 +33,12 @@ public class Bullet extends GameObject {
             case RIGHT -> bulletImage = BULLET_RIGHT;
         }
     }
-
-
-    public int getCenterX() {
-        return x + size / 2;
-    }
-
-    public int getCenterY() {
-        return y + size / 2;
-    }
-
     public Rectangle getBounds() {
         return new Rectangle(x, y, size, size); // Adjust `width` and `height` as per bullet size
     }
 
 
     // Move the bullet based on its direction and speed
-
-    public void update() {
-        move();
-    }
-
-
     public void move() {
         switch (direction) {
             case UP -> y -= speed;
@@ -59,22 +46,6 @@ public class Bullet extends GameObject {
             case LEFT -> x -= speed;
             case RIGHT -> x += speed;
         }
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public Image getBulletImage() {
-        return bulletImage;
-    }
-
-    public void setBulletImage(Image bulletImage) {
-        this.bulletImage = bulletImage;
     }
 
     public int getDamage() {
@@ -89,7 +60,7 @@ public class Bullet extends GameObject {
     @Override
     public void render(Graphics g) {
         if (isOnIce) {
-            // Apply transparency or some effect when rendering
+            // Apply transparency when on ice
             Graphics2D g2d = (Graphics2D) g;
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
             g.drawImage(bulletImage, x, y, size, size, null);
@@ -99,6 +70,7 @@ public class Bullet extends GameObject {
         }
     }
 
+    // Set onIce status
     public void setOnIce(boolean onIce) {
         isOnIce = onIce;
     }

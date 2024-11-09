@@ -5,20 +5,4 @@ public enum Direction {
         DOWN,
         LEFT,
         RIGHT;
-
-        // Add a method to get the opposite direction
-        public Direction opposite() {
-                switch (this) {
-                        case UP:
-                                return Direction.DOWN;
-                        case DOWN:
-                                return Direction.UP;
-                        case LEFT:
-                                return Direction.RIGHT;
-                        case RIGHT:
-                                return Direction.LEFT;
-                        default:
-                                return this;
-                }
-        }
 }

@@ -6,6 +6,8 @@ import jsd.project.tank90.utils.Images;
 import java.awt.*;
 
 public class PowerTank extends EnemyTank {
+
+    // Get images
     private final Image TANK_UP_1 = Images.POWER_UP_1;
     private final Image TANK_DOWN_1 = Images.POWER_DOWN_1;
     private final Image TANK_LEFT_1 = Images.POWER_LEFT_1;
@@ -28,7 +30,6 @@ public class PowerTank extends EnemyTank {
     private final int speed = 2;
     private final int bulletSize = 5;
     private final int bulletSpeed = 3;
-    private final int fireSpeed = 2;
     private int life = 1;
 
     public PowerTank(int x, int y, int size, Direction direction) {
@@ -42,10 +43,6 @@ public class PowerTank extends EnemyTank {
 
     public void setLife(int life) {
         this.life = life;
-    }
-
-    public int getFireSpeed() {
-        return fireSpeed;
     }
 
     @Override
@@ -149,6 +146,6 @@ public class PowerTank extends EnemyTank {
 
     @Override
     public int getBulletDamage() {
-        return 2;
+        return 2; // Destroy bricks 2x effectively
     }
 }

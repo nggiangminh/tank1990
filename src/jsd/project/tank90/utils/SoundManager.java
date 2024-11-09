@@ -8,10 +8,10 @@ public class SoundManager {
     private FloatControl volumeControl; // Đối tượng FloatControl để điều chỉnh âm lượng
 
     // Phát nhạc nền
-    public void playBackgroundMusic(String musicFilePath) {
+    public void playBackgroundMusic() {
         try {
             // Đọc tệp âm thanh
-            File musicFile = new File(musicFilePath);
+            File musicFile = new File("src/jsd/project/tank90/resources/sounds/soundtrack.wav");
             audioStream = AudioSystem.getAudioInputStream(musicFile);
             clip = AudioSystem.getClip();
             clip.open(audioStream);
@@ -21,6 +21,23 @@ public class SoundManager {
 
             // Chơi nhạc nền lặp lại
             clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playMenuBackgroundMusic() {
+        try {
+            // Đọc tệp âm thanh
+            File musicFile = new File("src/jsd/project/tank90/resources/sounds/titlescreen.wav");
+            audioStream = AudioSystem.getAudioInputStream(musicFile);
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+            // Lấy FloatControl để điều chỉnh âm lượng
+            volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
             clip.start();
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();

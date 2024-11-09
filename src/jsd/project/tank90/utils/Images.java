@@ -25,6 +25,13 @@ public class Images {
     public static final Image TIMER_PU = new ImageIcon(folderPath + "powerup_timer.png").getImage();
     public static final Image TANK_DEAD = new ImageIcon(folderPath + "tank_dead.png").getImage();
 
+    //Bullet Images
+    public static final Image BULLET_UP = new ImageIcon(folderPath + "bullet_up.png").getImage();
+    public static final Image BULLET_DOWN = new ImageIcon(folderPath + "bullet_down.png").getImage();
+    public static final Image BULLET_LEFT = new ImageIcon(folderPath + "bullet_left.png").getImage();
+    public static final Image BULLET_RIGHT = new ImageIcon(folderPath + "bullet_right.png").getImage();
+
+
     //Shield images
     public static final Image SHIELD_1 = new ImageIcon(folderPath + "shield_1.png").getImage();
     public static final Image SHIELD_2 = new ImageIcon(folderPath + "shield_2.png").getImage();
@@ -90,7 +97,7 @@ public class Images {
     public static final Image ARMOR_RIGHT_1_H3 = new ImageIcon(folderPath + "tank_armor_right_1_h3.png").getImage();
     public static final Image ARMOR_RIGHT_2_H3 = new ImageIcon(folderPath + "tank_armor_right_2_h3.png").getImage();
 
-    public static final Image ARMOR_UP_1_F= new ImageIcon(folderPath + "tank_armor_up_1_f.png").getImage();
+    public static final Image ARMOR_UP_1_F = new ImageIcon(folderPath + "tank_armor_up_1_f.png").getImage();
     public static final Image ARMOR_UP_2_F = new ImageIcon(folderPath + "tank_armor_up_2_f.png").getImage();
     public static final Image ARMOR_DOWN_1_F = new ImageIcon(folderPath + "tank_armor_down_1_f.png").getImage();
     public static final Image ARMOR_DOWN_2_F = new ImageIcon(folderPath + "tank_armor_down_2_f.png").getImage();
@@ -155,6 +162,20 @@ public class Images {
     public static final Image POWER_LEFT_2_F = new ImageIcon(folderPath + "tank_power_left_2_f.png").getImage();
     public static final Image POWER_RIGHT_1_F = new ImageIcon(folderPath + "tank_power_right_f.png").getImage();
     public static final Image POWER_RIGHT_2_F = new ImageIcon(folderPath + "tank_power_right_2_f.png").getImage();
+
+    // Spawn Effect images
+    public static final Image APPEAR_1 = new ImageIcon(folderPath + "appear_1.png").getImage();
+    public static final Image APPEAR_2 = new ImageIcon(folderPath + "appear_2.png").getImage();
+    public static final Image APPEAR_3 = new ImageIcon(folderPath + "appear_3.png").getImage();
+    public static final Image APPEAR_4 = new ImageIcon(folderPath + "appear_4.png").getImage();
+
+    // Explosion Images
+    public static final Image EXPLO_1 = new ImageIcon(folderPath + "exp_1.png").getImage();
+    public static final Image EXPLO_2 = new ImageIcon(folderPath + "exp_2.png").getImage();
+    public static final Image EXPLO_3 = new ImageIcon(folderPath + "exp_3.png").getImage();
+    public static final Image EXPLO_4 = new ImageIcon(folderPath + "exp_4.png").getImage();
+    public static final Image EXPLO_5 = new ImageIcon(folderPath + "exp_5.png").getImage();
+
 
 }
 

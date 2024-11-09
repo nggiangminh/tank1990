@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class ArmorTank extends EnemyTank {
 
+    // Get images
     private final Image TANK_UP_1_F = Images.ARMOR_UP_1_F;
     private final Image TANK_DOWN_1_F = Images.ARMOR_DOWN_1_F;
     private final Image TANK_LEFT_1_F = Images.ARMOR_LEFT_1_F;
@@ -19,7 +20,6 @@ public class ArmorTank extends EnemyTank {
     private final int speed = 1;
     private final int bulletSize = 5;
     private final int bulletSpeed = 2;
-    private final int fireSpeed = 2;
     private int life = 4;
 
     public ArmorTank(int x, int y, int size, Direction direction) {
@@ -33,10 +33,6 @@ public class ArmorTank extends EnemyTank {
 
     public void setLife(int life) {
         this.life = life;
-    }
-
-    public int getFireSpeed() {
-        return fireSpeed;
     }
 
     @Override
@@ -54,6 +50,8 @@ public class ArmorTank extends EnemyTank {
         return speed;
     }
 
+
+    // Get images based on remaining lives
     @Override
     protected Image getTankUpImage1() {
         switch (life) {
@@ -113,6 +111,7 @@ public class ArmorTank extends EnemyTank {
             }
         }
     }
+
     @Override
     protected Image getTankUpImage2() {
         switch (life) {

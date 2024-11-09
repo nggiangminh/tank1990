@@ -3,6 +3,7 @@ package jsd.project.tank90.utils;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
+import jsd.project.tank90.model.tanks.Bullet;
 import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.model.tanks.Tank;
@@ -30,6 +31,7 @@ public class CollisionHandling {
                 if (environmentObj instanceof Base && bulletBounds.intersects(environmentObj.getBounds())) {
                     // Collision with Base: Remove bullet, change Base
                     ((Base) environmentObj).destroy();
+                    explosions.add(new Explosion(environmentObj.getCenterX(), environmentObj.getCenterY(), environmentObj.getSize())); // Add explosion
                     explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
                     bulletIterator.remove();
                     return true;
@@ -73,9 +75,6 @@ public class CollisionHandling {
         }
     }
 
-    // Checks collisions between the tank and solid environment objects
-
-
     public static void checkBulletEnemyTankCollision(List<Bullet> bullets, EnemyTank enemy, List<Explosion> explosions) {
         Rectangle tankBounds = enemy.getBounds();
         Iterator<Bullet> bulletIterator = bullets.iterator();
@@ -84,6 +83,7 @@ public class CollisionHandling {
             Bullet bullet = bulletIterator.next();
             Rectangle bulletBounds = bullet.getBounds();
             if (bulletBounds.intersects(tankBounds)) {
+                explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize())); // Add explosion
                 explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
                 bulletIterator.remove();
                 enemy.takeDamage();
@@ -101,6 +101,7 @@ public class CollisionHandling {
             Rectangle bulletBounds = bullet.getBounds();
             if (bulletBounds.intersects(tankBounds) && !playerTank.isDisabled()) {
                 playerTank.takeDamage();
+                explosions.add(new Explosion(playerTank.getCenterX(), playerTank.getCenterY(), playerTank.getSize())); // Add explosion
                 explosions.add(new Explosion(bullet.getCenterX(), bullet.getCenterY(), bullet.getSize() * 2)); // Add explosion
                 bulletIterator.remove();
                 break; // Stop checking this bullet as it has been removed

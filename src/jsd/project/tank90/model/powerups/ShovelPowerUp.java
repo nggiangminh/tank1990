@@ -1,8 +1,8 @@
 package jsd.project.tank90.model.powerups;
 
-import jsd.project.tank90.utils.Images;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.ui.GamePanel;
+import jsd.project.tank90.utils.Images;
 
 import java.awt.*;
 
@@ -18,14 +18,10 @@ public class ShovelPowerUp extends PowerUp {
         return SHOVEL_IMAGE;
     }
 
-    @Override
-    public String getType() {
-        return "Shovel";
-    }
 
     @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
-        super.activate(playerTank,gamePanel);
+        super.activate(playerTank, gamePanel);
         gamePanel.activateShovelEffect();
     }
 }

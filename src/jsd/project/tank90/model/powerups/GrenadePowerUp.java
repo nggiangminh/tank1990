@@ -20,11 +20,6 @@ public class GrenadePowerUp extends PowerUp {
     }
 
     @Override
-    public String getType() {
-        return null;
-    }
-
-    @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
         super.activate(playerTank,gamePanel);
         gamePanel.killAllEnemies();

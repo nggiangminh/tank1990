@@ -1,9 +1,8 @@
-// ShieldPowerUp.java
 package jsd.project.tank90.model.powerups;
 
-import jsd.project.tank90.utils.Images;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.ui.GamePanel;
+import jsd.project.tank90.utils.Images;
 
 import java.awt.*;
 
@@ -20,14 +19,8 @@ public class ShieldPowerUp extends PowerUp {
     }
 
     @Override
-    public String getType() {
-        return "Shield";
-    }
-
-    // Activate shield with a duration, managed by a separate thread
-    @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
-        super.activate(playerTank,gamePanel);
+        super.activate(playerTank, gamePanel);
         playerTank.activateShield(); // Enable the shield
     }
 }

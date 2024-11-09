@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Random;
 
 public class EnemySpawner {
-    private int enemyLeft = 20;
+    private int enemyLeft = 20; // number of enemies to spawn
     private final List<EnemyTank> enemyTanks; // List to hold active enemies
     private final List<SpawnEffect> spawnQueue = new ArrayList<>(); // Temporary list for spawn effects
     private final int DELAY_FRAMES = 30;
+
+    //Spawn points for enemy tanks
     private final Point spawnPoint1 = new Point(20, 20);
     private final Point spawnPoint2 = new Point(265, 20);
     private final Point spawnPoint3 = new Point(510, 20);
@@ -20,7 +22,7 @@ public class EnemySpawner {
     private final int maxEnemies;
     private final Random random = new Random();
     // Spawn effect images
-    private final Image[] spawnImages = {new ImageIcon("src/jsd/project/tank90/resources/images/appear_1.png").getImage(), new ImageIcon("src/jsd/project/tank90/resources/images/appear_2.png").getImage(), new ImageIcon("src/jsd/project/tank90/resources/images/appear_3.png").getImage(), new ImageIcon("src/jsd/project/tank90/resources/images/appear_4.png").getImage()};
+    private final Image[] spawnImages = {Images.APPEAR_1,Images.APPEAR_2,Images.APPEAR_3,Images.APPEAR_4};
     private int spawnCountDown;
 
     public EnemySpawner(List<EnemyTank> enemyTanks, int maxEnemies) {
@@ -66,9 +68,6 @@ public class EnemySpawner {
         return enemyLeft + enemyTanks.size() +spawnQueue.size();
     }
 
-    public int getMaxEnemies() {
-        return maxEnemies;
-    }
 
     // Inner class to handle spawning effect and cooldown
     private class SpawnEffect {

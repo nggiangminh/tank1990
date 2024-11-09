@@ -9,7 +9,7 @@ public class SteelWall extends GameObject {
 
     private final Image STEEL_IMAGE = Images.STEEL;
 
-    private boolean isDestructable = true;
+    private boolean isDestructable = true; //false for border blocks
 
     public SteelWall(int x, int y, int size) {
         super(x, y, size);

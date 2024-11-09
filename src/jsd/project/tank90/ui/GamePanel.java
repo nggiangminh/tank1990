@@ -3,7 +3,7 @@ package jsd.project.tank90.ui;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.utils.Bullet;
+import jsd.project.tank90.model.tanks.Bullet;
 import jsd.project.tank90.utils.Direction;
 import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
@@ -48,7 +48,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private boolean isRight = false;
     private boolean isFire = false;
     // Firing cooldown to manage fire rate
-    private int fireCooldown = 0;
     private boolean isPaused = false;
     private boolean pPressed = false;
 
@@ -69,7 +68,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         this.playerTank = new PlayerTank(playerSpawnPos[0], playerSpawnPos[1], tankSize);
         this.statusPanel = new StatusPanel(playerTank, this);
         soundManager = new SoundManager();
-        soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/soundtrack.wav"); // Đường dẫn đến tệp âm thanh
+        soundManager.playBackgroundMusic();
         soundManager.setVolume(-35.0f);
 
 
@@ -85,9 +84,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         new Thread(this).start();
     }
 
-    public void activateFreeze() {
-        freezeTimer = 300; // 300 frame
-    }
 
 
     private void initializeMapObjects() {
@@ -113,17 +109,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
     public void updateGame() {
-
         if (isPaused) {
             return;
         }
-
-
         enemySpawner.spawnEnemy();
         for (Explosion explosion : explosions) {
             explosion.update();
         }
-
         if (freezeTimer > 0) {
             freezeTimer--;
         }
@@ -168,7 +160,21 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             // No movement keys pressed and no slide momentum left
             previousDirection = null;
         }
+        //check player claim powerup
         CollisionHandling.checkClaimPowerup(playerTank, powerUps, this);
+        powerUps.removeIf(powerUp -> !powerUp.isActive());
+        // Handle continuous firing with cooldown
+        if (isFire && playerTank.getBullets().size() < playerTank.getMaxBullets()) {
+            playerTank.shoot();
+        }
+        playerTank.updateBullets();
+        //check bullet on ice for effect
+        for (Bullet bullet : playerTank.getBullets()) {
+            bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet, environmentObjects));
+        }
+        //check collision
+        CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects, explosions);
+
         // Update each enemy tank's movement and check collisions
         Iterator<EnemyTank> enemyIterator = enemyTanks.iterator();
         while (enemyIterator.hasNext()) {
@@ -195,33 +201,20 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                     enemy.shoot();
                 }
                 enemy.updateBullets();
+
+                // Check collision
                 CollisionHandling.checkBulletEnvironmentCollision(enemy, environmentObjects, explosions);
                 CollisionHandling.checkBulletEnemyTankCollision(playerTank.getBullets(), enemy, explosions);
                 CollisionHandling.checkBulletPlayerTankCollision(enemy.getBullets(), playerTank, explosions);
                 CollisionHandling.checkBulletEnemyBulletCollision(playerTank.getBullets(), enemy.getBullets(), explosions);
                 CollisionHandling.checkPlayerEnemyCollision(playerTank, enemyTanks, explosions);
+                //check bullet on ice for effect
                 for (Bullet bullet : enemy.getBullets()) {
                     bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet, environmentObjects));
                 }
-
             }
         }
-        powerUps.removeIf(powerUp -> !powerUp.isActive());
-        // Handle continuous firing with cooldown
-        if (isFire && fireCooldown <= 0 && playerTank.getBullets().size() < playerTank.getMaxBullets()) {
-            playerTank.shoot();
-            fireCooldown = Math.max(5, 50 - playerTank.getFireSpeed());
-        }
-
-        playerTank.updateBullets();
-        for (Bullet bullet : playerTank.getBullets()) {
-            bullet.setOnIce(CollisionHandling.checkBulletOnIce(bullet, environmentObjects));
-        }
-        CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects, explosions);
-        if (fireCooldown > 0) {
-            fireCooldown--;
-        }
-
+        //check if game is stopped
         checkStopGame();
     }
 
@@ -259,7 +252,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             if (explosion.isFinished()) explosionIterator.remove();
         }
 
-        // Render Tree
+        // Render Tree last to cover others
         for (GameObject environmentObj : new ArrayList<>(environmentObjects)) {
             if ((environmentObj instanceof Tree)) {
                 environmentObj.render(g);
@@ -356,6 +349,9 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    public void activateFreeze() {
+        freezeTimer = 300; // 300 frame
+    }
     public void activateShovelEffect() {
         List<Point> fortressTiles = getFortressAreaCoordinates();
 
@@ -420,13 +416,13 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         }).start();
     }
 
+    // get the coordinates of base surroundings
     public List<Point> getFortressAreaCoordinates() {
         List<Point> fortressCoordinates = new ArrayList<>();
 
         int[][] fortressArea = {{12, 24}, {12, 25}, {12, 26}, {13, 24}, {14, 24}, {15, 24}, {15, 25}, {15, 26}};
 
         // Convert each coordinate to a Point and scale by tile size
-        int tileSize = 20; // Assuming each tile is 20x20 pixels
         for (int[] coordinate : fortressArea) {
             int x = coordinate[0] * tileSize; // Column index (x-coordinate)
             int y = coordinate[1] * tileSize; // Row index (y-coordinate)
@@ -436,6 +432,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         return fortressCoordinates;
     }
 
+    // kill all enemies and add explosion
     public void killAllEnemies() {
         Iterator<EnemyTank> enemyTankIterator = enemyTanks.iterator();
         while (enemyTankIterator.hasNext()) {
@@ -455,6 +452,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     }
 
     private void checkStopGame() {
+        // stop game if base is destroyed
         for (EnemyTank enemy : enemyTanks)
             if (CollisionHandling.checkBulletBaseCollision(enemy, environmentObjects, explosions)) {
                 playerTank.destroyBase();
@@ -464,14 +462,18 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             playerTank.destroyBase();
             stopGame();
         }
+
+        //stop game if player is out of life
         if (playerTank.getLife() == 0) stopGame();
 
+        // stop game is there's no enemy left
         if (enemyTanks.isEmpty() && enemySpawner.getEnemyLeft() == 0) {
-            winning = true;
+            winning = true; // win the level
             stopGame();
         }
     }
 
+    //Get the number of enemy left to win the level
     public int getEnemyLeft() {
         return enemySpawner.getEnemyLeft();
     }

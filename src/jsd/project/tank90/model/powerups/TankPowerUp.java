@@ -1,8 +1,8 @@
 package jsd.project.tank90.model.powerups;
 
-import jsd.project.tank90.utils.Images;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.ui.GamePanel;
+import jsd.project.tank90.utils.Images;
 
 import java.awt.*;
 
@@ -19,13 +19,8 @@ public class TankPowerUp extends PowerUp {
     }
 
     @Override
-    public String getType() {
-        return "Tank";
-    }
-
-    @Override
     public void activate(PlayerTank playerTank, GamePanel gamePanel) {
-        super.activate(playerTank,gamePanel);
-        playerTank.setLife(playerTank.getLife() + 1);
+        super.activate(playerTank, gamePanel);
+        playerTank.setLife(playerTank.getLife() + 1); // +1 life
     }
 }

@@ -13,7 +13,6 @@ public class WinningPanel extends JPanel {
     private final Image gameOverImage;
     private final List<EnemyTank> killedEnemies; // Store the killed enemies list
     private final PlayerTank playerTank;
-    private SoundManager soundManager;
 
     public WinningPanel(int maplLevel, List<EnemyTank> killedEnemies, PlayerTank playerTank) {
         this.mapLevel = maplLevel;
@@ -57,7 +56,7 @@ public class WinningPanel extends JPanel {
         labelPanel.add(pointsLabel);
         labelPanel.add(Box.createVerticalStrut(20));
 
-        // Tank kill labels
+        // Tank killed labels
         String[] labels = {"Basic Tanks Killed: " + killedBasicTanks, "Fast Tanks Killed: " + killedFastTanks, "Power Tanks Killed: " + killedPowerTanks, "Armor Tanks Killed: " + killedArmorTanks, "Total Tanks Killed: " + totalKilled};
 
         for (String text : labels) {
