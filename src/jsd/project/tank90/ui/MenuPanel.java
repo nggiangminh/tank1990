@@ -87,7 +87,7 @@ public class MenuPanel extends JPanel {
         g.setFont(new Font("Monospaced", Font.BOLD, 16));
         int playerX = getWidth() / 2 - 40;
         g.drawImage(tankIcon, playerX - 30, playerY - 15, this);
-        g.drawString("1 PLAYER", playerX, playerY);
+        g.drawString("Play Game", playerX, playerY);
 
         // Draw copyright text
         g.setFont(new Font("Monospaced", Font.BOLD, 20));

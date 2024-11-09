@@ -1,4 +1,4 @@
-package jsd.project.tank90.model.tanks;
+package jsd.project.tank90.utils;
 
 public enum Direction {
         UP,

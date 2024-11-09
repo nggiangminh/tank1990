@@ -1,5 +1,8 @@
 package jsd.project.tank90.model.tanks;
 
+import jsd.project.tank90.utils.Bullet;
+import jsd.project.tank90.utils.Direction;
+
 import java.awt.*;
 import java.util.Random;
 

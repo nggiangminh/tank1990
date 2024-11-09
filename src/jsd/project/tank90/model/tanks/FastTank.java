@@ -1,5 +1,6 @@
 package jsd.project.tank90.model.tanks;
 
+import jsd.project.tank90.utils.Direction;
 import jsd.project.tank90.utils.Images;
 
 import java.awt.*;

@@ -3,7 +3,6 @@ package jsd.project.tank90.utils;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.model.tanks.Bullet;
 import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.model.tanks.Tank;

@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 public class LevelSelectionPanel extends JPanel {
     private final JLabel[] levelLabels;
     private final JLabel arrowLabel;
+    private final JLabel titleLabel;  // Add title label
     private int currentIndex = 1;
 
     public LevelSelectionPanel() {
@@ -17,6 +18,13 @@ public class LevelSelectionPanel extends JPanel {
         setLayout(null);
         setFocusable(true);
         requestFocusInWindow();
+
+        // Title label setup
+        titleLabel = new JLabel("Select Map");
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 20));
+        titleLabel.setBounds(80, 20, 200, 30);  // Position at the top of the panel
+        add(titleLabel);
 
         arrowLabel = new JLabel("→");
         arrowLabel.setForeground(Color.WHITE);
@@ -63,15 +71,15 @@ public class LevelSelectionPanel extends JPanel {
     }
 
     private void updateArrowPosition() {
-        arrowLabel.setLocation(50, 80 + (currentIndex-1) * 30);
+        arrowLabel.setLocation(50, 80 + (currentIndex - 1) * 30);
     }
 
     private void openGamePlay(int mapLevel) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.getContentPane().removeAll();
-        GamePanel gamePanel = new GamePanel(mapLevel);  // Pass the map file path to GamePanel
+        GamePanel gamePanel = new GamePanel(mapLevel);
         PlayerTank playerTank = gamePanel.getPlayerTank();
-        StatusPanel statusPanel = new StatusPanel(playerTank);// Pass the map file path to GamePanel
+        StatusPanel statusPanel = new StatusPanel(playerTank);
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(statusPanel, BorderLayout.EAST);
         Timer timer = new Timer(100, e -> statusPanel.repaint());

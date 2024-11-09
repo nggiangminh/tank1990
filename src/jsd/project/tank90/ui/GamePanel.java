@@ -2,10 +2,9 @@ package jsd.project.tank90.ui;
 
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
-import jsd.project.tank90.model.powerups.GrenadePowerUp;
 import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.model.tanks.Bullet;
-import jsd.project.tank90.model.tanks.Direction;
+import jsd.project.tank90.utils.Bullet;
+import jsd.project.tank90.utils.Direction;
 import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
 import jsd.project.tank90.utils.*;
@@ -75,7 +74,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         soundManager.playBackgroundMusic("src/jsd/project/tank90/resources/sounds/soundtrack.wav"); // Đường dẫn đến tệp âm thanh
         soundManager.setVolume(-35.0f);
 
-        powerUps.add(new GrenadePowerUp(220, 450, 30));
 
         // Initialize and add the pause overlay
         pauseOverlay = new PauseOverlay();
