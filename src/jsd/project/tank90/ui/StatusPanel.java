@@ -7,13 +7,13 @@ import java.awt.*;
 
 public class StatusPanel extends JPanel {
     private final PlayerTank playerTank;
-    private final Color backgroundColor = new Color(0, 0, 0);
     private final Color textColor = new Color(236, 240, 241);
     private final Color accentColor = new Color(52, 152, 219);
 
     public StatusPanel(PlayerTank playerTank) {
         this.playerTank = playerTank;
         setPreferredSize(new Dimension(225, 600));
+        Color backgroundColor = new Color(0, 0, 0);
         setBackground(backgroundColor);
     }
 
