@@ -4,8 +4,8 @@ import jsd.project.tank90.utils.SoundManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MenuPanel extends JPanel {
     private Image titleImage;
@@ -18,8 +18,6 @@ public class MenuPanel extends JPanel {
     public MenuPanel() {
         soundManager = new SoundManager();
         soundManager.playMenuBackgroundMusic();
-
-
 
         // Load images
         titleImage = new ImageIcon("src/jsd/project/tank90/resources/images/battle_city.png").getImage();
@@ -34,32 +32,17 @@ public class MenuPanel extends JPanel {
         });
         timer.start();
 
-        // Mouse click listener to open level selection
-        addMouseListener(new MouseAdapter() {
+        // Key listener for Enter key
+        setFocusable(true);
+        requestFocusInWindow();
+        addKeyListener(new KeyAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                int playerX = getWidth() / 2 - 40;
-                if (e.getX() >= playerX && e.getX() <= playerX + 80 &&
-                        e.getY() >= playerY - 20 && e.getY() <= playerY) {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     openLevelSelection();
                 }
             }
         });
-
-        // Mouse movement listener to change cursor
-        addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                int playerX = getWidth() / 2 - 40;
-                if (e.getX() >= playerX && e.getX() <= playerX + 80 &&
-                        e.getY() >= playerY - 20 && e.getY() <= playerY) {
-                    setCursor(new Cursor(Cursor.HAND_CURSOR));
-                } else {
-                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                }
-            }
-        });
-
     }
 
     private void openLevelSelection() {
@@ -69,7 +52,6 @@ public class MenuPanel extends JPanel {
         soundManager.stopBackgroundMusic();
         frame.revalidate();
         frame.repaint();
-
     }
 
     @Override

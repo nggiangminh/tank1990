@@ -31,7 +31,7 @@ public class PlayerTank extends Tank {
     private Image TANK_RIGHT_2 = Images.PLAYER_RIGHT_2_S1;
     private int lifePlusPoints = 0; // To check if 20k points got
     private int points = 0;
-    private int life = 1;
+    private int life = 4;
     private int bulletSpeed = 2;
     private int maxBullets = 1;
     private int bulletDamage = 1;

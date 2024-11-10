@@ -69,7 +69,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         this.statusPanel = new StatusPanel(playerTank, this);
         soundManager = new SoundManager();
         soundManager.playBackgroundMusic();
-        soundManager.setVolume(-35.0f);
+        soundManager.setVolume(-10.0f);
 
 
         // Initialize and add the pause overlay
