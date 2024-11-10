@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="cap nhat shovel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp5.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_5.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

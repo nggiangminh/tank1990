@@ -33,12 +33,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final SoundManager soundManager;
     private final int mapLevel;
     private final PauseOverlay pauseOverlay;
+    private final StatusPanel statusPanel;
     public int freezeTimer = 0;
     private PlayerTank playerTank;
     private Direction previousDirection = null; // Track the previous direction
     private int slideMomentum = 0; // Number of frames to continue sliding
     private List<GameObject> environmentObjects;
     private boolean running = true;
+
+    private boolean gameStopped = false;
     private boolean winning = false;
     // Movement and firing control booleans
     private boolean isUp = false;
@@ -49,8 +52,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     // Firing cooldown to manage fire rate
     private boolean isPaused = false;
     private boolean pPressed = false;
-
-    private final StatusPanel statusPanel;
 
     public GamePanel(int mapLevel) {
         setBackground(Color.BLACK);
@@ -211,7 +212,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             }
         }
         //check if game is stopped
-        checkStopGame();
+        if (!gameStopped)checkStopGame(); // ensure stopGame is only called once
     }
 
     @Override
@@ -314,15 +315,14 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     }
 
     public void stopGame() {
+        gameStopped = true;
         stopMusic();
         playerTank.disable();
-        running = false;//stop game loop
-        // Create a timer to delay the stop by 1 second (1000 ms)
+        JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        // Create a timer to delay the stop by 2 sec
         Timer timer = new Timer(2000, e -> {
-            JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            System.out.println(gameFrame);
+            running = false;//stop game loop
             gameFrame.getContentPane().removeAll();
-
             if (winning && mapLevel < 10) {
                 gameFrame.getContentPane().add(new WinningPanel(mapLevel, killedEnemies, playerTank));
             } else {
