@@ -5,15 +5,15 @@ import jsd.project.tank90.utils.Direction;
 import jsd.project.tank90.utils.Images;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public abstract class Tank extends GameObject {
     protected final Image DEAD_IMAGE = Images.TANK_DEAD; //Image for dead tank
 
     protected Direction direction; // Current direction of the tank
-    protected List<Bullet> bullets = new ArrayList<>(); // List of bullets fired by the tank
+    protected List<Bullet> bullets = new CopyOnWriteArrayList<>(); // List of bullets fired by the tank
     protected Image tankImage;
     protected boolean toggleImage = false;
     private boolean disabled = false;

@@ -163,9 +163,14 @@ public class PlayerTank extends Tank {
     }
 
     @Override
+    public void move() {
+        if (!baseDestroyed) super.move();
+    }
+
+    @Override
     public Bullet shoot() {
 
-        if (fireCooldown <= 0) {
+        if (fireCooldown <= 0 && !baseDestroyed) {
             Bullet bullet = super.shoot();
             if (bullet != null) {
                 playShotSound(); // play sound
@@ -269,7 +274,7 @@ public class PlayerTank extends Tank {
 
     @Override
     public void render(Graphics g) {
-        if (isDisabled() && !baseDestroyed)
+        if (isDisabled())
             g.drawImage(DEAD_IMAGE, x, y, size, size, null); // render the dead tank image
         else {
             g.drawImage(tankImage, x, y, size, size, null);
@@ -294,6 +299,7 @@ public class PlayerTank extends Tank {
 
     // Spawn method (get back to the spawn position)
     public void spawn() {
+        enable();
         this.x = spawnX;
         this.y = spawnY;
         setDirection(Direction.UP);
@@ -305,6 +311,7 @@ public class PlayerTank extends Tank {
         enable();
         this.x = spawnX;
         this.y = spawnY;
+        setDirection(Direction.UP);
         setStar(0);// Reset star
         starCheck();
         activateShield();

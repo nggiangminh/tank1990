@@ -3,7 +3,6 @@ package jsd.project.tank90.ui;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
-import jsd.project.tank90.model.powerups.ShovelPowerUp;
 import jsd.project.tank90.model.tanks.Bullet;
 import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
@@ -14,8 +13,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class GamePanel extends JPanel implements KeyListener, Runnable {
@@ -25,12 +24,12 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     private final List<String> mapData;
     private final int MAX_SLIDE_MOMENTUM = 30; // Maximum frames for sliding
     private final int[] playerSpawnPos = new int[]{200, 500};
-    private final List<EnemyTank> enemyTanks = new ArrayList<>(); // List to hold multiple EnemyTank enemies
-    private final List<EnemyTank> killedEnemies = new ArrayList<>(); // List to hold multiple EnemyTank enemies
+    private final List<EnemyTank> enemyTanks = new CopyOnWriteArrayList<>(); // List to hold multiple EnemyTank enemies
+    private final List<EnemyTank> killedEnemies = new CopyOnWriteArrayList<>(); // List to hold multiple EnemyTank enemies
     private final EnemySpawner enemySpawner = new EnemySpawner(enemyTanks, 4);
-    private final List<PowerUp> powerUps = new ArrayList<>();
+    private final List<PowerUp> powerUps = new CopyOnWriteArrayList<>();
     private final PowerUpSpawner powerUpSpawner = new PowerUpSpawner(powerUps);
-    private final List<Explosion> explosions = new ArrayList<>();
+    private final List<Explosion> explosions = new CopyOnWriteArrayList<>();
     private final SoundManager soundManager;
     private final int mapLevel;
     private final PauseOverlay pauseOverlay;
@@ -87,7 +86,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
     private void initializeMapObjects() {
-//        powerUps.add(new ShovelPowerUp(130, 500, 30));
         environmentObjects = new ArrayList<>();
         for (int y = 0; y < mapData.size(); y++) {
             String line = mapData.get(y);
@@ -175,18 +173,16 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         CollisionHandling.checkBulletEnvironmentCollision(playerTank, environmentObjects, explosions);
 
         // Update each enemy tank's movement and check collisions
-        Iterator<EnemyTank> enemyIterator = enemyTanks.iterator();
-        while (enemyIterator.hasNext()) {
-            EnemyTank enemy = enemyIterator.next();
+        List<EnemyTank> toRemove = new ArrayList<>();
+        for (EnemyTank enemy : enemyTanks) {
             if (enemy.isDead() && !enemy.isShowPoints()) {
                 enemy.markAsDead();
                 explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
             } else if (enemy.shouldRemove()) {
                 playerTank.increasePoints(enemy.getPoints());
-                enemyIterator.remove();// Safely remove the dead enemy
+                toRemove.add(enemy);
                 killedEnemies.add(enemy);
                 if (enemy.isFlashing()) powerUpSpawner.spawnPowerUp();
-
             } else if (!enemy.isDead()) {
                 if (freezeTimer == 0) {
                     enemy.changeDirection();
@@ -213,6 +209,8 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 }
             }
         }
+        enemyTanks.removeAll(toRemove); // Remove enemies after iteration
+
         //check if game is stopped
         if (!gameStopped) checkStopGame(); // ensure stopGame is only called once
     }
@@ -244,12 +242,15 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
         for (PowerUp powerUp : powerUps) {
             powerUp.render(g);
         }
-        Iterator<Explosion> explosionIterator = explosions.iterator();
-        while (explosionIterator.hasNext()) {
-            Explosion explosion = explosionIterator.next();
+
+        // Deffer removal
+        List<Explosion> toRemove = new ArrayList<>();
+        for (Explosion explosion : explosions) {
             explosion.render(g);
-            if (explosion.isFinished()) explosionIterator.remove();
+            if (explosion.isFinished()) toRemove.add(explosion);
         }
+        explosions.removeAll(toRemove);
+
 
         // Render Tree last to cover others
         for (GameObject environmentObj : new ArrayList<>(environmentObjects)) {
@@ -319,7 +320,6 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
     public void stopGame() {
         gameStopped = true;
         stopMusic();
-        playerTank.disable();
         JFrame gameFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         // Create a timer to delay the stop by 2 sec
         Timer timer = new Timer(2000, e -> {
@@ -372,7 +372,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                         // Store the original BrickWall for later restoration
                         replacedWalls.add(obj);
                         // Replace with a SteelWall at the same position
-                        environmentObjects.set(i, new SteelWall(x, y, obj.getSize(),false));
+                        environmentObjects.set(i, new SteelWall(x, y, obj.getSize(), false));
                         brickFound = true;
                         break;
                     }
@@ -381,7 +381,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 if (!brickFound) {
                     SteelWall newWall = new SteelWall(x, y, tileSize, false); // Assuming tile size is 20
                     environmentObjects.add(newWall);
-                    replacedWalls.add(new BrickWall(x,y,tileSize)); // Track newly added wall for removal
+                    replacedWalls.add(new BrickWall(x, y, tileSize)); // Track newly added wall for removal
                 }
             }
             // Wait for the effect duration
@@ -423,9 +423,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
     // kill all enemies and add explosion
     public void killAllEnemies() {
-        Iterator<EnemyTank> enemyTankIterator = enemyTanks.iterator();
-        while (enemyTankIterator.hasNext()) {
-            EnemyTank enemy = enemyTankIterator.next();
+        for (EnemyTank enemy : enemyTanks) {
             playerTank.increasePoints(enemy.getPoints());
             explosions.add(new Explosion(enemy.getCenterX(), enemy.getCenterY(), enemy.getSize()));
             enemy.markAsDead();

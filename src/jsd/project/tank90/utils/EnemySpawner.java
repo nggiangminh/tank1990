@@ -2,18 +2,16 @@ package jsd.project.tank90.utils;
 
 import jsd.project.tank90.model.tanks.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EnemySpawner {
-    private int enemyLeft = 20; // number of enemies to spawn
     private final List<EnemyTank> enemyTanks; // List to hold active enemies
-    private final List<SpawnEffect> spawnQueue = new ArrayList<>(); // Temporary list for spawn effects
+    private final List<SpawnEffect> spawnQueue = new CopyOnWriteArrayList<>(); // Temporary list for spawn effects
     private final int DELAY_FRAMES = 30;
-
     //Spawn points for enemy tanks
     private final Point spawnPoint1 = new Point(20, 20);
     private final Point spawnPoint2 = new Point(265, 20);
@@ -22,7 +20,8 @@ public class EnemySpawner {
     private final int maxEnemies;
     private final Random random = new Random();
     // Spawn effect images
-    private final Image[] spawnImages = {Images.APPEAR_1,Images.APPEAR_2,Images.APPEAR_3,Images.APPEAR_4};
+    private final Image[] spawnImages = {Images.APPEAR_1, Images.APPEAR_2, Images.APPEAR_3, Images.APPEAR_4};
+    private int enemyLeft = 20; // number of enemies to spawn
     private int spawnCountDown;
 
     public EnemySpawner(List<EnemyTank> enemyTanks, int maxEnemies) {
@@ -54,18 +53,20 @@ public class EnemySpawner {
 
     // Render spawn effects for enemies in spawnQueue
     public void renderSpawnEffects(Graphics g) {
-        spawnQueue.removeIf(spawnEffect -> {
-            spawnEffect.render(g); // Render the spawning effect
+        List<SpawnEffect> toRemove = new ArrayList<>();
+        for (SpawnEffect spawnEffect : spawnQueue) {
+            spawnEffect.render(g);
             if (spawnEffect.isFinished()) {
-                enemyTanks.add(spawnEffect.tank); // Move tank to active list after effect
-                return true; // Remove from spawn queue
+                enemyTanks.add(spawnEffect.tank);
+                toRemove.add(spawnEffect);
             }
-            return false;
-        });
+        }
+        spawnQueue.removeAll(toRemove); // Remove after iteration
     }
 
+
     public int getEnemyLeft() {
-        return enemyLeft + enemyTanks.size() +spawnQueue.size();
+        return enemyLeft + enemyTanks.size() + spawnQueue.size();
     }
 
 
