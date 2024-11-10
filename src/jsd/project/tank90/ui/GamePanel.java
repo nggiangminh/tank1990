@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
     private void initializeMapObjects() {
-        powerUps.add(new ShovelPowerUp(130, 500, 30));
+//        powerUps.add(new ShovelPowerUp(130, 500, 30));
         environmentObjects = new ArrayList<>();
         for (int y = 0; y < mapData.size(); y++) {
             String line = mapData.get(y);
