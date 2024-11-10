@@ -48,7 +48,7 @@ public class StatusPanel extends JPanel {
         // Draw controls guide
         g2d.setColor(accentColor);
         g2d.setFont(new Font("Monospaced", Font.BOLD, 20));
-        g2d.drawString("Controls", 20, 190);
+        g2d.drawString("Controls", 20, 180);
 
         g2d.setColor(textColor);
         g2d.setFont(new Font("Monospaced", Font.PLAIN, 14));
