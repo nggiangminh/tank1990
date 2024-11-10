@@ -132,6 +132,8 @@ public class CollisionHandling {
     public static boolean checkTankEnvironmentCollision(Tank tank, List<GameObject> environmentObjects) {
         Rectangle tankBounds = tank.getBounds();
         for (GameObject environmentObj : environmentObjects) {
+            if (environmentObj == null) continue; // Skip if null to prevent NullPointerException
+
             if (environmentObj instanceof BrickWall || environmentObj instanceof SteelWall || environmentObj instanceof Water) {
                 if (tankBounds.intersects(environmentObj.getBounds())) {
                     return true;
@@ -140,6 +142,7 @@ public class CollisionHandling {
         }
         return false;
     }
+
 
     public static boolean checkPlayerOnIce(PlayerTank playerTank, List<GameObject> environmentObjects) {
         Rectangle playerTankBounds = playerTank.getBounds();
