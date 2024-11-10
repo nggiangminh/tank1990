@@ -3,6 +3,7 @@ package jsd.project.tank90.ui;
 import jsd.project.tank90.model.GameObject;
 import jsd.project.tank90.model.environments.*;
 import jsd.project.tank90.model.powerups.PowerUp;
+import jsd.project.tank90.model.powerups.ShovelPowerUp;
 import jsd.project.tank90.model.tanks.Bullet;
 import jsd.project.tank90.model.tanks.EnemyTank;
 import jsd.project.tank90.model.tanks.PlayerTank;
@@ -86,6 +87,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
 
 
     private void initializeMapObjects() {
+        powerUps.add(new ShovelPowerUp(130, 500, 30));
         environmentObjects = new ArrayList<>();
         for (int y = 0; y < mapData.size(); y++) {
             String line = mapData.get(y);
@@ -212,7 +214,7 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
             }
         }
         //check if game is stopped
-        if (!gameStopped)checkStopGame(); // ensure stopGame is only called once
+        if (!gameStopped) checkStopGame(); // ensure stopGame is only called once
     }
 
     @Override
@@ -365,49 +367,40 @@ public class GamePanel extends JPanel implements KeyListener, Runnable {
                 // Find the wall object at this location
                 for (int i = 0; i < environmentObjects.size(); i++) {
                     GameObject obj = environmentObjects.get(i);
-
-                    // Check if the object is a BrickWall at the target location
+                    // Check if the object is at the target location
                     if (obj instanceof BrickWall && obj.getX() == x && obj.getY() == y) {
                         // Store the original BrickWall for later restoration
                         replacedWalls.add(obj);
-
                         // Replace with a SteelWall at the same position
-                        environmentObjects.set(i, new SteelWall(x, y, obj.getSize()));
+                        environmentObjects.set(i, new SteelWall(x, y, obj.getSize(),false));
                         brickFound = true;
                         break;
                     }
                 }
-
-                // If no BrickWall was found, create a new SteelWall
+                // If no BrickWall was found, create a new SteelWall, add a brickwall for later restore
                 if (!brickFound) {
-                    SteelWall newWall = new SteelWall(x, y, 20); // Assuming tile size is 20
+                    SteelWall newWall = new SteelWall(x, y, tileSize, false); // Assuming tile size is 20
                     environmentObjects.add(newWall);
-                    replacedWalls.add(newWall); // Track newly added wall for removal
+                    replacedWalls.add(new BrickWall(x,y,tileSize)); // Track newly added wall for removal
                 }
             }
-
             // Wait for the effect duration
             try {
                 Thread.sleep(5000); // Wait for 5 seconds (or desired duration in milliseconds)
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-
             // Revert steel walls back to their original state
             for (GameObject wall : replacedWalls) {
-                if (wall instanceof BrickWall) {
-                    // Restore original brick walls
-                    for (int i = 0; i < environmentObjects.size(); i++) {
-                        GameObject obj = environmentObjects.get(i);
-                        if (obj instanceof SteelWall && obj.getX() == wall.getX() && obj.getY() == wall.getY()) {
-                            environmentObjects.set(i, wall);
-                            break;
-                        }
+                // Restore original brick walls
+                for (int i = 0; i < environmentObjects.size(); i++) {
+                    GameObject obj = environmentObjects.get(i);
+                    if (obj instanceof SteelWall && obj.getX() == wall.getX() && obj.getY() == wall.getY()) {
+                        environmentObjects.set(i, wall);
+                        break;
                     }
-                } else if (wall instanceof SteelWall) {
-                    // Remove newly added steel walls
-                    environmentObjects.remove(wall);
                 }
+
             }
         }).start();
     }
