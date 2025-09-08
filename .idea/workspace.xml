@@ -6,22 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cc6aeab2-0f00-4049-a6be-7c2529aa1ebc" name="Changes" comment="cap nhat shovel">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/model/tanks/PlayerTank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/Frame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/Frame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/GamePanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/MenuPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Tank1990/jsd/project/tank90/ui/MenuPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/model/tanks/PlayerTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp2.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp3.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp4.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp5.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/resources/images/exp_5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/Frame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/MenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jsd/project/tank90/ui/StatusPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jsd/project/tank90/ui/StatusPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,16 +27,13 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;minhkhongchamhoc&quot;
-  }
-}</component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {}
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/minhkhongchamhoc/tank1990.git&quot;,
-    &quot;accountId&quot;: &quot;10fddc66-e8bc-45fe-95e4-3dfb85ed53fa&quot;
+    &quot;url&quot;: &quot;https://github.com/nggiangminh/tank1990.git&quot;,
+    &quot;accountId&quot;: &quot;f5719438-6626-4a71-81c3-dc76f005141b&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -63,30 +44,32 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2o97a89hke6Ycffs7IW24ITvReu" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Frame.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dang&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/nguye/Videos/Tank1990&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Frame.executor": "Run",
+    "Application.Game.executor": "Run",
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/nguye/Videos/Tank1990",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\HANUdocs\Nam4\JSD\tank1990\src\jsd\project\tank90\resources\sounds" />
@@ -152,7 +135,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="dang" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
